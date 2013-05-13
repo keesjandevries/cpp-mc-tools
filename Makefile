@@ -130,7 +130,7 @@ ${PROGRAMS} : ${BIN_DIR}/% : ${OBJECTS} ${TMP_DIR}/%.o
 
 ${LIBRARY} : ${OBJECTS}
 	@echo " - Building Library : " ${LIB_NAME}
-	@${CCC} ${LIB_COMP_FLAGS} -o $@ $^ ${INC_FLAGS} ${LIB_FLAGS}
+	@${CCC} ${LIB_COMP_FLAGS} -o $@ $^ ${INC_FLAGS} ${LIB_FLAGS} ${CCC_FLAGS}
 	@echo "Library : "${LIB_NAME}" Successfully Built"
 	@echo
 
