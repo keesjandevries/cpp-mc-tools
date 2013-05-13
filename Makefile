@@ -1,34 +1,6 @@
 ############################################################################################
-#
-# makefile
-#
-# Original Author : Christopher Hunt
-# Creation Date   : 05/04/2013
-#
-# Last Update     : Christopher Hunt & Ben Krikler
-# At              : 05/04/2013
-#
-#
-# A simple, flexible makefile designed to work well within a rigid directory structure.
-# Builds multiple executables containing all implementation files.
-#
-# For basic usage the following is required:
-#
-#  1.  Source files are expected to be in "./src/" 
-#  2.  Header files are expected to be in "./include/".
-#  3.  Executable source files must have the suffix ".cxx" 
-#  4.  Implementation source files must have the suffix ".cpp"
-#
-# If the previous reuirements are met, the makefile will locate the necessary files and
-#  build all excutables by default, placing them the "bin" directory.
-#
-#
-# For basic use, it is advised that only the Defines, Includes and Library flags be altered.
-# More complicated directory structures may warrant changes to the preset directories below.
-#
-# It is not advised that the user modify any code below the second hash-line 
-#                                     On pain of GNU Make!
-#
+# This files orininates from the examples given in 
+# https://github.com/ichep-coders-club/Bits-n-Pieces/tree/master/makefiles.d
 ############################################################################################
 
 # File Locations
