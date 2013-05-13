@@ -33,15 +33,20 @@
 
 # File Locations
 INC_DIR = include
-BIN_DIR = bin
 SRC_DIR = src
+BIN_DIR = bin
+LIB_DIR = lib
 TMP_DIR = .temp
 
 EXE_SRC_DIR = ${SRC_DIR}
 
 ROOTXFLAGS = $(shell root-config --cflags --libs)
+# Library Name
+LIB_NAME = mylib
+
 
 # Includes and Libraries
+# FIXME: THE JSON INCLUDES MAY NOT BE NEEDED WHEN THE ARE INSTALLED IN ~/local
 INC_FLAGS += -I${INC_DIR} -I$(PWD)/../../json-local/include
 LIB_FLAGS += -L$(PWD)/../../json-local/lib -ljansson
 CCC_FLAGS += ${ROOTXFLAGS}
@@ -62,6 +67,11 @@ CCC = g++ -g  -Wall -Wextra  ${DEFINES}
 ##############################################################################################
 
 
+# Extra Compile Flags to Create Library
+LIB_COMP_FLAGS = -fPIC -shared
+LIB_LINK_FLAGS = -Wl,-rpath=$(realpath ${LIB_DIR}) -l${LIB_NAME} -L${LIB_DIR}
+
+
 # Find The Files
 EXE_FILES = ${shell ls $(EXE_SRC_DIR)}
 SRC_FILES = ${shell ls $(SRC_DIR)}
@@ -80,6 +90,7 @@ SOURCES = $(patsubst %.cpp,${SRC_DIR}/%.cpp,$(filter %.cpp,$(SRC_FILES)))
 OBJECTS = $(patsubst %.cpp,$(TMP_DIR)/%.o,$(filter %.cpp,$(SRC_FILES)))
 EXE_OBJ = $(patsubst %.cxx,$(TMP_DIR)/%.o,${EXE_SRC})
 
+LIBRARY   = ${LIB_DIR}/lib${LIB_NAME}.so
 PROGRAMS  = $(patsubst %.cxx,${BIN_DIR}/%,${EXE_SRC})
 PROGNAMES = $(notdir ${PROGRAMS})
 
@@ -89,7 +100,7 @@ PROGNAMES = $(notdir ${PROGRAMS})
 
 
 
-all : intro directories ${PROGRAMS}
+all : intro directories ${LIBRARY} ${PROGRAMS}
 	@echo "Make Completed Successfully"
 	@echo
 
@@ -113,8 +124,14 @@ single_intro :
 
 ${PROGRAMS} : ${BIN_DIR}/% : ${OBJECTS} ${TMP_DIR}/%.o
 	@echo " - Building Target  : " $(notdir $(basename $@))
-	@${CCC} -o $@ $^ ${INC_FLAGS} ${LIB_FLAGS} ${CCC_FLAGS}
+	@${CCC} ${LIB_LINK_FLAGS} -o $@ $^ ${INC_FLAGS} ${LIB_FLAGS} ${CCC_FLAGS}
 	@echo "Target : "$(notdir $(basename $@))" Successfully Built"
+	@echo
+
+${LIBRARY} : ${OBJECTS}
+	@echo " - Building Library : " ${LIB_NAME}
+	@${CCC} ${LIB_COMP_FLAGS} -o $@ $^ ${INC_FLAGS} ${LIB_FLAGS}
+	@echo "Library : "${LIB_NAME}" Successfully Built"
 	@echo
 
 
@@ -125,16 +142,18 @@ ${EXE_OBJ} : ${TMP_DIR}/%.o : ${SRC_DIR}/%.cxx ${INCLUDE}
 
 ${OBJECTS} : ${TMP_DIR}/%.o : ${SRC_DIR}/%.cpp ${INCLUDE}
 	@echo " - Compiling Source : " $(notdir $(basename $@))
-	@${CCC}  -c $< -o $@ ${INC_FLAGS} ${CCC_FLAGS}
+	@${CCC} ${LIB_COMP_FLAGS} -c $< -o $@ ${INC_FLAGS} ${CCC_FLAGS}
 
 
 
-directories : ${BIN_DIR} ${SRC_DIR} ${INC_DIR} ${TMP_DIR}
-
+directories : ${BIN_DIR} ${LIB_DIR} ${SRC_DIR} ${INC_DIR} ${TMP_DIR}
 
 
 ${BIN_DIR} :
 	mkdir -p ${BIN_DIR}
+
+${LIB_DIR} :
+	mkdir -p ${LIB_DIR}
 
 ${SRC_DIR} :
 	mkdir -p ${SRC_DIR}
