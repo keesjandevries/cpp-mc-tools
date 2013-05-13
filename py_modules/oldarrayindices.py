@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-get_array_ids(prediction_index,spectrum_index):
+def get_array_ids(prediction_index,spectrum_index):
     return {
             "m0"           : 1 ,
             "m12"          : 2 ,
@@ -16,7 +16,7 @@ get_array_ids(prediction_index,spectrum_index):
             # predictions
             "R(b->sg)"     : prediction_index,  
             "R(D_ms)"      : prediction_index+1, 
-            "Bsmumu"       : prediction_index+2, 
+            "bsmm"         : prediction_index+2, 
             "R(B->taunu)"  : prediction_index+3, 
             "R(B->Xsll)"   : prediction_index+4, 
             "R(K->lnu)"    : prediction_index+5, 
@@ -32,7 +32,7 @@ get_array_ids(prediction_index,spectrum_index):
             "Ab16"         : prediction_index+15,
             "Ac17"         : prediction_index+16,
             "Al(SLD)"      : prediction_index+17,
-            "m_h^0"        : prediction_index+18,
+            "mh"           : prediction_index+18,
             "Oh^2"         : prediction_index+19,
             "Al(P_tau)"    : prediction_index+20,
             "Al_fb"        : prediction_index+21,
@@ -77,10 +77,10 @@ get_array_ids(prediction_index,spectrum_index):
             "gluino"       : spectrum_index+21, 
             "mh0"          : spectrum_index+22, 
             "mH0"          : spectrum_index+23, 
-            "mA0"          : spectrum_index+24, 
+            "MA"          : spectrum_index+24, 
             "mH+-"         : spectrum_index+25, 
-            "ssmh0"        : spectrum_index+30, 
+            "ssmh"        : spectrum_index+30, 
             "ssmH0"        : spectrum_index+31, 
-            "ssmA0"        : spectrum_index+32, 
+            "ssMA"        : spectrum_index+32, 
             "ssmH+-"       : spectrum_index+33, 
             }
