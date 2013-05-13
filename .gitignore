@@ -1,3 +1,14 @@
+#own contributions
+*~
+*swp
+html/*
+latex/*
+bin/*
+.temp/
+*pdf
+.nf*
+
+#standard c++ git ignore from github
 # Compiled Object files
 *.slo
 *.lo
