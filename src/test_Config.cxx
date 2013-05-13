@@ -14,7 +14,7 @@ double get_bsmm_ratio(double *VARS, std::vector<int>* array_ids){
     int bsmm_id=(*array_ids)[0];
     return VARS[bsmm_id]/(3.46e-9);
 }
-
+// WARNING: THIS PROGRAM IS NOT MAINTAINED ATM, SHOULD PROBABLY BE REMOVED
 
 //FIXME: For now this is hard coded should come from config file
 std::map<std::string,Axis*> get_axes_map(){
@@ -38,6 +38,7 @@ std::map<std::string,Axis*> get_axes_map(){
     mg_binning.high=6000.;
     mg_binning.nbins=100;
     //for bsmm ratio
+// WARNING: THIS PROGRAM IS NOT MAINTAINED ATM, SHOULD PROBABLY BE REMOVED
     BinningInputs bsmm_ratio_binning;
     bsmm_ratio_binning.binning_type="linear";
     bsmm_ratio_binning.low=0.;
@@ -65,6 +66,7 @@ std::map<std::string,Axis*> get_axes_map(){
 // FIXME: for now hard coded, later from config file
 std::vector< AxesZaxesNames> get_axes_names_list(){
     std::vector< AxesZaxesNames> axes_names_list;
+// WARNING: THIS PROGRAM IS NOT MAINTAINED ATM, SHOULD PROBABLY BE REMOVED
     AxesZaxesNames m0m12_names;
     m0m12_names.axes.push_back("m0");
     m0m12_names.axes.push_back("m12");
@@ -82,6 +84,7 @@ std::vector<Space*> get_spaces(std::map<std::string,Axis*> axes_map, std::vector
         for (std::vector<std::string>::iterator axis_name_it=(*axes_names_it).axes.begin();
                 axis_name_it!=(*axes_names_it).axes.end();axis_name_it++){
             axes.push_back(axes_map[*axis_name_it]);
+// WARNING: THIS PROGRAM IS NOT MAINTAINED ATM, SHOULD PROBABLY BE REMOVED
         }
         //get zaxes
         for (std::vector<std::string>::iterator axis_name_it=(*axes_names_it).zaxes.begin();
@@ -99,6 +102,7 @@ void make_histograms(TString infile){
 // INISTIALISE FILE
 // FIXME: eventually turn this into a function
     // File
+// WARNING: THIS PROGRAM IS NOT MAINTAINED ATM, SHOULD PROBABLY BE REMOVED
     TFile* f = new TFile(infile,"UPDATE");  
     // Tree
     TTree* t = (TTree*)f->Get("tree");
@@ -119,6 +123,7 @@ void make_histograms(TString infile){
 
     //This if the foreloop that makes the plots
     for(int i=0; i<nentries; i++){
+// WARNING: THIS PROGRAM IS NOT MAINTAINED ATM, SHOULD PROBABLY BE REMOVED
         //FIXME: make progress bar
         if (i%100000==0) std::cout << "Processed: " << i << "entries" << std::endl;
         // get entry
@@ -140,6 +145,7 @@ void make_histograms(TString infile){
 
 
 
+// WARNING: THIS PROGRAM IS NOT MAINTAINED ATM, SHOULD PROBABLY BE REMOVED
 int main(){
 //    TString file="/vols/cms04/kjd110/nuhm2_old/nuhm2_all_old_combined.root";
 //    TString file="/vols/cms04/kjd110/nuhm1_mc8_boxes/bak_nuhm1-boxesmc8.root";
@@ -147,3 +153,4 @@ int main(){
     make_histograms(file);
     return 0;
 }
+// WARNING: THIS PROGRAM IS NOT MAINTAINED ATM, SHOULD PROBABLY BE REMOVED
