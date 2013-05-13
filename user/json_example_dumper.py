@@ -54,7 +54,7 @@ spaces=[{
     'zaxes':['mh','BsmmRatio'],
     },
     { 'axes':'mh' }, 
-    { 'axes':'BsmmRatio' }, 
+    { 'axes':'BsmmRatio', 'zaxes':'BsmmRatio' }, 
     {'axes':'m0'}
         ]
 
