@@ -50,12 +50,41 @@ def populate_axes(style,array_ids_dict,axes):
         axis['observable_ids'].update({'array_ids':array_ids})
     return axes
 
+def check_axes_defined(axes, axes_names):
+    defined=True
+    name=None
+    if axes:
+        if not isinstance(axes, list):
+            axes=[axes]
+        for axis in axes:
+            if not axis in axes_names:
+                defined=False
+                name=axis
+                break
+    else:
+        defined=False
+    return defined, name
+
+def populate_spaces(axes_dict):
+    spaces=user.spaces.get_spaces()
+    axes_names=axes_dict.keys()
+    for space in spaces:
+        defined, name= check_axes_defined(space.get('axes'),axes_names)
+        if not defined:
+            print('ERROR: \"{}\" not defined in user/axes.py . Exiting program'.format(name))
+            exit(1)
+        defined, name= check_axes_defined(space.get('zaxes'),axes_names)
+        if (not defined) and name:
+            print('ERROR: \"{}\" not defined in user/axes.py . Exiting program'.format(name))
+            exit(1)
+    return spaces
+
 if __name__ == '__main__':
     args=parse_args()
     file_info=get_file_info(args.rootfile)
     array_ids_dict,style=get_array_ids_dict_style(file_info)
     axes=populate_axes(style,array_ids_dict,user.axes.get_axes())
-    spaces=user.spaces.get_spaces()
+    spaces=populate_spaces(axes)
     #FIXME: this should be replaced by files that get deleted after running plotting from python
     with open('user/example_axes.json','w') as json_file:
         json.dump(axes,json_file,indent=3)
