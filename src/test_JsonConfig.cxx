@@ -28,12 +28,22 @@ std::vector<Space*> get_spaces(std::map<std::string,Axis*> axes_map, std::vector
         //get axes
         for (std::vector<std::string>::iterator axis_name_it=(*axes_names_it).axes.begin();
                 axis_name_it!=(*axes_names_it).axes.end();axis_name_it++){
-            axes.push_back(axes_map[*axis_name_it]);
+            if (axes_map.find(*axis_name_it) != axes_map.end() ){
+                axes.push_back(axes_map[*axis_name_it]);
+            }
+            else {
+                std::cout << "ERROR: \"" << *axis_name_it << "\" not in axis map." << std::endl;
+            }
         }
         //get zaxes
         for (std::vector<std::string>::iterator axis_name_it=(*axes_names_it).zaxes.begin();
                 axis_name_it!=(*axes_names_it).zaxes.end();axis_name_it++){
-            zaxes.push_back(axes_map[*axis_name_it]);
+            if (axes_map.find(*axis_name_it) != axes_map.end() ){
+                zaxes.push_back(axes_map[*axis_name_it]);
+            }
+            else {
+                std::cout << "ERROR: \"" << *axis_name_it << "\" not in axis map." << std::endl;
+            }
         }
         //make a space and push back
         Space * space = new Space(axes,zaxes) ;
@@ -92,8 +102,8 @@ void make_histograms(TString infile){
 
 int main(){
 //    TString file="/vols/cms04/kjd110/nuhm2_old/nuhm2_all_old_combined.root";
-//    TString file="/vols/cms04/kjd110/nuhm1_mc8_boxes_mh2/nuhm1-boxesmc8.root";
-    TString file="/vols/cms04/kjd110/nuhm1_mc8_boxes_mh2/bak2_nuhm1-boxesmc8.root";
+    TString file="/vols/cms04/kjd110/nuhm1_mc8_boxes_mh2/nuhm1-boxesmc8.root";
+//    TString file="/vols/cms04/kjd110/nuhm1_mc8_boxes_mh2/bak2_nuhm1-boxesmc8.root";
     make_histograms(file);
     return 0;
 }
