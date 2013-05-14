@@ -1,4 +1,3 @@
-
 def get_files():
     return {
             '/vols/cms04/kjd110/nuhm1_mc8_boxes_mh2/bak2_nuhm1-boxesmc8.root'   : {
