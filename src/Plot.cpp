@@ -65,7 +65,7 @@ void Plot::init_root_histogram_2d(std::vector<Axis*> axes,Axis* zaxis){
     _plot.second=new TH2D(c_name,title,nxbins,xbins,nybins,ybins);
     // Set axes titles
     const char * x_axis_name_c=axes[0]->get_name().c_str();
-    const char * y_axis_name_c=axes[0]->get_name().c_str();
+    const char * y_axis_name_c=axes[1]->get_name().c_str();
     _plot.second->SetXTitle(x_axis_name_c);
     _plot.second->SetYTitle(y_axis_name_c);
     delete [] xbins;
