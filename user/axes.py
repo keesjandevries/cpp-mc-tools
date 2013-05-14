@@ -33,6 +33,28 @@ def get_axes():
                 'mc_old':'MA',
                 }
             },
+        'A0':{
+            'binning':{
+                'type'  :'linear',
+                'low'   : -5000. ,
+                'high'  : 5000. ,
+                'nbins' : 100 ,
+                },
+            'observable_ids' :{
+                'mc_old':'A0',
+                }
+            },
+        'mh2':{
+            'binning':{
+                'type'  :'linear',
+                'low'   : -1e7 ,
+                'high'  : 1e7 ,
+                'nbins' : 100 ,
+                },
+            'observable_ids' :{
+                'mc_old':'mh2',
+                }
+            },
         'tanb':{
             'binning':{
                 'type'  :'linear',
