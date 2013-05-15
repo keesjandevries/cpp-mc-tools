@@ -53,6 +53,7 @@ std::vector<Space*> get_spaces(std::map<std::string,Axis*> axes_map, std::vector
 }
 
 void make_histograms(TString infile){
+    std::cout << "Making plots for \"" << infile << "\"." << std::endl; 
 // INISTIALISE FILE
 // FIXME: eventually turn this into a function
     // File
@@ -102,8 +103,9 @@ void make_histograms(TString infile){
 
 int main(){
 //    TString file="/vols/cms04/kjd110/nuhm2_old/nuhm2_all_old_combined.root";
-    TString file="/vols/cms04/kjd110/nuhm1_mc8_boxes_mh2/nuhm1-boxesmc8.root";
+//    TString file="/vols/cms04/kjd110/nuhm1_mc8_boxes_mh2/nuhm1-boxesmc8.root";
 //    TString file="/vols/cms04/kjd110/nuhm1_mc8_boxes_mh2/bak2_nuhm1-boxesmc8.root";
+    TString file= "/vols/cms04/kjd110/nuhm1_mc8_boxes_mh2_fix//nuhm1-boxesmc8.root";
     make_histograms(file);
     return 0;
 }
