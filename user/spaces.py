@@ -8,4 +8,5 @@ def get_spaces():
             {   'axes':'mh' }, 
             {   'axes':'BsmmRatio', 'zaxes':'BsmmRatio' }, 
             {   'axes':'m0'},
+            {   'axes':'chi2'},
         ]
