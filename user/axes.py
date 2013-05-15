@@ -100,4 +100,16 @@ def get_axes():
                 },
             'function_name': 'bsmm_ratio',
             },
+        'mh2_m0^2_Ratio':{
+            'binning':{
+                'type'  :'linear',
+                'low'   : -3. ,
+                'high'  : 3. ,
+                'nbins' : 100 ,
+                },
+            'observable_ids' :{
+                'mc_old':['mh2','m0'],
+                },
+            'function_name': 'var1_over_var2_square',
+            },
         }

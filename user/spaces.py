@@ -1,6 +1,7 @@
 def get_spaces():
     return [
             {   'axes':['m0','m12'], 'zaxes':['mh','BsmmRatio'], },
+            {   'axes':['m0','mh2_m0^2_Ratio']  },
             {   'axes':['MA','tanb'],'zaxes':'BsmmRatio'},
             {   'axes':['m0','tanb'],'zaxes':'BsmmRatio'},
             {   'axes':['A0','tanb'],'zaxes':'BsmmRatio'},
