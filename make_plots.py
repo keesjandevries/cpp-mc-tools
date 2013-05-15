@@ -44,10 +44,13 @@ def get_array_ids_dict_style(file_info):
 
 def populate_axes(style,array_ids_dict,axes):
     for name, axis in axes.items():
-        oids=axis['observable_ids'][style]
-        if not isinstance(oids, list): oids=[oids]
-        array_ids=[array_ids_dict[oid] for oid in oids]
-        axis['observable_ids'].update({'array_ids':array_ids})
+        if not axis['observable_ids'].get('array_ids')==None:
+            continue 
+        else:
+            oids=axis['observable_ids'][style]
+            if not isinstance(oids, list): oids=[oids]
+            array_ids=[array_ids_dict[oid] for oid in oids]
+            axis['observable_ids'].update({'array_ids':array_ids})
     return axes
 
 def check_axes_defined(axes, axes_names):
