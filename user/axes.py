@@ -1,5 +1,16 @@
 def get_axes():
     return {
+        'chi2':{
+            'binning':{
+                'type'  :'linear',
+                'low'   : 30. ,
+                'high'  : 40. ,
+                'nbins' : 10 ,
+                },
+            'observable_ids' :{
+                'array_ids':0,
+                }
+            },
         'm0':{
             'binning':{
                 'type'  :'linear',
