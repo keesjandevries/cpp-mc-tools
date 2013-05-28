@@ -18,9 +18,8 @@ LIB_NAME = mylib
 
 
 # Includes and Libraries
-# FIXME: THE JSON INCLUDES MAY NOT BE NEEDED WHEN THE ARE INSTALLED IN ~/local
-INC_FLAGS += -I${INC_DIR} -I$(PWD)/../../json-local/include
-LIB_FLAGS += -L$(PWD)/../../json-local/lib -ljansson
+INC_FLAGS += -I${INC_DIR} 
+LIB_FLAGS +=  -ljansson
 CCC_FLAGS += ${ROOTXFLAGS}
 
 # Compile-Time Definitions
