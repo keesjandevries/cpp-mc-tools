@@ -1,12 +1,6 @@
 #include "Run.h"
 
-std::map<std::string,Axis*> my_get_axes_map(std::string axes_file_name,  std::map<std::string, GetValueFunction> function_map ){
-    return parse_axes_from_json_file(axes_file_name,function_map);
-}
-
-std::vector< AxesZaxesNames> my_get_axes_names_list(std::string filename){
-    return parse_axes_names_list_from_json_file(filename);
-}
+//FIXME: THIS MODULE COULD DO WITH MORE CLEANUP, BUT IT SEEMS TO WORK
 
 /// this function turns something a c++ version of [ {'axes':['m0','m12'], 'zaxes':['bsmm_ratio', ... ]}, ...   ]
 /// into a vector of spaces. Here 'm0', 'm12' are keys to Axes in the axes_map
@@ -41,7 +35,9 @@ std::vector<Space*> my_get_spaces(std::map<std::string,Axis*> axes_map, std::vec
     return spaces;
 }
 
-void make_histograms(const char * file){
+//FIXME: THIS MODULE COULD DO WITH MORE CLEANUP, BUT IT SEEMS TO WORK
+//
+void make_histograms(const char * file, const char * json_axes_file, const char * json_spaces_file){
     TString infile(file);
     std::cout << "Making plots for \"" << infile << "\"." << std::endl; 
 // INISTIALISE FILE
@@ -57,13 +53,14 @@ void make_histograms(const char * file){
     double* invars = new double[nTotVars];
     t->SetBranchAddress("vars",invars);
 
+//FIXME: THIS MODULE COULD DO WITH MORE CLEANUP, BUT IT SEEMS TO WORK
 // INITIALISE spaces
     // make axes list
-    std::vector< AxesZaxesNames> axes_list=my_get_axes_names_list("user/example_spaces.json");
+    std::vector< AxesZaxesNames> axes_list=parse_axes_names_list_from_json_file(json_spaces_file);
     // get value functions map
     std::map<std::string,GetValueFunction> function_map=get_GetValueFunction_map();
     // get axes map
-    std::map<std::string,Axis*> axes_map=my_get_axes_map("user/example_axes.json",function_map);
+    std::map<std::string,Axis*> axes_map=parse_axes_from_json_file(json_axes_file,function_map);
     // get spaces from axes specified in axes_list
     std::vector<Space*> spaces= my_get_spaces(axes_map,axes_list);
 
@@ -79,8 +76,6 @@ void make_histograms(const char * file){
             (*it)->update(invars,i);
         }
     }
-    //FIXME: not sure if this is needed
-    f->cd();
     //Write all plots (X^2,entries, *zaxes) to root file
     for( std::vector<Space*>::iterator it=spaces.begin(); it!=spaces.end() ; it++){
         (*it)->write_plots();
@@ -89,9 +84,10 @@ void make_histograms(const char * file){
     f->Close();
 }
 
+//FIXME: THIS MODULE COULD DO WITH MORE CLEANUP, BUT IT SEEMS TO WORK
 
 extern "C" {
-    void run(){
-        make_histograms("/vols/cms04/kjd110/nuhm1_mc8_boxes_mh2_fix//nuhm1-boxesmc8.root");
+    void run(const char * root_file,const char * json_axes_files, const char * json_spaces_file){
+        make_histograms(root_file,json_axes_files,json_spaces_file);
     }
 }
