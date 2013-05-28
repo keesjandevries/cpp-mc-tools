@@ -1,12 +1,18 @@
 #! /usr/bin/env python
 # python modules
 import argparse, json
+from ctypes import cdll
 # custum modules
 import  py_modules.oldarrayindices 
 # dictionaries
 import user.axes
 import user.spaces
 import user.files
+# shared library objects
+runlib=cdll.LoadLibrary('lib/libmylib.so')
+# some definitions 
+axes_file='user/temp_axes.json'
+spaces_file='user/temp_spaces.json'
 
 
 def parse_args():
@@ -89,9 +95,10 @@ if __name__ == '__main__':
     axes=populate_axes(style,array_ids_dict,user.axes.get_axes())
     spaces=populate_spaces(axes)
     #FIXME: this should be replaced by files that get deleted after running plotting from python
-    with open('user/example_axes.json','w') as json_file:
+    with open(axes_file,'w') as json_file:
         json.dump(axes,json_file,indent=3)
-    with open('user/example_spaces.json','w') as json_file:
+    with open(spaces_file,'w') as json_file:
         json.dump(spaces,json_file,indent=3)
+    runlib.run(args.rootfile.encode('ascii'),axes_file.encode('ascii'),spaces_file.encode('ascii'))
         
 
