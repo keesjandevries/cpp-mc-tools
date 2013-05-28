@@ -65,7 +65,6 @@ void make_histograms(const char * file, const char * json_axes_file, const char 
     std::vector<Space*> spaces= my_get_spaces(axes_map,axes_list);
 
     //This if the foreloop that makes the plots
-    nentries = 100;
     for(int i=0; i<nentries; i++){
         //FIXME: make progress bar
         if (i%100000==0) std::cout << "Processed: " << i << "entries" << std::endl;
