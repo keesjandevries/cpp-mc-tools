@@ -106,7 +106,8 @@ int main(){
 //    TString file="/vols/cms04/kjd110/nuhm1_mc8_boxes_mh2/nuhm1-boxesmc8.root";
 //    TString file="/vols/cms04/kjd110/nuhm1_mc8_boxes_mh2/bak2_nuhm1-boxesmc8.root";
 //    TString file="/vols/cms04/kjd110/nuhm1_mc8_boxes_mh2/bak_nuhm1-boxesmc8.root";
-    TString file= "/vols/cms04/kjd110/nuhm1_mc8_boxes_mh2_fix//nuhm1-boxesmc8.root";
+//    TString file= "/vols/cms04/kjd110/nuhm1_mc8_boxes_mh2_fix//nuhm1-boxesmc8.root";
+    TString file= "/vols/cms04/kjd110/mo_fix_cmssm_mc8//cmssm-boxes-combined-mc8.root";
     make_histograms(file);
     return 0;
 }
