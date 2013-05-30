@@ -1,5 +1,115 @@
 def get_axes():
     return {
+        'mstop1':{
+            'binning':{
+                'type'  :'linear',
+                'low'   : 0. ,
+                'high'  : 3000. ,
+                'nbins' : 100 ,
+                },
+            'observable_ids' :{
+                'mc_old':'stop1',
+                }
+            },
+        'mg':{
+            'binning':{
+                'type'  :'linear',
+                'low'   : 0. ,
+                'high'  : 6000. ,
+                'nbins' : 100 ,
+                },
+            'observable_ids' :{
+                'mc_old':'gluino',
+                }
+            },
+        'msq12':{
+            'binning':{
+                'type'  :'linear',
+                'low'   : 0. ,
+                'high'  : 5000. ,
+                'nbins' : 100 ,
+                },
+            'observable_ids' :{
+                'mc_old':'msq12',
+                }
+            }, 
+        'msq3' :{
+            'binning':{
+                'type'  :'linear',
+                'low'   : 0. ,
+                'high'  : 2500. ,
+                'nbins' : 100 ,
+                },
+            'observable_ids' :{
+                'mc_old':'msq3',
+                }
+            },
+        'msl'  :{
+            'binning':{
+                'type'  :'linear',
+                'low'   : 0. ,
+                'high'  : 2500. ,
+                'nbins' : 100 ,
+                },
+            'observable_ids' :{
+                'mc_old':'msl',
+                }
+            },
+        'A'    :{
+            'binning':{
+                'type'  :'linear',
+                'low'   : -5000.,
+                'high'  : 5000. ,
+                'nbins' : 100 ,
+                },
+            'observable_ids' :{
+                'mc_old':'A',
+                }
+            },
+        'M1'   :{
+            'binning':{
+                'type'  :'linear',
+                'low'   : 0. ,
+                'high'  : 2500. ,
+                'nbins' : 100 ,
+                },
+            'observable_ids' :{
+                'mc_old':'M1',
+                }
+            },
+        'in_mu':{
+            'binning':{
+                'type'  :'linear',
+                'low'   : -5000.,
+                'high'  : 5000. ,
+                'nbins' : 100 ,
+                },
+            'observable_ids' :{
+                'mc_old':'in_mu',
+                }
+            },
+        'in_ma':{
+            'binning':{
+                'type'  :'linear',
+                'low'   : 0. ,
+                'high'  : 2000. ,
+                'nbins' : 100 ,
+                },
+            'observable_ids' :{
+                'mc_old':'in_ma',
+                }
+            },
+        'mneu1':{
+            'binning':{
+                'type'  :'linear',
+                'low'   : 0. ,
+                'high'  : 2000. ,
+                'nbins' : 100 ,
+                },
+            'observable_ids' :{
+                'mc_old':'neu1',
+                }
+            }, 
         'chi2':{
             'binning':{
                 'type'  :'linear',

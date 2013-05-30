@@ -1,7 +1,11 @@
 def get_spaces():
-    return [
+#    return spaces['cmssm']
+    return spaces['pmssm']
+
+spaces={
+    'cmssm': [
             {   'axes':['m0','m12'], 'zaxes':['mh','BsmmRatio'], },
-            {   'axes':['m0','mh2_m0^2_Ratio']  },
+#            {   'axes':['m0','mh2_m0^2_Ratio']  },
             {   'axes':['MA','tanb'],'zaxes':'BsmmRatio'},
             {   'axes':['m0','tanb'],'zaxes':'BsmmRatio'},
             {   'axes':['A0','tanb'],'zaxes':'BsmmRatio'},
@@ -10,4 +14,40 @@ def get_spaces():
             {   'axes':'BsmmRatio', 'zaxes':'BsmmRatio' }, 
             {   'axes':'m0'},
             {   'axes':'chi2'},
-        ]
+            {'axes':['mneu1','mg']},
+        ],
+    'pmssm':[
+#            {'axes':['mneu1','mg']},
+#            {'axes':['msq12','tanb']},
+#            {'axes':['msq3','tanb']},
+#            {'axes':['msq3','msq12']},
+#            {'axes':['msl' ,'tanb']},
+#            {'axes':['msl' ,'msq12']},
+#            {'axes':['msl' ,'msq3']},
+#            {'axes':['A'   ,'tanb']},
+#            {'axes':['A'   ,'msq12']},
+#            {'axes':['A'   ,'msq3']},
+#            {'axes':['A'   ,'msl']},
+#            {'axes':['M1'  ,'tanb']},
+#            {'axes':['M1'  ,'msq12']},
+#            {'axes':['M1'  ,'msq3']},
+#            {'axes':['M1'  ,'msl']},
+#            {'axes':['M1'  ,'A']},
+#            {'axes':['in_mu','tanb']},
+#            {'axes':['in_mu','msq12']},
+#            {'axes':['in_mu','msq3']},
+#            {'axes':['in_mu','msl']},
+#            {'axes':['in_mu','A']},
+#            {'axes':['in_mu','M1']},
+#            {'axes':['in_ma','tanb']},
+#            {'axes':['in_ma','msq12']},
+#            {'axes':['in_ma','msq3']},
+#            {'axes':['in_ma','msl']},
+#            {'axes':['in_ma','A']},
+#            {'axes':['in_ma','M1']},
+#            {'axes':['in_ma','in_mu']},
+            {'axes':['mneu1','mstop1']},
+            {'axes':'mg'},
+            {'axes':'chi2'},
+                    ],
+    }
