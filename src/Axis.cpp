@@ -61,6 +61,15 @@ Axis::Axis(std::string name,int array_id){
     _name=name;
 }
 
+//FIXME: this is a coding style that should be adopted everywhere
+//only non-trivial actions should be in the body of the function
+Axis::Axis(std::string name, GaussConstraint * gauss_constraint): 
+    _name(name),    
+    _gauss_constraint(gauss_constraint), 
+    _get_value(NULL) {
+    // intentionally empty
+}
+
 Axis::Axis(std::string name,GetValueFunction get_value, std::vector<int> array_ids){
     //array ids tell the get_value function where to look in the array
     _array_ids=array_ids;
@@ -71,6 +80,10 @@ Axis::Axis(std::string name,GetValueFunction get_value, std::vector<int> array_i
 }
 
 double Axis::get_value(double * VARS){
+    //FIXME: this is ugly and result oriented USE ENUM
+    if (_get_value==NULL){
+        return _gauss_constraint->GetChi2(VARS);
+    }
     return _get_value(VARS,&_array_ids);
 }
 
@@ -93,3 +106,4 @@ void Axis::print_bin_edges(){
 double default_get_value(double * VARS, std::vector<int>* array_ids){
     return VARS[(*array_ids)[0]];
 }
+

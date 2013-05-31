@@ -5,10 +5,14 @@
 #include<vector>
 #include<cmath>
 
+#include "GaussConstraint.h"
+
 /// for linear and log binning, all that defines the axes are the lower and higher value and the number of bins
 struct BinningInputs{std::string binning_type; double low , high; int nbins;};
 ///Make function pointer into a type def 
 typedef  double (*GetValueFunction)(double *, std::vector<int>*);
+/// FIXME: need some enumaration for type of Axis
+///  enum axis_type{NORMAL,CONSTRAINT }
 
 /// Axis class has get_value(double * VARS) as key function
 /// get_value(double * VARS) uses the function pointer _get_value of the type GetValueFunction. 
@@ -27,6 +31,8 @@ class Axis{
         Axis(std::string name, BinningInputs, int /*array id*/);
         Axis(std::string name, BinningInputs, std::vector<int> /*array ids*/);
         Axis(std::string name, BinningInputs, GetValueFunction ,std::vector<int> /*array ids*/ );
+        ///constraint
+        Axis(std::string name, GaussConstraint*);
         ~Axis(){};
         //member functions
         std::vector<double> get_bin_edges(){return _bin_edges;};
@@ -40,6 +46,7 @@ class Axis{
         std::vector<double> _bin_edges;
         std::vector<int>    _array_ids;
         std::string         _name;
+        GaussConstraint *   _gauss_constraint;
         GetValueFunction    _get_value;
 };
 
