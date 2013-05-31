@@ -14,7 +14,7 @@ spaces={
             {   'axes':'BsmmRatio', 'zaxes':'BsmmRatio' }, 
             {   'axes':'m0'},
             {   'axes':'chi2'},
-            {'axes':['mneu1','mg']},
+            {   'axes':['mneu1','mg']},
         ],
     'pmssm':[
 #            {'axes':['mneu1','mg']},
@@ -49,5 +49,6 @@ spaces={
             {'axes':['mneu1','mstop1']},
             {'axes':'mg'},
             {'axes':'chi2'},
+            {'axes':'mh','zaxes':'chi2_mh'}
                     ],
     }
