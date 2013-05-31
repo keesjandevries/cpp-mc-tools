@@ -8,11 +8,13 @@ import  py_modules.oldarrayindices
 import user.axes
 import user.spaces
 import user.files
+import user.constraints
 # shared library objects
 runlib=cdll.LoadLibrary('lib/libmylib.so')
 # some definitions 
 axes_file='user/temp_axes.json'
 spaces_file='user/temp_spaces.json'
+constraints_file='user/temp_constraints.json'
 
 
 def parse_args():
@@ -50,7 +52,9 @@ def get_array_ids_dict_style(file_info):
 
 def populate_axes(style,array_ids_dict,axes):
     for name, axis in axes.items():
-        if not axis['observable_ids'].get('array_ids')==None:
+        if axis.get('constraint_name'):
+            continue
+        elif not axis['observable_ids'].get('array_ids')==None:
             continue 
         else:
             oids=axis['observable_ids'][style]
@@ -58,6 +62,17 @@ def populate_axes(style,array_ids_dict,axes):
             array_ids=[array_ids_dict[oid] for oid in oids]
             axis['observable_ids'].update({'array_ids':array_ids})
     return axes
+
+def populate_constraints(style,array_ids_dict,constraints):
+    for name, constraint in constraints.items():
+        if not constraint['observable_ids'].get('array_ids')==None:
+            continue 
+        else:
+            oids=constraint['observable_ids'][style]
+            if not isinstance(oids, list): oids=[oids]
+            array_ids=[array_ids_dict[oid] for oid in oids]
+            constraint['observable_ids'].update({'array_ids':array_ids})
+    return constraints
 
 def check_axes_defined(axes, axes_names):
     defined=True
@@ -88,17 +103,21 @@ def populate_spaces(axes_dict):
             exit(1)
     return spaces
 
+
 if __name__ == '__main__':
     args=parse_args()
     file_info=get_file_info(args.rootfile)
     array_ids_dict,style=get_array_ids_dict_style(file_info)
     axes=populate_axes(style,array_ids_dict,user.axes.get_axes())
     spaces=populate_spaces(axes)
+    constraints=populate_constraints(style,array_ids_dict,user.constraints.get_constraints())
     #FIXME: this should be replaced by files that get deleted after running plotting from python
     with open(axes_file,'w') as json_file:
         json.dump(axes,json_file,indent=3)
     with open(spaces_file,'w') as json_file:
         json.dump(spaces,json_file,indent=3)
-    runlib.run(args.rootfile.encode('ascii'),axes_file.encode('ascii'),spaces_file.encode('ascii'))
+    with open(constraints_file,'w') as json_file:
+        json.dump(constraints,json_file,indent=3)
+    runlib.run(args.rootfile.encode('ascii'),axes_file.encode('ascii'),spaces_file.encode('ascii'),constraints_file.encode('ascii'))
         
 
