@@ -1,5 +1,8 @@
 def get_axes():
     return {
+        'chi2_mh':{
+            'constraint_name':'Mh125',
+            },
         'mstop1':{
             'binning':{
                 'type'  :'linear',
