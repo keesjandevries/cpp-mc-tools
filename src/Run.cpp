@@ -37,7 +37,7 @@ std::vector<Space*> my_get_spaces(std::map<std::string,Axis*> axes_map, std::vec
 
 //FIXME: THIS MODULE COULD DO WITH MORE CLEANUP, BUT IT SEEMS TO WORK
 //
-void make_histograms(const char * file, const char * json_axes_file, const char * json_spaces_file){
+void make_histograms(const char * file, const char * json_axes_file, const char * json_spaces_file, const char * json_constraints_file){
     TString infile(file);
     std::cout << "Making plots for \"" << infile << "\"." << std::endl; 
 // INISTIALISE FILE
@@ -59,8 +59,11 @@ void make_histograms(const char * file, const char * json_axes_file, const char 
     std::vector< AxesZaxesNames> axes_list=parse_axes_names_list_from_json_file(json_spaces_file);
     // get value functions map
     std::map<std::string,GetValueFunction> function_map=get_GetValueFunction_map();
+    // get constraint map
+    std::map<std::string,GaussFunc> gauss_func_map=get_GaussFunc_map();
+    std::map<std::string,GaussConstraint*> gauss_constraint_map=parse_gauss_constraint_from_json_file(json_constraints_file, gauss_func_map);
     // get axes map
-    std::map<std::string,Axis*> axes_map=parse_axes_from_json_file(json_axes_file,function_map);
+    std::map<std::string,Axis*> axes_map=parse_axes_from_json_file(json_axes_file,function_map,gauss_constraint_map);
     // get spaces from axes specified in axes_list
     std::vector<Space*> spaces= my_get_spaces(axes_map,axes_list);
 
@@ -86,7 +89,7 @@ void make_histograms(const char * file, const char * json_axes_file, const char 
 //FIXME: THIS MODULE COULD DO WITH MORE CLEANUP, BUT IT SEEMS TO WORK
 
 extern "C" {
-    void run(const char * root_file,const char * json_axes_files, const char * json_spaces_file){
-        make_histograms(root_file,json_axes_files,json_spaces_file);
+    void run(const char * root_file,const char * json_axes_files, const char * json_spaces_file, const char * json_constraints_file){
+        make_histograms(root_file,json_axes_files,json_spaces_file,json_constraints_file);
     }
 }

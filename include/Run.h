@@ -13,6 +13,7 @@
 #include "Space.h"
 #include "JsonParsing.h"
 #include "GetValueFunctions.h"
+#include "GaussFunctions.h"
 
 
 #endif
