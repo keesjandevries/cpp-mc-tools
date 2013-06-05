@@ -1,4 +1,5 @@
 #include <iostream>
+#include "Axis.h"
 #include "VarsFunction.h"
 
 
@@ -14,5 +15,10 @@ int main(){
     double vars[]={1.};
 
     std::cout << "return:" << my_vars_function(vars) << std::endl;;
+    
+//    BaseGetValueFunction * ptr=&my_vars_function;
+    Axis axis("harry",&my_vars_function);
+
+    std::cout << "Axis returns: " << axis.new_get_value(vars) << std::endl;
     return 0;
 }    
