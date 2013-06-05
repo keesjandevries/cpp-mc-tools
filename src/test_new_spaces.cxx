@@ -41,7 +41,7 @@ void make_histograms(TString infile){
     array_ids.push_back(33);
     VarsFunction get_mh(array_ids,my_get_value);
     //make pointers to Axes
-    Axis * mh_axis=new Axis("mh",my_binning, &get_mh );
+    Axis * mh_axis=new Axis("mh", &get_mh,my_binning );
     //initialise plot
     //create axes vector
     std::vector<Axis*> mh;
