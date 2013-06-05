@@ -15,4 +15,8 @@ def get_files():
             '/vols/cms04/kjd110/cmssm_pmssm_test/cmssm-boxes-combined-drop-atlas.root':{
                 'observable_ids':{ 'mc_old' :{ 'prediction_index':10, 'spectrum_index':74  }}, 
                 },
+            '/vols/cms04/kjd110/pmssm10_bf_of_pmssm8/pMSSM10-mndrop-atlas.root':{
+                'observable_ids':{ 'mc_old' :{ 'prediction_index':15, 'spectrum_index':79  }}, 
+                },
+
             }

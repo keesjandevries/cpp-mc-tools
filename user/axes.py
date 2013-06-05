@@ -80,6 +80,28 @@ def get_axes():
                 'mc_old':'M1',
                 }
             },
+        'M2'   :{
+            'binning':{
+                'type'  :'linear',
+                'low'   : 0. ,
+                'high'  : 2500. ,
+                'nbins' : 100 ,
+                },
+            'observable_ids' :{
+                'mc_old':'M2',
+                }
+            },
+        'M3'   :{
+            'binning':{
+                'type'  :'linear',
+                'low'   : 0. ,
+                'high'  : 2500. ,
+                'nbins' : 100 ,
+                },
+            'observable_ids' :{
+                'mc_old':'M3',
+                }
+            },
         'in_mu':{
             'binning':{
                 'type'  :'linear',
@@ -116,9 +138,9 @@ def get_axes():
         'chi2':{
             'binning':{
                 'type'  :'linear',
-                'low'   : 30. ,
-                'high'  : 40. ,
-                'nbins' : 10 ,
+                'low'   : 20. ,
+                'high'  : 25. ,
+                'nbins' : 500 ,
                 },
             'observable_ids' :{
                 'array_ids':0,
