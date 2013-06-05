@@ -29,6 +29,7 @@ class Axis{
         Axis(std::string name, GetValueFunction,std::vector<int> /*array ids*/ );
         ///with binning for ranges of projections
         Axis(std::string name, BinningInputs, int /*array id*/);
+        Axis(std::string name, BaseGetValueFunction *, BinningInputs); 
         Axis(std::string name, BinningInputs, std::vector<int> /*array ids*/);
         Axis(std::string name, BinningInputs, GetValueFunction ,std::vector<int> /*array ids*/ );
         ///constraint
@@ -43,7 +44,9 @@ class Axis{
         void print_bin_edges();
         void print_array_indices();
     private:
+        bool _is_new;
         void init(std::string name,  BinningInputs, GetValueFunction ,std::vector<int>/*aids*/ );
+        void init_binning(BinningInputs);
         std::vector<double> _bin_edges;
         std::vector<int>    _array_ids;
         std::string         _name;

@@ -31,6 +31,29 @@ void Axis::init(std::string name,  BinningInputs bin_inp , GetValueFunction get_
     _name=name;
 }
 
+void Axis::init_binning(BinningInputs bin_inp ){
+    //////////////////////
+    //initialise bin edges
+    //////////////////////
+    double low=bin_inp.low , high=bin_inp.high ;
+    int nbins=bin_inp.nbins;
+    //Check whether binning type is linear or log, warn otherwise
+    if ((bin_inp.binning_type!="linear")&&(bin_inp.binning_type!="log")){
+        std::cout << "ERROR in initialising Axis: binning_type not defined" << std::endl;
+    }
+    //Log binning is handled here
+    if (bin_inp.binning_type=="log"){
+        low=log10(low); high=log10(high);
+    }
+    //Fill bin edges
+    double step_size=(high-low)/double(nbins);
+    for (int i=0;i<(nbins+1);i++){
+        double edge=low+i*step_size;
+        if (bin_inp.binning_type=="log") edge=pow(10.,edge);
+        _bin_edges.push_back(edge);
+    }
+}
+
 Axis::Axis(std::string name, BinningInputs bin_inp , GetValueFunction get_value, std::vector<int> array_ids){
     init( name, bin_inp ,get_value, array_ids);
 }
@@ -67,6 +90,12 @@ _name(name), _new_get_value(func)
     //intentionally empty
 }
 
+Axis::Axis(std::string name,BinningInputs binning, BaseGetValueFunction * func):
+_name(name), _new_get_value(func), _is_new(true)
+{
+    init_binning(binning);
+}
+
 //FIXME: this is a coding style that should be adopted everywhere
 //only non-trivial actions should be in the body of the function
 Axis::Axis(std::string name, GaussConstraint * gauss_constraint): 
@@ -87,10 +116,15 @@ Axis::Axis(std::string name,GetValueFunction get_value, std::vector<int> array_i
 
 double Axis::get_value(double * VARS){
     //FIXME: this is ugly and result oriented USE ENUM
-    if (_get_value==NULL){
+    if (_is_new==true){
+        return (*_new_get_value)(VARS);
+    }
+    else  if (_get_value==NULL){
         return _gauss_constraint->GetChi2(VARS);
     }
-    return _get_value(VARS,_array_ids);
+    else{
+        return _get_value(VARS,_array_ids);
+    }
 }
 
 double Axis::new_get_value(double * vars){
