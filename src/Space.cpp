@@ -13,17 +13,14 @@ Space::Space(std::vector<Axis*> axes,std::vector<Axis*> zaxes){
 void Space::init_base_chi2_plot(std::vector<Axis *> axes){
     _chi2_init_default=1e9; //FIXME: global variable here?
     _chi2_index=0;
-    std::string chi2_name="chi2";
-    Axis * base_chi2_zaxis = new Axis(chi2_name, _chi2_index );
+    Axis * base_chi2_zaxis = new Axis("chi2");
     _base_chi2_plot = new Plot(axes,base_chi2_zaxis);
     _base_chi2_plot->fill_default(_chi2_init_default);
 }
 
 void Space::init_entry_plot(std::vector<Axis *> axes){
     double _entry_init_default=-1.;// makes sense to have -1 as  marker for invalid entry number
-    int entry_index=-1; //NOTE: Dummy, because entries has no lookup 
-    std::string entry_name="entries";
-    Axis * entry_zaxis = new Axis(entry_name, entry_index );
+    Axis * entry_zaxis = new Axis("entries" );
     _entry_plot = new Plot(axes,entry_zaxis);
     _entry_plot->fill_default(_entry_init_default);
 }
