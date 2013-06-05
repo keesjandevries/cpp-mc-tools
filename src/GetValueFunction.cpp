@@ -1,12 +1,12 @@
-#include "GetValueFunction.h"
+#include "BaseGetValueFunction.h"
 
-GetValueFunction::GetValueFunction(){
+BaseGetValueFunction::BaseGetValueFunction(){
     //empty
 }
-GetValueFunction::~GetValueFunction(){
+BaseGetValueFunction::~BaseGetValueFunction(){
     //emtpy
 }
 
-double GetValueFunction::operator()(double * /*VARS*/){
+double BaseGetValueFunction::operator()(double * /*VARS*/){
     //emtpy
 }

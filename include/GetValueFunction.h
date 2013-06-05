@@ -1,10 +1,10 @@
 #ifndef  INC_GETVALUEFUNCTION_H
 #define INC_GETVALUEFUNCTION_H
 
-class GetValueFunction{
+class BaseGetValueFunction{
     public:
-    GetValueFunction();
-    virtual ~GetValueFunction();
+    BaseGetValueFunction();
+    virtual ~BaseGetValueFunction();
     virtual double operator()(double * /*VARS*/);
 };
 

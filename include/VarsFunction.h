@@ -1,11 +1,11 @@
 #ifndef  INC_VARSFUNCTION_H
 #define INC_VARSFUNCTION_H
 #include <vector>
-#include "GetValueFunction.h"
+#include "BaseGetValueFunction.h"
 
 typedef  double (*GetVarsFunction)(double *, std::vector<int>&);
 
-class VarsFunction: public GetValueFunction{
+class VarsFunction: public BaseGetValueFunction{
     public:
         //constructors & destructors
         VarsFunction(){};
