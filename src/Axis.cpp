@@ -103,7 +103,7 @@ void Axis::print_bin_edges(){
     std::cout << "]" << std::endl;
 }
 
-double default_get_value(double * VARS, std::vector<int>* array_ids){
-    return VARS[(*array_ids)[0]];
+double default_get_value(double * VARS, std::vector<int>& array_ids){
+    return VARS[array_ids[0]];
 }
 

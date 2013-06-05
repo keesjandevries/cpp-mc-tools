@@ -10,7 +10,7 @@
 /// for linear and log binning, all that defines the axes are the lower and higher value and the number of bins
 struct BinningInputs{std::string binning_type; double low , high; int nbins;};
 ///Make function pointer into a type def 
-typedef  double (*GetValueFunction)(double *, std::vector<int>*);
+typedef  double (*GetValueFunction)(double *, std::vector<int>&);
 /// FIXME: need some enumaration for type of Axis
 ///  enum axis_type{NORMAL,CONSTRAINT }
 
@@ -50,6 +50,6 @@ class Axis{
         GetValueFunction    _get_value;
 };
 
-/// Default function for getting value, when Constructor is called without function name
-double default_get_value(double * VARS, std::vector<int>* array_ids);
+/// Default function for getting value, when Constructor is called without function name,
+double default_get_value(double * VARS, std::vector<int>& array_ids);
 #endif

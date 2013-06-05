@@ -7,17 +7,17 @@ std::map<std::string, GetValueFunction > get_GetValueFunction_map(){
     return function_map;
 }
 
-double bsmm_ratio(double *VARS, std::vector<int>* array_ids){
-    int bsmm_id=(*array_ids)[0];
-    return VARS[bsmm_id]/(3.46e-9);
+double bsmm_ratio(double *VARS, std::vector<int>& array_ids){
+    return VARS[array_ids[0]]/(3.46e-9);
 }
 
-double difference(double *VARS, std::vector<int>* array_ids){
-    return VARS[(*array_ids)[0]]-VARS[(*array_ids)[1]];
+//FIXME: use pass by reference e.g. std::vector<int>& array
+double difference(double *VARS, std::vector<int>& array_ids){
+    return VARS[array_ids[0]]-VARS[array_ids[1]];
 }
 
-double var1_over_var2_square(double *VARS, std::vector<int>* array_ids){
+double var1_over_var2_square(double *VARS, std::vector<int>& array_ids){
     // useful for e.g. mh2/(m0*m0) 
-    double var1=VARS[(*array_ids)[0]], var2=VARS[(*array_ids)[1]];
+    double var1=VARS[array_ids[0]], var2=VARS[array_ids[1]];
     return var1/(var2*var2);
 }

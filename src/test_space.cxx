@@ -9,8 +9,8 @@
 #include <TH2D.h>
 
 #include "Space.h"
-double get_bsmm_ratio(double *VARS, std::vector<int>* array_ids){
-    int bsmm_id=(*array_ids)[0];
+double get_bsmm_ratio(double *VARS, std::vector<int>& array_ids){
+    int bsmm_id=array_ids[0];
     return VARS[bsmm_id]/(3.46e-9);
 }
 
