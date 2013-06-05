@@ -1,6 +1,6 @@
-#include "GetValueFunctions.h"
-std::map<std::string, GetValueFunction > get_GetValueFunction_map(){
-    std::map<std::string, GetValueFunction > function_map;
+#include "GetVarsFunctions.h"
+std::map<std::string, GetVarsFunction > get_GetVarsFunction_map(){
+    std::map<std::string, GetVarsFunction > function_map;
     function_map["bsmm_ratio"]=bsmm_ratio;
     function_map["difference"]=difference;
     function_map["var1_over_var2_square"]=var1_over_var2_square;
