@@ -16,6 +16,8 @@ def get_array_ids(prediction_index,spectrum_index):
             'M1'           :6,
             'in_mu'        :7,
             'in_ma'        :8,
+            'M2'           :9,
+            'M3'           :10,
             "mtop"         : prediction_index-4, 
             "MZ"           : prediction_index-3, 
             "GZ_in"        : prediction_index-2, 
