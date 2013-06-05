@@ -23,6 +23,7 @@ class Axis{
     public:
         ///constructors and destructors
         ///no binning e.g. for Z-axis
+        Axis(std::string name); 
         Axis(std::string name, BaseGetValueFunction *); 
         ///with binning for ranges of projections
         Axis(std::string name, BaseGetValueFunction *, BinningInputs); 
