@@ -19,6 +19,6 @@ int main(){
 //    BaseGetValueFunction * ptr=&my_vars_function;
     Axis axis("harry",&my_vars_function);
 
-    std::cout << "Axis returns: " << axis.new_get_value(vars) << std::endl;
+    std::cout << "Axis returns: " << axis.get_value(vars) << std::endl;
     return 0;
 }    

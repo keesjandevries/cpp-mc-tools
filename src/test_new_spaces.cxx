@@ -5,6 +5,8 @@
 #include <TH2D.h>
 
 #include "Space.h"
+#include "VarsFunction.h"
+
 double get_bsmm_ratio(double *VARS, std::vector<int>& array_ids){
     int bsmm_id=array_ids[0];
     return VARS[bsmm_id]/(3.46e-9);
@@ -41,17 +43,17 @@ void make_histograms(TString infile){
     //make pointers to Axes
     Axis * mh_axis=new Axis("mh",my_binning, &get_mh );
     //initialise plot
-    //mh
+    //create axes vector
     std::vector<Axis*> mh;
+    mh.push_back(mh_axis);
+    //create space
     Space * mh_space=new Space(mh);
     //the for loop
-    nentries=1000;//FIXME: just temporary
+//    nentries=1000;//FIXME: just temporary
     for(int i=0; i<nentries; i++){
         if (i%100000==0) std::cout << "Processed: " << i << "entries" << std::endl;
         t->GetEntry(i);
-        my_m0m12->update(invars,i);
-        my_mg->update(invars,i);
-        my_bsmm_ratio->update(invars,i);
+        mh_space->update(invars,i);
     }
     f->cd();
     mh_space->write_plots();
