@@ -52,7 +52,7 @@ spaces={
 #            {'axes':['mneu1','mstop1']},
 #            {'axes':'mg'},
 #            {'axes':['mh','msq3']},
-            {'axes':'chi2'},
+#            {'axes':'chi2'},
 #            {'axes':'mh'},
 #            {'axes':'tanb'},
 #            {'axes':'msq12'},
@@ -61,6 +61,7 @@ spaces={
 #            {'axes':'A'   },
 #            {'axes':'M1'  },
 #            {'axes':'in_mu'},
-#            {'axes':'in_ma'},
+#            {'axes':'in_ma','zaxes':'mh'},
+            {'axes':'mh','zaxes':'chi2_mh'}
                     ],
     }
