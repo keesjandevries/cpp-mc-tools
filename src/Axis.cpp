@@ -61,6 +61,12 @@ Axis::Axis(std::string name,int array_id){
     _name=name;
 }
 
+Axis::Axis(std::string name,BaseGetValueFunction * func):
+_name(name), _new_get_value(func)
+{
+    //intentionally empty
+}
+
 //FIXME: this is a coding style that should be adopted everywhere
 //only non-trivial actions should be in the body of the function
 Axis::Axis(std::string name, GaussConstraint * gauss_constraint): 
@@ -85,6 +91,10 @@ double Axis::get_value(double * VARS){
         return _gauss_constraint->GetChi2(VARS);
     }
     return _get_value(VARS,_array_ids);
+}
+
+double Axis::new_get_value(double * vars){
+    return (*_new_get_value)(vars);
 }
 
 void Axis::print_array_indices(){
