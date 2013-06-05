@@ -25,6 +25,12 @@ void Axis::init_binning(BinningInputs bin_inp ){
 }
 
 
+Axis::Axis(std::string name):
+_name(name)
+{
+    //intentionally empty
+}
+
 Axis::Axis(std::string name,BaseGetValueFunction * func):
 _name(name), _get_value(func)
 {
