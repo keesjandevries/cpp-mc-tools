@@ -62,6 +62,7 @@ spaces={
 #            {'axes':'M1'  },
 #            {'axes':'in_mu'},
 #            {'axes':'in_ma','zaxes':'mh'},
-            {'axes':'mh','zaxes':'chi2_mh'}
+#            {'axes':'mh','zaxes':'chi2_mh'}
+            {'axes':'mh'}
                     ],
     }
