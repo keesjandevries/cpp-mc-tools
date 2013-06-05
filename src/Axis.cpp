@@ -84,7 +84,7 @@ double Axis::get_value(double * VARS){
     if (_get_value==NULL){
         return _gauss_constraint->GetChi2(VARS);
     }
-    return _get_value(VARS,&_array_ids);
+    return _get_value(VARS,_array_ids);
 }
 
 void Axis::print_array_indices(){
