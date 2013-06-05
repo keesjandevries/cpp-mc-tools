@@ -81,8 +81,8 @@ BinningInputs json_to_binning_inputs(json_t * object_t){
         binning_input.binning_type=tmp_binning_type;
     }
     else {
-        std::cout << "ERROR: in " << __FUNCTION__ << std::endl;
-        std::cout << "       not a json object"   << std::endl;
+        std::cout << "WARNING: in " << __FUNCTION__ << std::endl;
+        std::cout << "not a json object. Was binning defined?"   << std::endl;
     }
     return binning_input;
 }
