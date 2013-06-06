@@ -88,14 +88,9 @@ def populate_axes(style,array_ids_dict,axes):
             axis=handle_vars_lookup(name,axis,array_ids_dict,style)
         elif axis.get('vars_function') is not None:
             axis=handle_vars_function(name,axis,array_ids_dict,style)
-
-#        elif not axis['observable_ids'].get('array_ids')==None:
-#            continue 
-#        else:
-#            oids=axis['observable_ids'][style]
-#            if not isinstance(oids, list): oids=[oids]
-#            array_ids=[array_ids_dict[oid] for oid in oids]
-#            axis['observable_ids'].update({'array_ids':array_ids})
+        else:
+            print('ERROR: invalid key\nExiting')
+            exit(1)
     return axes
 
 def populate_constraints(style,array_ids_dict,constraints):
@@ -153,6 +148,6 @@ if __name__ == '__main__':
         json.dump(spaces,json_file,indent=3)
     with open(constraints_file,'w') as json_file:
         json.dump(constraints,json_file,indent=3)
-#    runlib.run(args.rootfile.encode('ascii'),axes_file.encode('ascii'),spaces_file.encode('ascii'),constraints_file.encode('ascii'))
+    runlib.run(args.rootfile.encode('ascii'),axes_file.encode('ascii'),spaces_file.encode('ascii'),constraints_file.encode('ascii'))
         
 
