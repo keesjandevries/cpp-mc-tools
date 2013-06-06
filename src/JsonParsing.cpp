@@ -197,23 +197,37 @@ std::map<std::string, GaussConstraint*> parse_gauss_constraint_from_json_file(st
 }
 
 VarsLookup * get_VarsLookup(json_t * vars_lookup_t){
+    VarsLookup * vars_lookup=NULL;
     int array_id=-1;
-    if (json_is_object(vars_lookup_t)){
-        json_t * array_id_t = json_object_get(vars_lookup_t,"array_id");
-        if (json_is_integer(array_id_t)){
-            array_id=json_integer_value(array_id_t); 
-        }
-        else{
-            std::cout << "ERROR: in " << __FUNCTION__ << ", line: " <<__LINE__ << std::endl;
-            std::cout << "array_id is not an integer" << std::endl;
-        }
+    // json_object_get will return NULL in case vars_lookup_t is not object
+    json_t * array_id_t = json_object_get(vars_lookup_t,"array_id");
+    // json_is_integer will also give false if array_id_t is NULL
+    // hence all the checks are done
+    if (json_is_integer(array_id_t)){
+        array_id=json_integer_value(array_id_t); 
+        vars_lookup = new VarsLookup(array_id);
     }
-    else {
+    else{
         std::cout << "ERROR: in " << __FUNCTION__ << ", line: " <<__LINE__ << std::endl;
-        std::cout << "array_id is not an object" << std::endl;
+        std::cout << "array_id is not an integer" << std::endl;
     }
-    VarsLookup * vars_lookup = new VarsLookup(array_id);
     return vars_lookup;
+}
+
+VarsFunction * get_VarsFunction(json_t * vars_function_t , std::map<std::string, GetVarsFunction> function_map){
+    VarsFunction * vars_function=NULL;
+    json_t * observable_ids_t = json_object_get(vars_function_t, "observable_ids");
+    json_t * name_t = json_object_get(vars_function_t, "name");
+    // retrieve values:
+    // function name
+    const char * name_c=json_string_value(name_t);
+    // array_ids
+    json_t * array_ids_t = json_object_get(observable_ids_t,"array_ids");
+    std::vector<int> array_ids=json_to_int_vector(array_ids_t);
+    if ((array_ids.size() > 0 ) && (function_map.find(name_c)!=function_map.end())){
+        vars_function = new VarsFunction(array_ids,function_map[name_c]); 
+    }
+    return vars_function;
 }
 
 //FIXME: should have overloaded this function to remain backward compatibility
@@ -253,7 +267,7 @@ std::map<std::string, Axis*> parse_axes_from_json_file(std::string filename,
             get_value = get_VarsLookup(vars_lookup_t);
         }
         else if (vars_function_t){
-            std::cout << "Vars function: Not implemented yet" << std::endl;
+            get_value = get_VarsFunction(vars_function_t,function_map);
         }
         else if (gauss_constraint_t){
             std::cout << "Constraint not implemented yet" << std::endl; 
