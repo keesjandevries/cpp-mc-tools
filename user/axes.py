@@ -1,7 +1,7 @@
 def get_axes():
     return {
         'chi2_mh':{
-            'constraint_name':'Mh125',
+            'gauss_constraint':'Mh125',
             },
         'mstop1':{
             'binning':{
@@ -10,7 +10,7 @@ def get_axes():
                 'high'  : 3000. ,
                 'nbins' : 100 ,
                 },
-            'observable_ids' :{
+            'vars_lookup' :{
                 'mc_old':'stop1',
                 }
             },
@@ -21,7 +21,7 @@ def get_axes():
                 'high'  : 6000. ,
                 'nbins' : 100 ,
                 },
-            'observable_ids' :{
+            'vars_lookup' :{
                 'mc_old':'gluino',
                 }
             },
@@ -32,7 +32,7 @@ def get_axes():
                 'high'  : 5000. ,
                 'nbins' : 100 ,
                 },
-            'observable_ids' :{
+            'vars_lookup' :{
                 'mc_old':'msq12',
                 }
             }, 
@@ -43,7 +43,7 @@ def get_axes():
                 'high'  : 2500. ,
                 'nbins' : 100 ,
                 },
-            'observable_ids' :{
+            'vars_lookup' :{
                 'mc_old':'msq3',
                 }
             },
@@ -54,7 +54,7 @@ def get_axes():
                 'high'  : 2500. ,
                 'nbins' : 100 ,
                 },
-            'observable_ids' :{
+            'vars_lookup' :{
                 'mc_old':'msl',
                 }
             },
@@ -65,7 +65,7 @@ def get_axes():
                 'high'  : 5000. ,
                 'nbins' : 100 ,
                 },
-            'observable_ids' :{
+            'vars_lookup' :{
                 'mc_old':'A',
                 }
             },
@@ -76,7 +76,7 @@ def get_axes():
                 'high'  : 2500. ,
                 'nbins' : 100 ,
                 },
-            'observable_ids' :{
+            'vars_lookup' :{
                 'mc_old':'M1',
                 }
             },
@@ -87,7 +87,7 @@ def get_axes():
                 'high'  : 2500. ,
                 'nbins' : 100 ,
                 },
-            'observable_ids' :{
+            'vars_lookup' :{
                 'mc_old':'M2',
                 }
             },
@@ -98,7 +98,7 @@ def get_axes():
                 'high'  : 2500. ,
                 'nbins' : 100 ,
                 },
-            'observable_ids' :{
+            'vars_lookup' :{
                 'mc_old':'M3',
                 }
             },
@@ -109,7 +109,7 @@ def get_axes():
                 'high'  : 5000. ,
                 'nbins' : 100 ,
                 },
-            'observable_ids' :{
+            'vars_lookup' :{
                 'mc_old':'in_mu',
                 }
             },
@@ -120,7 +120,7 @@ def get_axes():
                 'high'  : 2000. ,
                 'nbins' : 100 ,
                 },
-            'observable_ids' :{
+            'vars_lookup' :{
                 'mc_old':'in_ma',
                 }
             },
@@ -131,7 +131,7 @@ def get_axes():
                 'high'  : 2000. ,
                 'nbins' : 100 ,
                 },
-            'observable_ids' :{
+            'vars_lookup' :{
                 'mc_old':'neu1',
                 }
             }, 
@@ -142,8 +142,8 @@ def get_axes():
                 'high'  : 25. ,
                 'nbins' : 500 ,
                 },
-            'observable_ids' :{
-                'array_ids':0,
+            'vars_lookup' :{
+                'array_id':0,
                 }
             },
         'm0':{
@@ -153,7 +153,7 @@ def get_axes():
                 'high'  : 4000. ,
                 'nbins' : 100 ,
                 },
-            'observable_ids' :{
+            'vars_lookup' :{
                 'mc_old':'m0',
                 }
             },
@@ -164,7 +164,7 @@ def get_axes():
                 'high'  : 4000. ,
                 'nbins' : 100 ,
                 },
-            'observable_ids' :{
+            'vars_lookup' :{
                 'mc_old':'m12',
                 }
             },
@@ -175,7 +175,7 @@ def get_axes():
                 'high'  : 4000. ,
                 'nbins' : 100 ,
                 },
-            'observable_ids' :{
+            'vars_lookup' :{
                 'mc_old':'MA',
                 }
             },
@@ -186,7 +186,7 @@ def get_axes():
                 'high'  : 5000. ,
                 'nbins' : 100 ,
                 },
-            'observable_ids' :{
+            'vars_lookup' :{
                 'mc_old':'A0',
                 }
             },
@@ -197,7 +197,7 @@ def get_axes():
                 'high'  : 1e7 ,
                 'nbins' : 100 ,
                 },
-            'observable_ids' :{
+            'vars_lookup' :{
                 'mc_old':'mh2',
                 }
             },
@@ -208,7 +208,7 @@ def get_axes():
                 'high'  : 60. ,
                 'nbins' : 100 ,
                 },
-            'observable_ids' :{
+            'vars_lookup' :{
                 'mc_old':'tanb',
                 }
             },
@@ -219,7 +219,7 @@ def get_axes():
                 'high'  : 130. ,
                 'nbins' : 100 ,
                 },
-            'observable_ids' :{
+            'vars_lookup' :{
                 'mc_old':'mh',
                 }
             },
@@ -230,11 +230,13 @@ def get_axes():
                 'high'  : 3. ,
                 'nbins' : 100 ,
                 },
-            'observable_ids' :{
-                'mc_old':'bsmm',
+            'vars_function' :{
+                'observable_ids':{
+                    'mc_old':'bsmm',
                 },
-            'function_name': 'bsmm_ratio',
-            },
+                'name': 'bsmm_ratio',
+             },
+        },
         'mh2_m0^2_Ratio':{
             'binning':{
                 'type'  :'linear',
@@ -242,9 +244,11 @@ def get_axes():
                 'high'  : 3. ,
                 'nbins' : 100 ,
                 },
-            'observable_ids' :{
-                'mc_old':['mh2','m0'],
+            'vars_function' :{
+                'observable_ids':{
+                    'mc_old':['mh2','m0'],
                 },
-            'function_name': 'var1_over_var2_square',
-            },
+                'name': 'var1_over_var2_square',
+             },
+         },
         }
