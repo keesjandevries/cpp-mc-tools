@@ -63,6 +63,7 @@ spaces={
 #            {'axes':'in_mu'},
 #            {'axes':'in_ma','zaxes':'mh'},
 #            {'axes':'mh','zaxes':'chi2_mh'}
-            {'axes':'mh'}
+#            {'axes':'mh'}
+            {   'axes':'BsmmRatio', 'zaxes':['BsmmRatio','chi2_mh'] }, 
                     ],
     }
