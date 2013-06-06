@@ -17,9 +17,6 @@ class GaussConstraint: public BaseGetValueFunction{
         virtual ~GaussConstraint(){};
         virtual double operator()(double *);
         double GetChi2(double *);
-        //Note: no copy or assignment operators are defined
-        //following the google c++ style guide, this can be 
-        //simply handled by using pointers in the STL containers.
     private:
         // observable ids (Oid) for acces to argument of GetChi2(), in this case double *
         std::vector<int> _array_ids;
