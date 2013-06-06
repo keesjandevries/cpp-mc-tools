@@ -1,28 +1,23 @@
-#ifndef  INC_CONSTRAINT_H
-#define INC_CONSTRAINT_H
+#ifndef  INC_CONTOURCONSTRAINT_H
+#define INC_CONTOURCONSTRAINT_H
 #include <iostream>
 #include <vector>
 #include "BaseGetValueFunction.h"
+#include "Contour.h"
 
-// data structure is always central value mu, st
-struct GaussData{
-    double mu, sigma_square;
-}; 
 // typedef for member gaussian X^2 function
-typedef double(*GaussFunc)(double *, std::vector<int> & , GaussData &); 
+typedef double(*ContourFunc)(double *, std::vector<int> & , Contour *); 
 
-class GaussConstraint: public BaseGetValueFunction{
+class ContourConstraint: public BaseGetValueFunction{
     public:
-        GaussConstraint(std::vector<int> /*oids*/ ,double /*mu*/, std::vector<double>  /*sigmas*/,GaussFunc);
-        virtual ~GaussConstraint(){};
+        ContourConstraint(std::vector<int> /*oids*/ ,Contour *, ContourFunc );
+        virtual ~ContourConstraint(){};
         virtual double operator()(double *);
         double GetChi2(double *);
     private:
         // observable ids (Oid) for acces to argument of GetChi2(), in this case double *
         std::vector<int> _array_ids;
-        GaussData        _data; 
-        GaussFunc        _gauss_chi2_function;
-        // FIXME: not sure if this function should be private, in is not used anywhere else
-        double get_sigma_square(std::vector<double>);
+        Contour *_contour;
+        ContourFunc _contour_chi2_function ;
 };
 #endif
