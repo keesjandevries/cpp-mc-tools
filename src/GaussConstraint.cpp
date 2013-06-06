@@ -10,7 +10,11 @@ GaussConstraint::GaussConstraint(std::vector<int> int_obs_ids, double mu, std::v
 }
 
 double GaussConstraint::GetChi2(double* VARS){
-    return _gauss_chi2_function(VARS,&_array_ids ,&_data);
+    return _gauss_chi2_function(VARS,_array_ids ,_data);
+}
+
+double GaussConstraint::operator()(double* VARS){
+    return _gauss_chi2_function(VARS,_array_ids ,_data);
 }
 
 double GaussConstraint::get_sigma_square(std::vector<double> sigmas){

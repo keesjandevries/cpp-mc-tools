@@ -2,18 +2,20 @@
 #define INC_CONSTRAINT_H
 #include <iostream>
 #include <vector>
-#include <map>
+#include "BaseGetValueFunction.h"
 
 // data structure is always central value mu, st
 struct GaussData{
     double mu, sigma_square;
 }; 
 // typedef for member gaussian X^2 function
-typedef double(*GaussFunc)(double *, std::vector<int> * , GaussData *); 
+typedef double(*GaussFunc)(double *, std::vector<int> & , GaussData &); 
 
-class GaussConstraint{
+class GaussConstraint: public BaseGetValueFunction{
     public:
         GaussConstraint(std::vector<int> /*oids*/ ,double /*mu*/, std::vector<double>  /*sigmas*/,GaussFunc);
+        virtual ~GaussConstraint(){};
+        virtual double operator()(double *);
         double GetChi2(double *);
         //Note: no copy or assignment operators are defined
         //following the google c++ style guide, this can be 

@@ -119,7 +119,7 @@ std::vector<AxesZaxesNames> parse_axes_names_list_from_json_file(std::string fil
     return axes_names;
 }
 
-//FIXME: cleanup the error messages
+//FIXME: cleanup this function and the error messages
 GaussConstraint * parse_gauss_constraint(json_t* constraint_t, std::map<std::string, GaussFunc> gauss_func_map){
     GaussConstraint *constraint=NULL;
     if (json_is_object(constraint_t)){
@@ -230,6 +230,15 @@ VarsFunction * get_VarsFunction(json_t * vars_function_t , std::map<std::string,
     return vars_function;
 }
 
+GaussConstraint * get_GaussConstraint(json_t * gauss_constraint_t, std::map<std::string, GaussConstraint*> constraint_map){
+    GaussConstraint * gauss_constraint=NULL;
+    const char * name_c = json_string_value(gauss_constraint_t);
+    if (constraint_map.find(name_c)!=constraint_map.end()){
+        gauss_constraint=constraint_map[name_c];
+    }
+    return gauss_constraint;
+}
+
 //FIXME: should have overloaded this function to remain backward compatibility
 std::map<std::string, Axis*> parse_axes_from_json_file(std::string filename, 
         std::map<std::string, GetVarsFunction> function_map, 
@@ -270,7 +279,7 @@ std::map<std::string, Axis*> parse_axes_from_json_file(std::string filename,
             get_value = get_VarsFunction(vars_function_t,function_map);
         }
         else if (gauss_constraint_t){
-            std::cout << "Constraint not implemented yet" << std::endl; 
+            get_value = get_GaussConstraint(gauss_constraint_t,gauss_constraint_map);
         }
         if (get_value){
             Axis * axis=new Axis(axis_name_c,get_value,binning_input);

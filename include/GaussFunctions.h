@@ -11,5 +11,5 @@
 std::map<std::string, GaussFunc > get_GaussFunc_map();
 
 ///Individual declarations
-double gauss(double * VARS, std::vector<int> * array_ids , GaussData * data);
+double gauss(double * VARS, std::vector<int> & array_ids , GaussData & data);
 #endif
