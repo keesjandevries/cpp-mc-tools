@@ -47,20 +47,55 @@ def get_array_ids_dict_style(file_info):
         style='mc_old'
     elif mcpp_oids:
         print("NOTE: atm not implemented. Exiting program")
-        exit(0)
+        exit(1)
     return array_ids_dict, style
+
+def handle_vars_lookup(name,axis,array_ids_dict, style):
+    if axis['vars_lookup'].get('array_id') is not None:
+        pass
+    else:
+        try:
+            oid=axis['vars_lookup'][style]
+            axis['vars_lookup'].update({'array_id':array_ids_dict[oid]})
+        except KeyError:
+            print('ERROR: observable id {} not found for axis {}. \nExiting program'.format(oid,name))
+            exit(1)
+    return axis
+
+def handle_vars_function(name,axis,array_ids_dict,style):
+    if axis['vars_function'].get('observable_ids') is not None:
+        if not axis['vars_function']['observable_ids'].get('array_ids')==None:
+            pass
+        else:
+            oids=axis['vars_function']['observable_ids'][style]
+            if not isinstance(oids, list): oids=[oids]
+            try:
+                array_ids=[array_ids_dict[oid] for oid in oids]
+            except KeyError:
+                print('ERROR: observable id {} not found for axis {}. \nExiting program'.format(oid,name))
+                exit(1)
+            axis['vars_function']['observable_ids'].update({'array_ids':array_ids})
+    else:
+        print('ERROR: observable_ids not found for axis {}. \nExiting program'.format(name))
+        exit(1)
+    return axis
 
 def populate_axes(style,array_ids_dict,axes):
     for name, axis in axes.items():
-        if axis.get('constraint_name'):
+        if axis.get('gauss_constraint') is not None:
             continue
-        elif not axis['observable_ids'].get('array_ids')==None:
-            continue 
-        else:
-            oids=axis['observable_ids'][style]
-            if not isinstance(oids, list): oids=[oids]
-            array_ids=[array_ids_dict[oid] for oid in oids]
-            axis['observable_ids'].update({'array_ids':array_ids})
+        elif axis.get('vars_lookup') is not None:
+            axis=handle_vars_lookup(name,axis,array_ids_dict,style)
+        elif axis.get('vars_function') is not None:
+            axis=handle_vars_function(name,axis,array_ids_dict,style)
+
+#        elif not axis['observable_ids'].get('array_ids')==None:
+#            continue 
+#        else:
+#            oids=axis['observable_ids'][style]
+#            if not isinstance(oids, list): oids=[oids]
+#            array_ids=[array_ids_dict[oid] for oid in oids]
+#            axis['observable_ids'].update({'array_ids':array_ids})
     return axes
 
 def populate_constraints(style,array_ids_dict,constraints):
@@ -118,6 +153,6 @@ if __name__ == '__main__':
         json.dump(spaces,json_file,indent=3)
     with open(constraints_file,'w') as json_file:
         json.dump(constraints,json_file,indent=3)
-    runlib.run(args.rootfile.encode('ascii'),axes_file.encode('ascii'),spaces_file.encode('ascii'),constraints_file.encode('ascii'))
+#    runlib.run(args.rootfile.encode('ascii'),axes_file.encode('ascii'),spaces_file.encode('ascii'),constraints_file.encode('ascii'))
         
 
