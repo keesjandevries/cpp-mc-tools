@@ -3,7 +3,7 @@
 DefaultContour::DefaultContour(std::vector<double_pair> coordinates):
     Contour(coordinates)
 {
-   // not more is needed 
+    _coordinates_parameters=GetCoordinatesParameters();     // e.g. 'x' or 'theta'
 }
 double DefaultContour::get_point_parameter(double_pair point){
     return point.first; // the x coordinate

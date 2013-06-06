@@ -9,8 +9,6 @@ class DefaultContour: public Contour{
         DefaultContour(){};
         DefaultContour(std::vector<double_pair>/*coords*/);   
         virtual ~DefaultContour(){};
-        // Not sure if these guys are good
-        std::vector<double> GetCoordinatesParameters();
     private:
         // virtual member functions
         virtual double get_point_parameter(double_pair);    //e.g. get_theta(...), get_x(...)

@@ -2,7 +2,8 @@
 Contour::Contour(std::vector<double_pair> coordinates):
     _coordinates(coordinates)
 {
-    _coordinates_parameters=GetCoordinatesParameters();     // e.g. 'x' or 'theta'
+    // intentionally empty
+    // cannot invoke GetCoordinatesParameters, since in depends on get_point_parameters
 }
 
 double Contour::GetContourValue(double parameter){
