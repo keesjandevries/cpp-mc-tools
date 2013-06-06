@@ -196,9 +196,29 @@ std::map<std::string, GaussConstraint*> parse_gauss_constraint_from_json_file(st
     return constraint_map;
 }
 
+VarsLookup * get_VarsLookup(json_t * vars_lookup_t){
+    int array_id=-1;
+    if (json_is_object(vars_lookup_t)){
+        json_t * array_id_t = json_object_get(vars_lookup_t,"array_id");
+        if (json_is_integer(array_id_t)){
+            array_id=json_integer_value(array_id_t); 
+        }
+        else{
+            std::cout << "ERROR: in " << __FUNCTION__ << ", line: " <<__LINE__ << std::endl;
+            std::cout << "array_id is not an integer" << std::endl;
+        }
+    }
+    else {
+        std::cout << "ERROR: in " << __FUNCTION__ << ", line: " <<__LINE__ << std::endl;
+        std::cout << "array_id is not an object" << std::endl;
+    }
+    VarsLookup * vars_lookup = new VarsLookup(array_id);
+    return vars_lookup;
+}
+
 //FIXME: should have overloaded this function to remain backward compatibility
 std::map<std::string, Axis*> parse_axes_from_json_file(std::string filename, 
-        std::map<std::string, GetValueFunction> function_map, 
+        std::map<std::string, GetVarsFunction> function_map, 
         std::map<std::string, GaussConstraint*> gauss_constraint_map){
     std::map<std::string, Axis*> axes_map;
     /// Following www.digip.org/jansson/doc/2.4/apiref.html, searching from "json_load_file"
@@ -217,59 +237,31 @@ std::map<std::string, Axis*> parse_axes_from_json_file(std::string filename,
     // reading in the various axes
     json_object_foreach(axes_t,axis_name_c,axis_t){
         std::cout << "   " << axis_name_c << std::endl;
-        // Get the json objects
-        json_t * binning_t          = json_object_get(axis_t,"binning");
-        json_t * observable_ids_t   = json_object_get(axis_t,"observable_ids");
-        json_t * function_name_t    = json_object_get(axis_t,"function_name");
-        //FIXME: this should become gauss_constraint_name
-        json_t * constraint_name_t  = json_object_get(axis_t,"constraint_name");
+        // method of getting a value out of the "vars" array
+        json_t * vars_lookup_t = json_object_get(axis_t,"vars_lookup");
+        json_t * vars_function_t = json_object_get(axis_t,"vars_function");
+        json_t * gauss_constraint_t = json_object_get(axis_t,"gauss_constraint");
+        // binning
+        json_t * binning_t = json_object_get(axis_t,"binning");
         // fill binning inputs
         BinningInputs binning_input=json_to_binning_inputs(binning_t);
-        // get array indices
-        std::vector<int> array_ids=json_to_int_vector(json_object_get(observable_ids_t,"array_ids"));
-        // get function name if specified
-        Axis *axis;
-        if (constraint_name_t){
-            const char * constraint_name_c=json_string_value(constraint_name_t);
-            if(constraint_name_c){
-                std::string constraint_name(constraint_name_c);
-                for (std::map<std::string, GaussConstraint*>::iterator it=gauss_constraint_map.begin();
-                        it!=gauss_constraint_map.end(); it++){
-                    std::cout <<  (*it).first << std::endl;
-                }
-                if (gauss_constraint_map.find(constraint_name)!=gauss_constraint_map.end()){
-                    axis=new Axis(axis_name_c,gauss_constraint_map[constraint_name]);
-                }
-            }
-            //FIXME: warning if constraint name is not given
+        // fill function that gets values from vars
+        BaseGetValueFunction * get_value=NULL;
+        Axis * axis=NULL;
+        //
+        if (vars_lookup_t){
+            get_value = get_VarsLookup(vars_lookup_t);
         }
-        else{
-            if (json_is_string(function_name_t)){
-                const char * function_name_c;
-                //FIXME: I believe this is better done using json_string_value()
-                json_unpack(function_name_t,"s",&function_name_c);
-                std::string function_name(function_name_c);
-                /// initialise Axis with get_value function from map if it exists
-                if (function_map.find(function_name)!=function_map.end()){            
-                    axis=new Axis(axis_name_c,binning_input,function_map[function_name],array_ids);
-                }
-                else{
-                    std::cout << "WARNING: in function \"" << __FUNCTION__ << "\", line \"" << __LINE__ << "\", file \""<< __FILE__ << "\""<< std::endl;
-                    std::cout << "         could not find function name \"" << function_name << "\" in axes map." << std::endl; 
-                    std::cout << "          functions in the function map are: " ;
-                    for(std::map<std::string, GetValueFunction>::iterator it=function_map.begin();it!=function_map.end(); it++){
-                        std::cout << " \"" <<it->first << "\", "  ;
-                    }
-                    std::cout << std::endl;
-                }
-            }
-            else{
-                /// initialise Axis without get_value function
-                axis=new Axis(axis_name_c,binning_input,array_ids);
-            }
+        else if (vars_function_t){
+            std::cout << "Vars function: Not implemented yet" << std::endl;
         }
-        // append Axis
-        axes_map[axis_name_c]=axis;
+        else if (gauss_constraint_t){
+            std::cout << "Constraint not implemented yet" << std::endl; 
+        }
+        if (get_value){
+            Axis * axis=new Axis(axis_name_c,get_value,binning_input);
+            axes_map[axis_name_c]=axis;
+        }
     }
     return axes_map; 
 }

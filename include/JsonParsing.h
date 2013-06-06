@@ -3,6 +3,9 @@
 #include <map>
 #include "Axis.h"
 #include "GaussConstraint.h"
+#include "BaseGetValueFunction.h"
+#include "VarsFunction.h"
+#include "VarsLookup.h"
 //FIXME: JSONPARSING_H is also used in recalculate/ maybe will crash at some point
 
 #include "jansson.h"
@@ -14,36 +17,44 @@ struct AxesZaxesNames {
 };
 /// This function deals with a json file containing something like:
 ///{
-///   "chi2_mh":{
-///        "constraint_name":"Mh125",
-///      },
-///   "m12": {
-///      "observable_ids": {
-///         "array_id": 2
+///   "mh2_m0^2_Ratio": {
+///      "vars_function": {
+///         "observable_ids": {
+///            "array_ids": [
+///               6, 
+///               1
+///            ]
+///         }, 
+///         "name": "var1_over_var2_square"
 ///      }, 
 ///      "binning": {
-///         "high": 4000.0, 
-///         "nbins": 100, 
+///         "low": -3.0, 
 ///         "type": "linear", 
-///         "low": 0.0
+///         "high": 3.0, 
+///         "nbins": 100
 ///      }
 ///   }, 
-///   "m0": {
-///      "observable_ids": {
-///         "array_id": 1
+///
+///   "mstop1": {
+///      "vars_lookup": {
+///         "array_id": 96
 ///      }, 
 ///      "binning": {
-///         "high": 4000.0, 
-///         "nbins": 100, 
+///         "low": 0.0, 
 ///         "type": "linear", 
-///         "low": 0.0
+///         "high": 3000.0, 
+///         "nbins": 100
 ///      }
+///   }, 
+///   "chi2_mh": {
+///      "gauss_constraint": "Mh125"
 ///   }
 ///}
 ///And returns a map with pointers to Axis objects
 std::map<std::string, Axis*> parse_axes_from_json_file(std::string /*json file*/ ,
-        std::map<std::string, GetValueFunction> /*function map*/ ,
+        std::map<std::string, GetVarsFunction> /*function map*/ ,
         std::map<std::string, GaussConstraint*> /*constraint map*/);
+
 /// This function deals with a file containing a json array of objects like: of [[axes,zaxes] , axes, ...  ], e.g. 
 ///[{  'axes':['m0','m12'],'zaxes':['mh'] },
 /// {  'axes':'mh' } ]
