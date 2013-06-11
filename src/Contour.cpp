@@ -18,7 +18,6 @@ double Contour::GetContourValue(double parameter){
         return high_extrapolate(parameter);
     }
 }
-
 double Contour::GetPointParameter(std::vector<double> point_coordinates_vec){
     if (point_coordinates_vec.size() ==2){
         double_pair point_coordinates(point_coordinates_vec[0],point_coordinates_vec[1]);
@@ -30,7 +29,9 @@ double Contour::GetPointParameter(std::vector<double> point_coordinates_vec){
         std::cout << "       " << point_coordinates_vec.size() << " were given" << std::endl;
     }
 }
-
+double Contour::GetPointParameter(double_pair & point){
+    return get_point_parameter(point);    
+}
 double Contour::GetPointValue(std::vector<double> point_coordinates_vec){
     if (point_coordinates_vec.size() ==2){
         double_pair point_coordinates(point_coordinates_vec[0],point_coordinates_vec[1]);
@@ -42,7 +43,9 @@ double Contour::GetPointValue(std::vector<double> point_coordinates_vec){
         std::cout << "       " << point_coordinates_vec.size() << " were given" << std::endl;
     }
 }
-
+double Contour::GetPointValue(double_pair& point){
+    return get_point_value(point);    
+}
 std::vector<double> Contour::GetCoordinatesParameters(){
     std::vector<double> coordinates_parameters;
     for (std::vector<double_pair>::iterator it=_coordinates.begin();it!=_coordinates.end();it++){

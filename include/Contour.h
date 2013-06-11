@@ -17,16 +17,18 @@ class Contour{
         virtual ~Contour(){};
         // These are functions that should be available
         double GetPointParameter(std::vector<double> /*point_coordinates*/);
-        double GetContourValue(double /*parameter*/);
+        double GetPointParameter(double_pair&);
         double GetPointValue(std::vector<double> /*point_coordinates*/);
+        double GetPointValue(double_pair &);
+        double GetContourValue(double /*parameter*/);
         // FIXME: these should maybe be private memberfunctions
         std::vector<double> GetCoordinatesParameters();
     protected:
         std::vector<double_pair> _coordinates;
         std::vector<double> _coordinates_parameters;     // e.g. 'x' or 'theta'
         // virtual member functions
-        virtual double get_point_value(double_pair)=0;        //e.g. get_radius(...), get_y(...)
-        virtual double get_point_parameter(double_pair)=0;    //e.g. get_theta(...), get_x(...)
+        virtual double get_point_value(double_pair&)=0;        //e.g. get_radius(...), get_y(...)
+        virtual double get_point_parameter(double_pair&)=0;    //e.g. get_theta(...), get_x(...)
         virtual std::pair<double_pair,double_pair> get_segment(double /*parameter*/)=0;
         virtual double interpolate(double /*parameter*/,std::pair<double_pair,double_pair> /*segment*/)=0;
         virtual double low_extrapolate(double /*parameter*/)=0;
