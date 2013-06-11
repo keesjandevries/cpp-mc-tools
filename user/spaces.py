@@ -1,6 +1,7 @@
 def get_spaces():
 #    return spaces['cmssm']
-    return spaces['pmssm']
+    return spaces['nuhm1']
+#    return spaces['pmssm']
 
 spaces={
     'cmssm': [
@@ -16,6 +17,9 @@ spaces={
             {   'axes':'chi2'},
             {   'axes':['mneu1','mg']},
         ],
+    'nuhm1': [
+            {   'axes':['m0','m12'],},
+       ],
    'pmssm':[
 #            {'axes':['mneu1','mg']},
 #            {'axes':['M1','mg']},
