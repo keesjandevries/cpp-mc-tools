@@ -5,10 +5,10 @@ DefaultContour::DefaultContour(std::vector<double_pair> coordinates):
 {
     _coordinates_parameters=GetCoordinatesParameters();     // e.g. 'x' or 'theta'
 }
-double DefaultContour::get_point_parameter(double_pair point){
+double DefaultContour::get_point_parameter(double_pair& point){
     return point.first; // the x coordinate
 }
-double DefaultContour::get_point_value(double_pair point){
+double DefaultContour::get_point_value(double_pair& point){
     return point.second; // the y coordinate
 }
 std::pair<double_pair,double_pair>DefaultContour::get_segment(double parameter){
@@ -17,10 +17,8 @@ std::pair<double_pair,double_pair>DefaultContour::get_segment(double parameter){
     int i=0;
     for (std::vector<double>::iterator it= _coordinates_parameters.begin()
             ;it !=_coordinates_parameters.end();it++){
-        //FIXME: this comparison depends on the coordinates being 
-        //       sorted according to the magnitude of their parameter
         if (parameter < *it ){
-            segment=std::make_pair(_coordinates[i],_coordinates[i+1]);
+            segment=std::make_pair(_coordinates[i-1],_coordinates[i]);
             break;
         }
         i++;
