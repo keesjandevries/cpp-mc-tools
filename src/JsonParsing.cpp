@@ -69,6 +69,79 @@ std::vector<std::string> json_to_string_vector(json_t * object_t){
     return string_vector;
 }
 
+std::vector<double_pair> json_to_coordinates_vector(json_t * array_t){
+    std::vector<double_pair> double_pair_vector;
+    // if object is array, then loop over it and fill vector
+    if (json_is_array(array_t)){
+        size_t  size_array_t=json_array_size(array_t);
+        for (size_t i=0;i<size_array_t;i++){
+            json_t * point_t=json_array_get(array_t,i);
+            if (json_array_size(point_t)==2){
+                double x=json_real_value(json_array_get(point_t,0));
+                double y=json_real_value(json_array_get(point_t,1));
+                double_pair_vector.push_back(std::make_pair(x,y));
+            }
+            else{
+                std::cout << "ERROR: in " << __FUNCTION__ << std::endl;
+                std::cout << "coordinates don't consist of two entries, return empty vector"<< std::endl;
+                double_pair_vector.clear();
+                return double_pair_vector;
+            }
+        }
+    }
+    else {
+        std::cout << "ERROR: in " << __FUNCTION__ << std::endl;
+        std::cout << "json object was not an array, returning empty vector"<< std::endl;
+    }
+    return double_pair_vector;
+}
+
+Contour * json_to_contour(json_t * contour_t){
+    Contour * contour;
+    json_t * coordinates_t=json_object_get(contour_t,"coordinates");
+    json_t * type_t=json_object_get(contour_t,"type");
+    //get coordinates
+    std::vector<double_pair> coordinates=json_to_coordinates_vector(coordinates_t);
+    //fill type
+    const char * type_c = json_string_value(type_t);
+    if (type_c){
+        std::string type(type_c);
+        if (type=="UniversalLimits"){
+            contour = new UniversalLimitsContour(coordinates);
+        } 
+        else{
+            std::cout << "ERROR: in " << __FUNCTION__ << std::endl;
+            std::cout << "Contour type not found"<< std::endl;
+        }
+    }
+    return contour;
+}
+
+std::vector<Contour*> json_to_contour_vector(json_t * contours_t){
+    std::vector<Contour*> contours;
+    if (json_is_array(contours_t)){
+        size_t n_contours=json_array_size(contours_t);
+        for (size_t i=0;i<n_contours;i++){
+            json_t * contour_t = json_array_get(contours_t,i);
+            Contour * contour=json_to_contour(contour_t); 
+            if(contour){
+                contours.push_back(contour); 
+            }
+            else{
+                std::cout << "ERROR: in " << __FUNCTION__ << std::endl;
+                std::cout << "contour failed, returning empty vector of contours"<< std::endl;
+                contours.clear();
+                return contours;
+            }
+        }
+    }
+    else{
+        std::cout << "ERROR: in " << __FUNCTION__ << std::endl;
+        std::cout << "json object was not an array, returning empty vector"<< std::endl;
+    }
+    return contours;
+}
+
 BinningInputs json_to_binning_inputs(json_t * object_t){
     BinningInputs binning_input;
     if json_is_object(object_t){
@@ -122,56 +195,111 @@ std::vector<AxesZaxesNames> parse_axes_names_list_from_json_file(std::string fil
 //FIXME: cleanup this function and the error messages
 GaussConstraint * parse_gauss_constraint(json_t* constraint_t, std::map<std::string, GaussFunc> gauss_func_map){
     GaussConstraint *constraint=NULL;
-    if (json_is_object(constraint_t)){
-        //get array ids
-        json_t * observable_ids_t   = json_object_get(constraint_t,"observable_ids");
-        json_t * gauss_t            = json_object_get(constraint_t,"gaussian");
-        //check that both exist
-        if (!observable_ids_t || !gauss_t) {
-            std::cout << "ERROR: in " << __FUNCTION__<< ", LINE:" <<__FUNCTION__<< "\n\"observable_ids\" or \"gaussian\" not defined" << std::endl;
-            return constraint;
-        }
-        //get array ids
-        std::vector<int> array_ids=json_to_int_vector(json_object_get(observable_ids_t,"array_ids"));
-        //get gaussian settings
-        json_t * mu_t               = json_object_get(gauss_t,"mu");
-        json_t * sigmas_t           = json_object_get(gauss_t,"sigmas");
-        json_t * function_name_t    = json_object_get(gauss_t,"function_name");
-        //get mu 
-        double mu;
-        if (json_is_real(mu_t))  mu=json_real_value(mu_t); 
-        else {
-            std::cout << "ERROR: in " << __FUNCTION__<< ", LINE:" <<__FUNCTION__<< "\nmu is real or not given" << std::endl;
-            return constraint;
-        }
-        //get sigmas
-        std::vector<double> sigmas=json_to_double_vector(sigmas_t);  
-        if (sigmas.size()==0){ 
-            std::cout << "ERROR: in " << __FUNCTION__<< ", LINE:" <<__FUNCTION__<< "\nsigmas has length 0" << std::endl;
-            return constraint;
-        }
-        //get gauss_fucntion
-        GaussFunc gauss_func;
-        const char * function_name_c = json_string_value(function_name_t);
-        if (function_name_c){
-            if (gauss_func_map.find(function_name_c)!=gauss_func_map.end()){
-                gauss_func=gauss_func_map[function_name_c];
-            }
-        }
-        else {
-            std::cout << "ERROR: in " << __FUNCTION__<< ", LINE:" <<__FUNCTION__<< "\nfunction name goes wrong." << std::endl;
-            return constraint;
-        }
-        //allocate new gauss constraint
-        std::cout << "ALLOCATIONG THE CONSTRAINT" << std::endl;
-        constraint= new GaussConstraint(array_ids , mu, sigmas, gauss_func);
-        if (constraint)        std::cout << "constraint SUCCESFUL " << std::endl; 
-        else std::cout<< "constraint not succesful" << std::endl;
+    //get array ids
+    json_t * observable_ids_t   = json_object_get(constraint_t,"observable_ids");
+    //get array ids
+    std::vector<int> array_ids;
+    if (observable_ids_t){
+        array_ids=json_to_int_vector(json_object_get(observable_ids_t,"array_ids"));
     }
-    else{
-        std::cout << "ERROR: in " << __FUNCTION__ << ", LINE:" <<__FUNCTION__ <<"\nnot an object not defined" << std::endl;
+    else return constraint;
+    //get gaussian settings
+    json_t * mu_t=json_object_get(constraint_t,"mu");
+    json_t * sigmas_t=json_object_get(constraint_t,"sigmas");
+    json_t * function_name_t=json_object_get(constraint_t,"function_name");
+    //get mu 
+    double mu;
+    if (json_is_real(mu_t))  mu=json_real_value(mu_t); 
+    else {
+        std::cout << "ERROR: in " << __FUNCTION__<< ", LINE:" <<__FUNCTION__<< "\nmu is not real or not given" << std::endl;
+        return constraint;
     }
+    //get sigmas
+    std::vector<double> sigmas=json_to_double_vector(sigmas_t);  
+    if (sigmas.size()==0){ 
+        std::cout << "ERROR: in " << __FUNCTION__<< ", LINE:" <<__FUNCTION__<< "\nsigmas has length 0" << std::endl;
+        return constraint;
+    }
+    //get gauss_fucntion
+    GaussFunc gauss_func;
+    const char * function_name_c = json_string_value(function_name_t);
+    if (function_name_c){
+        if (gauss_func_map.find(function_name_c)!=gauss_func_map.end()){
+            gauss_func=gauss_func_map[function_name_c];
+        }
+    }
+    else {
+        std::cout << "ERROR: in " << __FUNCTION__<< ", LINE:" <<__FUNCTION__<< "\nfunction name goes wrong." << std::endl;
+        return constraint;
+    }
+    //allocate new gauss constraint
+    constraint= new GaussConstraint(array_ids , mu, sigmas, gauss_func);
     return constraint;
+}
+
+ContourConstraint * parse_contour_constraint(json_t* constraint_t, std::map<std::string, ContourFunc> contour_func_map){
+    ContourConstraint *constraint=NULL;
+    //get contour settings
+    json_t * observable_ids_t   = json_object_get(constraint_t,"observable_ids");
+    json_t * contours_t=json_object_get(constraint_t,"contours");
+    json_t * function_name_t=json_object_get(constraint_t,"function_name");
+    //get array ids
+    std::vector<int> array_ids;
+    if (observable_ids_t){
+        array_ids=json_to_int_vector(json_object_get(observable_ids_t,"array_ids"));
+    }
+    else return constraint;
+    //get contours
+    std::vector<Contour*> contours= json_to_contour_vector(contours_t);
+    if (contours.size()==0) return constraint;
+    //get contour_fucntion
+    ContourFunc contour_func;
+    const char * function_name_c = json_string_value(function_name_t);
+    if (function_name_c){
+        if (contour_func_map.find(function_name_c)!=contour_func_map.end()){
+            contour_func=contour_func_map[function_name_c];
+        }
+    }
+    else {
+        std::cout << "ERROR: in " << __FUNCTION__<< ", LINE:" <<__FUNCTION__<< "\nfunction name goes wrong." << std::endl;
+        return constraint;
+    }
+    //allocate new contour constraint
+    constraint= new ContourConstraint(array_ids , contours, contour_func);
+    return constraint;
+}
+
+std::map<std::string, BaseGetValueFunction*> parse_constraints_from_json_file(std::string filename,
+        std::map<std::string, GaussFunc> gauss_func_map,
+        std::map<std::string, ContourFunc> contour_func_map){
+    // define resultent map
+    std::map<std::string, BaseGetValueFunction*> constraint_map;
+    // load objects from file
+    json_t * constraints_t;    
+    json_error_t error;
+    // load file
+    constraints_t = json_load_file(filename.c_str(),0, &error);
+    //prepare loop
+    json_t * constraint_t;
+    const char * constraint_name_c; 
+    // loop over objects
+    json_object_foreach(constraints_t,constraint_name_c,constraint_t){
+        json_t * gauss_constraint_t=json_object_get(constraint_t,"gauss_constraint");
+        json_t * contour_constraint_t=json_object_get(constraint_t,"contour_constraint");
+
+        BaseGetValueFunction * constraint = NULL;
+        if (gauss_constraint_t){
+            constraint=parse_gauss_constraint(gauss_constraint_t,gauss_func_map); 
+        }
+        else if (contour_constraint_t){
+            constraint=parse_contour_constraint(contour_constraint_t,contour_func_map); 
+        }
+        
+        if (constraint){
+            constraint_map[constraint_name_c]=constraint;    
+        }
+    }
+    return constraint_map;
 }
 
 std::map<std::string, GaussConstraint*> parse_gauss_constraint_from_json_file(std::string filename,
@@ -229,22 +357,48 @@ VarsFunction * get_VarsFunction(json_t * vars_function_t , std::map<std::string,
     }
     return vars_function;
 }
-
-GaussConstraint * get_GaussConstraint(json_t * gauss_constraint_t, std::map<std::string, GaussConstraint*> constraint_map){
-    GaussConstraint * gauss_constraint=NULL;
+//
+//ContourConstraint * get_ContourConstraint(json_t * gauss_constraint_t, std::map<std::string, ContourConstraint*> constraint_map){
+//    ContourConstraint * gauss_constraint=NULL;
+//    const char * name_c = json_string_value(gauss_constraint_t);
+//    if (constraint_map.find(name_c)!=constraint_map.end()){
+//        gauss_constraint=constraint_map[name_c];
+//    }
+//    return gauss_constraint;
+//}
+//GaussConstraint * get_GaussConstraint(json_t * gauss_constraint_t, std::map<std::string, GaussConstraint*> constraint_map){
+//    GaussConstraint * gauss_constraint=NULL;
+//    const char * name_c = json_string_value(gauss_constraint_t);
+//    if (constraint_map.find(name_c)!=constraint_map.end()){
+//        gauss_constraint=constraint_map[name_c];
+//    }
+//    return gauss_constraint;
+//}
+BaseGetValueFunction * get_BaseGetValueFunction(json_t * gauss_constraint_t, std::map<std::string, BaseGetValueFunction*> constraint_map){
+    BaseGetValueFunction * gauss_constraint=NULL;
     const char * name_c = json_string_value(gauss_constraint_t);
     if (constraint_map.find(name_c)!=constraint_map.end()){
         gauss_constraint=constraint_map[name_c];
     }
+    else{
+        std::cout << "ERROR: \"" << name_c << "\" not defined" << std::endl;;
+    }
     return gauss_constraint;
 }
 
+
 //FIXME: should have overloaded this function to remain backward compatibility
+//std::map<std::string, Axis*> parse_axes_from_json_file(std::string filename, 
+//        std::map<std::string, GetVarsFunction> function_map, 
+//        std::map<std::string, GaussConstraint*> gauss_constraint_map){
+//    std::map<std::string, ContourConstraint*> contour_constraint_map;
+//    return parse_axes_from_json_file( filename, function_map, gauss_constraint_map, contour_constraint_map);
+//}
+
 std::map<std::string, Axis*> parse_axes_from_json_file(std::string filename, 
         std::map<std::string, GetVarsFunction> function_map, 
-        std::map<std::string, GaussConstraint*> gauss_constraint_map){
+        std::map<std::string, BaseGetValueFunction*> constraint_map){
     std::map<std::string, Axis*> axes_map;
-    /// Following www.digip.org/jansson/doc/2.4/apiref.html, searching from "json_load_file"
     json_t * axes_t;    
     json_error_t error;
     // load file
@@ -264,6 +418,7 @@ std::map<std::string, Axis*> parse_axes_from_json_file(std::string filename,
         json_t * vars_lookup_t = json_object_get(axis_t,"vars_lookup");
         json_t * vars_function_t = json_object_get(axis_t,"vars_function");
         json_t * gauss_constraint_t = json_object_get(axis_t,"gauss_constraint");
+        json_t * contour_constraint_t = json_object_get(axis_t,"contour_constraint");
         // binning
         json_t * binning_t = json_object_get(axis_t,"binning");
         // fill binning inputs
@@ -279,7 +434,10 @@ std::map<std::string, Axis*> parse_axes_from_json_file(std::string filename,
             get_value = get_VarsFunction(vars_function_t,function_map);
         }
         else if (gauss_constraint_t){
-            get_value = get_GaussConstraint(gauss_constraint_t,gauss_constraint_map);
+            get_value = get_BaseGetValueFunction(gauss_constraint_t,constraint_map);
+        }
+        else if (contour_constraint_t){
+            get_value = get_BaseGetValueFunction(contour_constraint_t,constraint_map);
         }
         if (get_value){
             Axis * axis=new Axis(axis_name_c,get_value,binning_input);

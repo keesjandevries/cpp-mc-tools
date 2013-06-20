@@ -14,6 +14,10 @@
 #include "JsonParsing.h"
 #include "GetVarsFunctions.h"
 #include "GaussFunctions.h"
+#include "Contour.h"
+#include "DefaultContour.h"
+#include "LogXLogYContour.h"
+#include "UniversalLimitsContour.h"
 
 
 #endif

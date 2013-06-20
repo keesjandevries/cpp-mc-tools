@@ -2,10 +2,16 @@
 #define JSONPARSING_H
 #include <map>
 #include "Axis.h"
-#include "GaussConstraint.h"
 #include "BaseGetValueFunction.h"
+#include "GaussConstraint.h"
+#include "ContourConstraint.h"
 #include "VarsFunction.h"
 #include "VarsLookup.h"
+#include "Contour.h"
+#include "DefaultContour.h"
+#include "LogXLogYContour.h"
+#include "UniversalLimitsContour.h"
+#include "ContourChi2Functions.h"
 //FIXME: JSONPARSING_H is also used in recalculate/ maybe will crash at some point
 
 #include "jansson.h"
@@ -53,7 +59,14 @@ struct AxesZaxesNames {
 ///And returns a map with pointers to Axis objects
 std::map<std::string, Axis*> parse_axes_from_json_file(std::string /*json file*/ ,
         std::map<std::string, GetVarsFunction> /*function map*/ ,
-        std::map<std::string, GaussConstraint*> /*constraint map*/);
+        std::map<std::string, BaseGetValueFunction*> /*constraint map*/);
+//std::map<std::string, Axis*> parse_axes_from_json_file(std::string /*json file*/ ,
+//        std::map<std::string, GetVarsFunction> /*function map*/ ,
+//        std::map<std::string, GaussConstraint*> /*constraint map*/);
+//std::map<std::string, Axis*> parse_axes_from_json_file(std::string /*json file*/ ,
+//        std::map<std::string, GetVarsFunction> /*function map*/ ,
+//        std::map<std::string, GaussConstraint*> /*constraint map*/,
+//        std::map<std::string, ContourConstraint*> contour_constraint_map);
 
 /// This function deals with a file containing a json array of objects like: of [[axes,zaxes] , axes, ...  ], e.g. 
 ///[{  'axes':['m0','m12'],'zaxes':['mh'] },
@@ -74,6 +87,10 @@ std::vector<AxesZaxesNames> parse_axes_names_list_from_json_file(std::string );
 ///    }
 std::map<std::string, GaussConstraint*> parse_gauss_constraint_from_json_file(std::string filename,
         std::map<std::string, GaussFunc> gauss_func_map);
+//
+std::map<std::string, BaseGetValueFunction*> parse_constraints_from_json_file(std::string filename,
+        std::map<std::string, GaussFunc> gauss_func_map,
+        std::map<std::string, ContourFunc> contour_func_map);
 
 /// Usefull parsing functions other functions
 std::vector<std::string> json_to_string_vector(json_t * object_t);

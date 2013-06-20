@@ -61,9 +61,11 @@ void make_histograms(const char * file, const char * json_axes_file, const char 
     std::map<std::string,GetVarsFunction> function_map=get_GetVarsFunction_map();
     // get constraint map
     std::map<std::string,GaussFunc> gauss_func_map=get_GaussFunc_map();
-    std::map<std::string,GaussConstraint*> gauss_constraint_map=parse_gauss_constraint_from_json_file(json_constraints_file, gauss_func_map);
+    std::map<std::string,ContourFunc> contour_func_map=get_ContourFunc_map();
+    std::map<std::string, BaseGetValueFunction*> constraints_map=parse_constraints_from_json_file( json_constraints_file,
+        gauss_func_map, contour_func_map);
     // get axes map
-    std::map<std::string,Axis*> axes_map=parse_axes_from_json_file(json_axes_file,function_map,gauss_constraint_map);
+    std::map<std::string,Axis*> axes_map=parse_axes_from_json_file(json_axes_file,function_map,constraints_map);
     // get spaces from axes specified in axes_list
     std::vector<Space*> spaces= my_get_spaces(axes_map,axes_list);
 
