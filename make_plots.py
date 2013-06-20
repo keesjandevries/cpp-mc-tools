@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 # python modules
-import argparse, json
+import argparse, json, pprint
 from ctypes import cdll
 # custum modules
 import  py_modules.oldarrayindices 
@@ -16,6 +16,7 @@ axes_file='user/temp_axes.json'
 spaces_file='user/temp_spaces.json'
 constraints_file='user/temp_constraints.json'
 
+pp=pprint.PrettyPrinter(indent=4)
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Process some integers.')
@@ -51,6 +52,7 @@ def get_array_ids_dict_style(file_info):
     return array_ids_dict, style
 
 def handle_vars_lookup(name,axis,array_ids_dict, style):
+    #This is different dince ther is only one observable id
     if axis['vars_lookup'].get('array_id') is not None:
         pass
     else:
@@ -63,26 +65,14 @@ def handle_vars_lookup(name,axis,array_ids_dict, style):
     return axis
 
 def handle_vars_function(name,axis,array_ids_dict,style):
-    if axis['vars_function'].get('observable_ids') is not None:
-        if not axis['vars_function']['observable_ids'].get('array_ids')==None:
-            pass
-        else:
-            oids=axis['vars_function']['observable_ids'][style]
-            if not isinstance(oids, list): oids=[oids]
-            try:
-                array_ids=[array_ids_dict[oid] for oid in oids]
-            except KeyError:
-                print('ERROR: observable id {} not found for axis {}. \nExiting program'.format(oid,name))
-                exit(1)
-            axis['vars_function']['observable_ids'].update({'array_ids':array_ids})
-    else:
-        print('ERROR: observable_ids not found for axis {}. \nExiting program'.format(name))
-        exit(1)
+    axis=recursive_insert_array_ids(axis, style, array_ids_dict)
     return axis
 
 def populate_axes(style,array_ids_dict,axes):
     for name, axis in axes.items():
         if axis.get('gauss_constraint') is not None:
+            continue
+        elif axis.get('contour_constraint') is not None:
             continue
         elif axis.get('vars_lookup') is not None:
             axis=handle_vars_lookup(name,axis,array_ids_dict,style)
@@ -94,14 +84,7 @@ def populate_axes(style,array_ids_dict,axes):
     return axes
 
 def populate_constraints(style,array_ids_dict,constraints):
-    for name, constraint in constraints.items():
-        if not constraint['observable_ids'].get('array_ids')==None:
-            continue 
-        else:
-            oids=constraint['observable_ids'][style]
-            if not isinstance(oids, list): oids=[oids]
-            array_ids=[array_ids_dict[oid] for oid in oids]
-            constraint['observable_ids'].update({'array_ids':array_ids})
+    constraints=recursive_insert_array_ids(constraints, style, array_ids_dict)
     return constraints
 
 def check_axes_defined(axes, axes_names):
@@ -120,6 +103,7 @@ def check_axes_defined(axes, axes_names):
     return defined, name
 
 def populate_spaces(axes_dict):
+    #check if all axes are defined
     spaces=user.spaces.get_spaces()
     axes_names=axes_dict.keys()
     for space in spaces:
@@ -133,6 +117,35 @@ def populate_spaces(axes_dict):
             exit(1)
     return spaces
 
+def get_array_ids(in_dict,style,array_ids_dict):
+    array_ids=in_dict['observable_ids'].get('array_ids')
+    if array_ids is None:
+        try:
+            oids=in_dict['observable_ids'][style]
+        except KeyError:
+            print('ERROR: \"{}\" defined nor \"array_ids\" defined for observable_ids. \nExiting program'.format(style))
+            exit(1)
+        if not isinstance(oids, list): 
+            oids=[oids]
+        try:
+            array_ids=[array_ids_dict[oid] for oid in oids]
+        except KeyError:
+            print('ERROR: observable id \"{}\" not defined for style \"{}\". \nExiting program'.format(oid,style))
+            exit(1)
+    return array_ids
+
+
+def recursive_insert_array_ids(in_dict, style, array_ids_dict):
+    if 'observable_ids' in in_dict.keys():
+        in_dict['observable_ids']['array_ids']=get_array_ids(in_dict,style,array_ids_dict)
+        return in_dict
+    else:
+        for key, val in in_dict.items():
+            if isinstance(val,dict):
+                in_dict[key]=recursive_insert_array_ids(val,style,array_ids_dict)
+            else:
+                continue
+        return in_dict
 
 if __name__ == '__main__':
     args=parse_args()
