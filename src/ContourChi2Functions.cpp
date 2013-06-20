@@ -5,6 +5,8 @@ std::map< std::string, ContourFunc>  get_ContourFunc_map(){
     ContourFunc_map["ma_tanb_mc8"]=ma_tanb_mc8;
     ContourFunc_map["xenon100_mc8"]=xenon100_mc8;
     ContourFunc_map["universal_limits"]=universal_limits;
+    ContourFunc_map["m3g_universal_limits"]=m3g_universal_limits;
+    ContourFunc_map["mg_universal_limits"]=mg_universal_limits;
     return ContourFunc_map;
 }
 
@@ -45,4 +47,31 @@ double universal_limits(double * vars, std::vector<int> & array_ids,std::vector<
     double mg_contour=neutralino_gluino->GetContourValue(mneu);
     double m3g_contour=neutralino_3g_squark->GetContourValue(mneu);
     return 7.82/sqrt(2)*sqrt(pow((m3g_contour/m3g),8)+pow((mg_contour/mg),8));
+}
+
+double m3g_universal_limits(double * vars, std::vector<int> & array_ids,std::vector<Contour *> & contours) {
+    Contour * neutralino_3g_squark=contours[0];
+    // neutralino mass: take absolute value (needs to be tested!!!)
+    double mneu=std::abs(vars[array_ids[0]]);
+    // 3rd generation squark masses
+    double msb1=vars[array_ids[1]];
+    double msb2=vars[array_ids[2]];
+    double mst1=vars[array_ids[3]];
+    double mst2=vars[array_ids[4]];
+    // average 3rd generation squark mass
+    double m3g= (msb1+msb2+mst1+mst2)/4;
+    // contour values
+    double m3g_contour=neutralino_3g_squark->GetContourValue(mneu);
+    return 7.82/sqrt(2)*pow((m3g_contour/m3g),4);
+}
+
+double mg_universal_limits(double * vars, std::vector<int> & array_ids,std::vector<Contour *> & contours) {
+    Contour * neutralino_gluino=contours[0];
+    // neutralino mass: take absolute value (needs to be tested!!!)
+    double mneu=std::abs(vars[array_ids[0]]);
+    // gluino mass
+    double mg=vars[array_ids[1]];
+    // contour values
+    double mg_contour=neutralino_gluino->GetContourValue(mneu);
+    return 7.82/sqrt(2)*pow((mg_contour/mg),4);
 }
