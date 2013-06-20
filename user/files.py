@@ -18,7 +18,12 @@ def get_files():
             '/vols/cms04/kjd110/pmssm10_bf_of_pmssm8/pMSSM10-mndrop-atlas.root':{
                 'observable_ids':{ 'mc_old' :{ 'prediction_index':15, 'spectrum_index':79  }}, 
                 },
-                'observable_ids':{ 'mc_old' :{ 'prediction_index':12, 'spectrum_index':76  }}, 
+            '/vols/cms04/kjd110/pmssm10_time_seed/pMSSM10-mndrop-atlas.root':{
+                'observable_ids':{ 'mc_old' :{ 'prediction_index':15, 'spectrum_index':79  }}, 
+                },
+            '/vols/cms04/kjd110/pmssm10_holland/pMSSM10-mndrop-atlas.root':{
+                'observable_ids':{ 'mc_old' :{ 'prediction_index':15, 'spectrum_index':79  }}, 
+                },
             '/vols/cms04/kjd110/nuhm1_mo_fixed/NUHM1-mnmc8.root':{
                 'observable_ids':{ 'mc_old' :{ 'prediction_index':12, 'spectrum_index':76  }}, 
                 },

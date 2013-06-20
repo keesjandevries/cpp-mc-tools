@@ -3,6 +3,15 @@ def get_axes():
         'chi2_mh':{
             'gauss_constraint':'Mh125',
             },
+        'chi2_jad':{
+            'contour_constraint':'universal_limits',
+            },
+        'chi2_m3g_only':{
+            'contour_constraint':'m3g_universal_limits',
+            },
+        'chi2_mg_only':{
+            'contour_constraint':'mg_universal_limits',
+            },
         'mstop1':{
             'binning':{
                 'type'  :'linear',
@@ -25,6 +34,17 @@ def get_axes():
                 'mc_old':'gluino',
                 }
             },
+        'jadmg':{
+            'binning':{
+                'type'  :'linear',
+                'low'   : 0. ,
+                'high'  : 1600. ,
+                'nbins' : 100 ,
+                },
+            'vars_lookup' :{
+                'mc_old':'gluino',
+                }
+            },
         'msq12':{
             'binning':{
                 'type'  :'linear',
@@ -41,6 +61,17 @@ def get_axes():
                 'type'  :'linear',
                 'low'   : 0. ,
                 'high'  : 2500. ,
+                'nbins' : 100 ,
+                },
+            'vars_lookup' :{
+                'mc_old':'msq3',
+                }
+            },
+        'jadmsq3' :{
+            'binning':{
+                'type'  :'linear',
+                'low'   : 0. ,
+                'high'  : 900. ,
                 'nbins' : 100 ,
                 },
             'vars_lookup' :{
@@ -135,11 +166,33 @@ def get_axes():
                 'mc_old':'neu1',
                 }
             }, 
+        'jadmgmneu1':{
+            'binning':{
+                'type'  :'linear',
+                'low'   : 0. ,
+                'high'  : 1600. ,
+                'nbins' : 100 ,
+                },
+            'vars_lookup' :{
+                'mc_old':'neu1',
+                }
+            }, 
+        'jadmsq3mneu1':{
+            'binning':{
+                'type'  :'linear',
+                'low'   : 0. ,
+                'high'  : 900. ,
+                'nbins' : 100 ,
+                },
+            'vars_lookup' :{
+                'mc_old':'neu1',
+                }
+            }, 
         'chi2':{
             'binning':{
                 'type'  :'linear',
-                'low'   : 20. ,
-                'high'  : 25. ,
+                'low'   : 25. ,
+                'high'  : 40. ,
                 'nbins' : 500 ,
                 },
             'vars_lookup' :{
@@ -235,6 +288,20 @@ def get_axes():
                     'mc_old':'bsmm',
                 },
                 'name': 'bsmm_ratio',
+             },
+        },
+        'm3g':{
+            'binning':{
+                'type'  :'linear',
+                'low'   : 0. ,
+                'high'  : 900. ,
+                'nbins' : 100 ,
+                },
+            'vars_function' :{
+                'observable_ids':{
+                    'mc_old':['stop1','stop2' ,  'sbottom1','sbottom2'],
+                },
+                'name': 'average',
              },
         },
         'mh2_m0^2_Ratio':{
