@@ -11,5 +11,6 @@ std::map<std::string, GetVarsFunction > get_GetVarsFunction_map();
 ///Individual declarations
 double bsmm_ratio(double *VARS, std::vector<int>& array_ids);
 double difference(double *VARS, std::vector<int>& array_ids);
+double average(double *VARS, std::vector<int>& array_ids);
 double var1_over_var2_square(double *VARS, std::vector<int>& array_ids);
 #endif
