@@ -21,6 +21,7 @@ pp=pprint.PrettyPrinter(indent=4)
 def parse_args():
     parser = argparse.ArgumentParser(description='Process some integers.')
     parser.add_argument('rootfile', help='define input root file')
+    parser.add_argument('--file-setup', help='array indices setup')
     return parser.parse_args()
 
 def get_file_info(filename):
@@ -149,7 +150,10 @@ def recursive_insert_array_ids(in_dict, style, array_ids_dict):
 
 if __name__ == '__main__':
     args=parse_args()
-    file_info=get_file_info(args.rootfile)
+    if args.file_setup:
+        file_info=get_file_info(args.file_setup)
+    else:
+        file_info=get_file_info(args.rootfile)
     array_ids_dict,style=get_array_ids_dict_style(file_info)
     axes=populate_axes(style,array_ids_dict,user.axes.get_axes())
     spaces=populate_spaces(axes)
