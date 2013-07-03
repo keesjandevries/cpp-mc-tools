@@ -10,6 +10,26 @@ def get_constraints():
                 'function_name':'gauss',
                 },
             },
+        'Oh2':{
+            'gauss_constraint':{
+                'observable_ids' :{
+                    'mc_old':'Oh^2',
+                    },
+                'mu':0.1109,
+                'sigmas':[ 0.0056, 0.012],
+                'function_name':'gauss',
+                },
+            },
+        'g-2':{
+            'gauss_constraint':{
+                'observable_ids' :{
+                    'mc_old':'Delta(g-2)',
+                    },
+                'mu':3.02e-09,
+                'sigmas':[ 8.8e-10, 2e-10],
+                'function_name':'gauss',
+                },
+            },
         'mg_universal_limits':{
             'contour_constraint':{
                 #for now directly give coordinates, later give file names

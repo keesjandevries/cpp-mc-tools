@@ -3,6 +3,12 @@ def get_axes():
         'chi2_mh':{
             'gauss_constraint':'Mh125',
             },
+        'chi2_oh2':{
+            'gauss_constraint':'Oh2',
+            },
+        'chi2_g-2':{
+            'gauss_constraint':'g-2',
+            },
         'chi2_jad':{
             'contour_constraint':'universal_limits',
             },
