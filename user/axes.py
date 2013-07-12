@@ -197,8 +197,8 @@ def get_axes():
         'chi2':{
             'binning':{
                 'type'  :'linear',
-                'low'   : 25. ,
-                'high'  : 40. ,
+                'low'   : 30. ,
+                'high'  : 300. ,
                 'nbins' : 500 ,
                 },
             'vars_lookup' :{
