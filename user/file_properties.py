@@ -1,4 +1,4 @@
-def get_files():
+def get_file_properties():
     return {
             'mc-old-nuhm1':{
                 'observable_ids':{ 'mc_old' :{ 'prediction_index':12, 'spectrum_index':76  }}, 
@@ -8,6 +8,6 @@ def get_files():
                 },
             'mc-old-pmssm10':{
                 'observable_ids':{ 'mc_old' :{ 'prediction_index':15, 'spectrum_index':79  }}, 
-                'mc_point_inputs':['msq12','msq3','msl', 'M1','M2','M3', 'A', 'MA','tanb','mu','mt','mz','Delta_alpha_had']
+                'mc_point_inputs':['msq12','msq3','msl', 'M1','M2','M3', 'A', 'MA','tanb','mu','mtop','MZ','DAlpha_had']
                 },
             }
