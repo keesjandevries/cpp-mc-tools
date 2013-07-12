@@ -19,7 +19,7 @@ constraints_file='user/temp_constraints.json'
 pp=pprint.PrettyPrinter(indent=4)
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='Process some integers.')
+    parser = argparse.ArgumentParser()
     parser.add_argument('rootfile', help='define input root file')
     parser.add_argument('--file-setup', help='array indices setup')
     return parser.parse_args()
