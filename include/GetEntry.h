@@ -1,8 +1,8 @@
 #ifndef  INC_GETENTRY_H
 #define INC_GETENTRY_H
-#include <TFile.h>
-#include <TTree.h>
-#include <TLeaf.h>
+#include "TFile.h"
+#include "TTree.h"
+#include "TLeaf.h"
 
 class GetEntry{
     public:
@@ -10,6 +10,7 @@ class GetEntry{
         GetEntry(const char *);
         virtual ~GetEntry(); 
         double * GetVars(int);
+        int GetNVars(){return _nvars;};
     private:
         TFile * _file;
         TTree * _tree;
