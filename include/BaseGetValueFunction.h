@@ -6,6 +6,7 @@ class BaseGetValueFunction{
     BaseGetValueFunction();
     virtual ~BaseGetValueFunction();
     virtual double operator()(double * /*VARS*/);
+    double get_value(double *);
 };
 
 #endif

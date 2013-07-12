@@ -10,3 +10,7 @@ BaseGetValueFunction::~BaseGetValueFunction(){
 double BaseGetValueFunction::operator()(double * /*VARS*/){
     //emtpy
 }
+
+double BaseGetValueFunction::get_value(double * vars){
+    return (*this)(vars);
+}
