@@ -1,5 +1,8 @@
 def get_file_properties():
     return {
+            'mc-old-cmssm':{
+                'observable_ids':{ 'mc_old' :{ 'prediction_index':10, 'spectrum_index':74  }}, 
+                },
             'mc-old-nuhm1':{
                 'observable_ids':{ 'mc_old' :{ 'prediction_index':12, 'spectrum_index':76  }}, 
                 },
