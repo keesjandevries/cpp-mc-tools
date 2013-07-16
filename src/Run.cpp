@@ -39,21 +39,7 @@ std::vector<Space*> my_get_spaces(std::map<std::string,Axis*> axes_map, std::vec
 //
 void make_histograms(const char * file, const char * json_axes_file, const char * json_spaces_file, const char * json_constraints_file){
     TString infile(file);
-    std::cout << "Making plots for \"" << infile << "\"." << std::endl; 
-// INISTIALISE FILE
-// FIXME: eventually turn this into a function
-    // File
-    TFile* f = new TFile(infile,"UPDATE");  
-    // Tree
-    TTree* t = (TTree*)f->Get("tree");
-    // number of entries
-    int nentries = t->GetEntries();
-    // branch to loop over
-    Int_t nTotVars = t->GetLeaf("vars")->GetLen();
-    double* invars = new double[nTotVars];
-    t->SetBranchAddress("vars",invars);
 
-//FIXME: THIS MODULE COULD DO WITH MORE CLEANUP, BUT IT SEEMS TO WORK
 // INITIALISE spaces
     // make axes list
     std::vector< AxesZaxesNames> axes_list=parse_axes_names_list_from_json_file(json_spaces_file);
@@ -68,24 +54,9 @@ void make_histograms(const char * file, const char * json_axes_file, const char 
     std::map<std::string,Axis*> axes_map=parse_axes_from_json_file(json_axes_file,function_map,constraints_map);
     // get spaces from axes specified in axes_list
     std::vector<Space*> spaces= my_get_spaces(axes_map,axes_list);
-
-    //This if the foreloop that makes the plots
-    for(int i=0; i<nentries; i++){
-        //FIXME: make progress bar
-        if (i%100000==0) std::cout << "Processed: " << i << "entries" << std::endl;
-        // get entry
-        t->GetEntry(i);
-        ///Update all spaces: check whether X^2 is lower than existing X^2
-        for( std::vector<Space*>::iterator it=spaces.begin(); it!=spaces.end() ; it++){
-            (*it)->update(invars,i);
-        }
-    }
-    //Write all plots (X^2,entries, *zaxes) to root file
-    for( std::vector<Space*>::iterator it=spaces.begin(); it!=spaces.end() ; it++){
-        (*it)->write_plots();
-    }
-    delete [] invars;
-    f->Close();
+    
+    RootMakePlots root_make_plots(file,spaces);
+    root_make_plots.Run();
 }
 
 //FIXME: THIS MODULE COULD DO WITH MORE CLEANUP, BUT IT SEEMS TO WORK
