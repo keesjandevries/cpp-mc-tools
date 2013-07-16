@@ -3,7 +3,7 @@
 RootMakePlots::RootMakePlots(const char * filename, std::vector<Space*> spaces):
     _spaces(spaces)
 {
-    _file=new TFile(filename);
+    _file=new TFile(filename,"UPDATE");
     _tree=(TTree*)_file->Get("tree");// FIXME: hardcoded
     _nvars=_tree->GetLeaf("vars")->GetLen();
     _vars=new double[_nvars];
