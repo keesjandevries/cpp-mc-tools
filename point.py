@@ -44,7 +44,8 @@ if __name__=='__main__':
     if 'mc_point' in args.verbose:
 #        try:
         oids=file_info['mc_point_inputs']
-        print('./mc_point.py {} {}'.format('--mc-pmssm10', ' '.join([ str(vars[array_ids_dict[oid]]) for oid in oids] )))
+        flag=file_info['mc_point_flag']
+        print('./mc_point.py {} {}'.format(flag, ' '.join([ str(vars[array_ids_dict[oid]]) for oid in oids] )))
 #        except:
 #            print('ERROR: FIXME')
 
