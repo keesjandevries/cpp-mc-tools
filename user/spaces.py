@@ -1,11 +1,13 @@
 def get_spaces():
-#    return spaces['cmssm']
+    return spaces['cmssm']
 #    return spaces['nuhm1']
-    return spaces['pmssm']
+#    return spaces['pmssm']
 
 spaces={
     'cmssm': [
-            {   'axes':['m0','m12']  },
+            {   'axes':['m0','m12'] , 'zaxes':['mh','chi2_mh','mstop1','A0'] },
+            { 'axes': 'mh'}
+#            {   'axes':'mstop1'  },
 #            {   'axes':['m0','mh2_m0^2_Ratio']  },
 #            {   'axes':['MA','tanb'],'zaxes':'BsmmRatio'},
 #            {   'axes':['m0','tanb'],'zaxes':'BsmmRatio'},

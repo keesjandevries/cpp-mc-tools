@@ -22,7 +22,7 @@ def get_axes():
             'binning':{
                 'type'  :'linear',
                 'low'   : 0. ,
-                'high'  : 3000. ,
+                'high'  : 6000. ,
                 'nbins' : 100 ,
                 },
             'vars_lookup' :{
@@ -220,7 +220,7 @@ def get_axes():
             'binning':{
                 'type'  :'linear',
                 'low'   : 0. ,
-                'high'  : 4000. ,
+                'high'  : 2500. ,
                 'nbins' : 100 ,
                 },
             'vars_lookup' :{

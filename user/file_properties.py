@@ -1,7 +1,12 @@
 def get_file_properties():
     return {
+            'mc-old-cmssm-mc8':{
+                'observable_ids':{ 'mc_old' :{ 'prediction_index':10, 'spectrum_index':124  }}, 
+                },
             'mc-old-cmssm':{
                 'observable_ids':{ 'mc_old' :{ 'prediction_index':10, 'spectrum_index':74  }}, 
+                'mc_point_inputs':['m0','m12','tanb','A0','mtop','MZ','DAlpha_had'],
+                'mc_point_flag':'--mc-cmssm',
                 },
             'mc-old-nuhm1':{
                 'observable_ids':{ 'mc_old' :{ 'prediction_index':12, 'spectrum_index':76  }}, 
@@ -11,6 +16,7 @@ def get_file_properties():
                 },
             'mc-old-pmssm10':{
                 'observable_ids':{ 'mc_old' :{ 'prediction_index':15, 'spectrum_index':79  }}, 
-                'mc_point_inputs':['msq12','msq3','msl', 'M1','M2','M3', 'A', 'MA','tanb','mu','mtop','MZ','DAlpha_had']
+                'mc_point_inputs':['msq12','msq3','msl', 'M1','M2','M3', 'A', 'MA','tanb','mu','mtop','MZ','DAlpha_had'],
+                'mc_point_flag':'--mc-pmssm10',
                 },
             }
