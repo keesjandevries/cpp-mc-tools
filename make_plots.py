@@ -7,6 +7,7 @@ from py_modules.tools import *
 import user.axes
 import user.spaces
 import user.files
+import user.file_properties
 import user.constraints
 # shared library objects
 runlib=cdll.LoadLibrary('lib/libmylib.so')
@@ -15,12 +16,13 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('rootfile', help='define input root file')
     parser.add_argument('--file-setup', help='array indices setup')
+    parser.add_argument('--nentries', help='number of entries to plot',type=int)
     return parser.parse_args()
 
 if __name__ == '__main__':
     args=parse_args()
     if args.file_setup:
-        file_info=get_file_info(args.file_setup,user.files.get_files())
+        file_info=get_file_info(args.file_setup,user.file_properties.get_file_properties())
     else:
         file_info=get_file_info(args.rootfile,user.files.get_files())
     array_ids_dict,style=get_array_ids_dict_style(file_info)
@@ -34,6 +36,10 @@ if __name__ == '__main__':
         json.dump(spaces,json_file,indent=3)
     with open(constraints_file,'w') as json_file:
         json.dump(constraints,json_file,indent=3)
-    runlib.run(args.rootfile.encode('ascii'),axes_file.encode('ascii'),spaces_file.encode('ascii'),constraints_file.encode('ascii'))
+    if args.nentries:
+        runlib.run_n(args.rootfile.encode('ascii'),axes_file.encode('ascii'),spaces_file.encode('ascii'),
+                constraints_file.encode('ascii'),args.nentries)
+    else:
+        runlib.run(args.rootfile.encode('ascii'),axes_file.encode('ascii'),spaces_file.encode('ascii'),constraints_file.encode('ascii'))
         
 
