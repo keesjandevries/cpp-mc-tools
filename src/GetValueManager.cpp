@@ -18,8 +18,20 @@ GetValueManager::~GetValueManager(){
 }
 
 void GetValueManager::AddVarsLookup(const char * name, int array_id){
-    if (_function_map.find(name)!=_function_map.end()){
+    if (_function_map.find(name)==_function_map.end()){
         VarsLookup * new_vars_lookup=new VarsLookup(array_id);
         _function_map[name]=new_vars_lookup;
+    }
+}
+
+BaseGetValueFunction * GetValueManager::Get(const char * name){
+    std::map<std::string,BaseGetValueFunction*>::iterator it;
+    it=_function_map.find(name); 
+    if (it!=_function_map.end()){
+        return it->second;
+    }
+    else{
+        std::cout << "Function \"" << name << "\" not found" << std::endl;
+        return NULL;
     }
 }

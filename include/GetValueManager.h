@@ -1,6 +1,7 @@
 #ifndef INC_GETVALUEMANAGER_H
 #define INC_GETVALUEMANAGER_H
 // standard library
+#include <iostream>
 #include <map>
 #include <string>
 // my own
@@ -11,6 +12,7 @@ class GetValueManager {
         static GetValueManager * GetInstance();
         ~GetValueManager();
         void AddVarsLookup(const char *, int);
+        BaseGetValueFunction * Get(const char *);
     private:
         //private so it cannot be called
         GetValueManager(){};//constructor
