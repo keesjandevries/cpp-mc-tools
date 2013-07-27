@@ -18,6 +18,11 @@ RootMakePlots::~RootMakePlots(){
 
 void RootMakePlots::Run(){
     int nentries=_nentries;
+    Run(nentries);
+}
+
+void RootMakePlots::Run(int nentries){
+    std::cout << "Plotting " << nentries << "points" << std::endl; 
     for(int i=0; i<nentries; i++){
         //FIXME: make progress bar
         if (i%100000==0) std::cout << "Processed: " << i << "entries" << std::endl;

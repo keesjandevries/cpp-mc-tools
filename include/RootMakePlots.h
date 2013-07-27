@@ -13,6 +13,7 @@ class RootMakePlots{
         RootMakePlots(const char *, std::vector<Space*>);
         virtual ~RootMakePlots();    
         void Run();
+        void Run(int);
     private:
         TFile * _file;
         TTree * _tree;
