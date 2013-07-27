@@ -37,7 +37,8 @@ std::vector<Space*> my_get_spaces(std::map<std::string,Axis*> axes_map, std::vec
 
 //FIXME: THIS MODULE COULD DO WITH MORE CLEANUP, BUT IT SEEMS TO WORK
 //
-void make_histograms(const char * file, const char * json_axes_file, const char * json_spaces_file, const char * json_constraints_file){
+void make_histograms(const char * file, const char * json_axes_file, const char * json_spaces_file, 
+        const char * json_constraints_file, int nentries=-1){
     TString infile(file);
 
 // INITIALISE spaces
@@ -56,7 +57,12 @@ void make_histograms(const char * file, const char * json_axes_file, const char 
     std::vector<Space*> spaces= my_get_spaces(axes_map,axes_list);
     
     RootMakePlots root_make_plots(file,spaces);
-    root_make_plots.Run();
+    if (nentries==-1){
+        root_make_plots.Run();
+    }
+    else{
+        root_make_plots.Run(nentries);
+    }
 }
 
 //FIXME: THIS MODULE COULD DO WITH MORE CLEANUP, BUT IT SEEMS TO WORK
@@ -64,5 +70,8 @@ void make_histograms(const char * file, const char * json_axes_file, const char 
 extern "C" {
     void run(const char * root_file,const char * json_axes_files, const char * json_spaces_file, const char * json_constraints_file){
         make_histograms(root_file,json_axes_files,json_spaces_file,json_constraints_file);
+    }
+    void run_n(const char * root_file,const char * json_axes_files, const char * json_spaces_file, const char * json_constraints_file, int nentries){
+        make_histograms(root_file,json_axes_files,json_spaces_file,json_constraints_file,nentries);
     }
 }
