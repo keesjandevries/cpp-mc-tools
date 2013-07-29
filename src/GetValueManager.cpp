@@ -24,6 +24,30 @@ void GetValueManager::AddVarsLookup(const char * name, int array_id){
     }
 }
 
+void GetValueManager::AddVarsFunction(const char * name, std::vector<int> array_ids , const char * function_name){
+    if (_get_vars_function_map.size()==0){
+        _get_vars_function_map=get_GetVarsFunction_map();
+    }
+    if (_function_map.find(name)==_function_map.end()){
+        std::map<std::string,GetVarsFunction>::iterator it=_get_vars_function_map.find(function_name);
+        if (it!=_get_vars_function_map.end()){
+            VarsFunction * new_vars_lookup=new VarsFunction(array_ids,it->second);
+            _function_map[name]=new_vars_lookup;
+        }
+        else{
+            std::cout << "function name: \"" << function_name << "\" not found" << std::endl;
+        }
+    }
+    else{
+        std::cout << "Function \"" << name << "\" already defined" << std::endl;  
+    }
+}
+
+void GetValueManager::AddVarsFunction(const char * name, int* array_ids_p, int n_array_ids , const char * function_name){
+    std::vector<int> array_ids(array_ids_p,array_ids_p+n_array_ids);    
+    AddVarsFunction(name,array_ids,function_name);
+}
+
 BaseGetValueFunction * GetValueManager::Get(const char * name){
     std::map<std::string,BaseGetValueFunction*>::iterator it;
     it=_function_map.find(name); 
