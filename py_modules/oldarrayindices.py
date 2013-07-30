@@ -2,6 +2,7 @@
 
 def get_array_ids(prediction_index,spectrum_index):
     return {
+            'X2'           :0,
             "m0"           : 1 ,
             "m12"          : 2 ,
             "A0"           : 3 ,
