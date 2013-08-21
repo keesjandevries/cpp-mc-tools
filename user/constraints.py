@@ -14,6 +14,7 @@ def get_constraints():
             'gauss_constraint':{
                 'observable_ids' :{
                     'mc_old':'Oh^2',
+                    'mcpp':('Micromegas','Omega'),
                     },
                 'mu':0.1109,
                 'sigmas':[ 0.0056, 0.012],
