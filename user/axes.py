@@ -172,6 +172,17 @@ def get_axes():
                 'mc_old':'neu1',
                 }
             }, 
+        'mneu1_900':{
+            'binning':{
+                'type'  :'linear',
+                'low'   : 0. ,
+                'high'  : 900. ,
+                'nbins' : 100 ,
+                },
+            'vars_lookup' :{
+                'mc_old':'neu1',
+                }
+            }, 
         'jadmgmneu1':{
             'binning':{
                 'type'  :'linear',
@@ -214,6 +225,7 @@ def get_axes():
                 },
             'vars_lookup' :{
                 'mc_old':'m0',
+                'mcpp':('MINPAR','M0'),
                 }
             },
         'm12':{
@@ -225,6 +237,7 @@ def get_axes():
                 },
             'vars_lookup' :{
                 'mc_old':'m12',
+                'mcpp':('MINPAR','M12'),
                 }
             },
         'MA':{
@@ -236,6 +249,7 @@ def get_axes():
                 },
             'vars_lookup' :{
                 'mc_old':'MA',
+                'mcpp' :('MASS','MA0'),
                 }
             },
         'A0':{
@@ -269,6 +283,7 @@ def get_axes():
                 },
             'vars_lookup' :{
                 'mc_old':'tanb',
+                'mcpp' :('MINPAR','TB'),
                 }
             },
         'mh':{
@@ -280,6 +295,17 @@ def get_axes():
                 },
             'vars_lookup' :{
                 'mc_old':'mh',
+                }
+            },
+        'ssmh':{
+            'binning':{
+                'type'  :'linear',
+                'low'   : 105. ,
+                'high'  : 130. ,
+                'nbins' : 100 ,
+                },
+            'vars_lookup' :{
+                'mc_old':'ssmh',
                 }
             },
         'BsmmRatio':{
@@ -300,12 +326,26 @@ def get_axes():
             'binning':{
                 'type'  :'linear',
                 'low'   : 0. ,
-                'high'  : 900. ,
+                'high'  : 2500. ,
                 'nbins' : 100 ,
                 },
             'vars_function' :{
                 'observable_ids':{
                     'mc_old':['stop1','stop2' ,  'sbottom1','sbottom2'],
+                },
+                'name': 'average',
+             },
+        },
+        'm12g':{
+            'binning':{
+                'type'  :'linear',
+                'low'   : 0. ,
+                'high'  : 2500. ,
+                'nbins' : 100 ,
+                },
+            'vars_function' :{
+                'observable_ids':{
+                    'mc_old':['squark_l','squark_r'],
                 },
                 'name': 'average',
              },
