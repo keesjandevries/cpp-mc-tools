@@ -15,8 +15,9 @@ runlib=cdll.LoadLibrary('lib/libmylib.so')
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('rootfile', help='define input root file')
-    parser.add_argument('--file-setup', help='array indices setup')
     parser.add_argument('--nentries', help='number of entries to plot',type=int)
+    parser.add_argument('--file-setup', help='select array indices setup from user/file_properties.py')
+    parser.add_argument('--spaces', help='select plots from user/spaces.py')
     return parser.parse_args()
 
 if __name__ == '__main__':
@@ -27,7 +28,7 @@ if __name__ == '__main__':
         file_info=get_file_info(args.rootfile,user.files.get_files())
     array_ids_dict,style=get_array_ids_dict_style(file_info)
     axes=populate_axes(style,array_ids_dict,user.axes.get_axes())
-    spaces=populate_spaces(axes,user.spaces.get_spaces())
+    spaces=populate_spaces(axes,user.spaces.get_spaces(args.spaces))
     constraints=populate_constraints(style,array_ids_dict,user.constraints.get_constraints())
     #FIXME: this should be replaced by files that get deleted after running plotting from python
     with open(axes_file,'w') as json_file:
