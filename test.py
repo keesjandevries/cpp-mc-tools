@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 #import test_vars_lookup
 from ctypes import cdll, c_int
-#import MyCythonWrappers
+import MyCythonWrappers
 lib=cdll.LoadLibrary('lib/libmylib.so')
 
 int_array=c_int*2
