@@ -1,7 +1,10 @@
 def get_file_properties():
     return {
-            'mc-old-cmssm-mc8':{
+            'mc-old-cmssm-mc8-ko':{
                 'observable_ids':{ 'mc_old' :{ 'prediction_index':10, 'spectrum_index':124  }}, 
+                },
+            'mc-old-cmssm-mc8':{
+                'observable_ids':{ 'mc_old' :{ 'prediction_index':10, 'spectrum_index':117  }}, 
                 },
             'mc-old-cmssm':{
                 'observable_ids':{ 'mc_old' :{ 'prediction_index':10, 'spectrum_index':74  }}, 
