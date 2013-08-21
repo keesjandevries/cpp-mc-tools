@@ -7,9 +7,9 @@ from ctypes import cdll
 # private modules
 from py_modules.tools import *
 # user defined 
+import user.mc_old_setup
 import user.axes
 import user.spaces
-import user.mc_old_setup
 import user.constraints
 # shared library objects
 runlib=cdll.LoadLibrary('lib/libmylib.so')
