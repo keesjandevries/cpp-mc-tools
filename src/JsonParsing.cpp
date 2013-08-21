@@ -175,13 +175,6 @@ std::vector<AxesZaxesNames> parse_axes_names_list_from_json_file(std::string fil
             if (axes_t){ 
                 //set axes
                 axes_zaxes_names.axes=json_to_string_vector(axes_t);
-                //print out spaces that entered this 
-                std::cout << "  Added axes names: [" ;
-                for (std::vector<std::string>::iterator it =axes_zaxes_names.axes.begin();
-                        it!=axes_zaxes_names.axes.end(); it++ ){
-                    std::cout << *it << "," ; 
-                }
-                std::cout << "]" <<std::endl;
                 //set zaxes if available
                 if (zaxes_t) axes_zaxes_names.zaxes =json_to_string_vector(zaxes_t);
                 //push_back into the vector
@@ -409,11 +402,8 @@ std::map<std::string, Axis*> parse_axes_from_json_file(std::string filename,
     // Now loop over the json object
     json_t * axis_t;
     const char * axis_name_c; 
-    // Some standard out
-    std::cout << "Initialising axes..." << std::endl;
     // reading in the various axes
     json_object_foreach(axes_t,axis_name_c,axis_t){
-        std::cout << "   " << axis_name_c << std::endl;
         // method of getting a value out of the "vars" array
         json_t * vars_lookup_t = json_object_get(axis_t,"vars_lookup");
         json_t * vars_function_t = json_object_get(axis_t,"vars_function");
