@@ -1,7 +1,18 @@
-def get_file_properties():
-    return {
-            'mc-old-cmssm-mc8':{
+def get(choice=None):
+    if choice is not None:
+        try:
+            return mc_old_setups[choice]
+        except KeyError:
+            print('ERROR: \'{}\'not in defined user/mc_old_setup.py '.format(choice))
+    else:
+        return None
+
+mc_old_setups= {
+            'mc-old-cmssm-mc8-ko':{
                 'observable_ids':{ 'mc_old' :{ 'prediction_index':10, 'spectrum_index':124  }}, 
+                },
+            'mc-old-cmssm-mc8':{
+                'observable_ids':{ 'mc_old' :{ 'prediction_index':10, 'spectrum_index':117  }}, 
                 },
             'mc-old-cmssm':{
                 'observable_ids':{ 'mc_old' :{ 'prediction_index':10, 'spectrum_index':74  }}, 

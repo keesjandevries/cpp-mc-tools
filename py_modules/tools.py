@@ -2,6 +2,7 @@
 
 # python modules
 import pprint
+import json
 # custum modules
 import  py_modules.oldarrayindices 
 # some definitions 
@@ -11,16 +12,7 @@ constraints_file='user/temp_constraints.json'
 
 pp=pprint.PrettyPrinter(indent=4)
 
-
-def get_file_info(filename,files):
-    try:
-        file_info=files[filename]
-    except KeyError:
-        print("ERROR: file \"{}\" not found in user/files.py. Exiting program".format(filename))
-        exit(1)
-    return file_info
-
-def get_array_ids_dict_style(file_info):
+def get_mc_old_array_ids_dict(file_info):
     try:
         observable_ids=file_info['observable_ids']
     except KeyError:
@@ -28,17 +20,9 @@ def get_array_ids_dict_style(file_info):
         exit(1)
     #Check both, they cannot both be true
     old_oids= observable_ids.get('mc_old')
-    mcpp_oids= observable_ids.get('mcpp')
-    if old_oids and mcpp_oids: 
-        print("ERROR: in file \"user/files.py \", both mc_old and mcpp observable ids are defined")
-        exit(1)
-    if old_oids:
+    if old_oids is not None:
         array_ids_dict= py_modules.oldarrayindices.get_array_ids(old_oids['prediction_index'],old_oids['spectrum_index'])
-        style='mc_old'
-    elif mcpp_oids:
-        print("NOTE: atm not implemented. Exiting program")
-        exit(1)
-    return array_ids_dict, style
+    return array_ids_dict
 
 def handle_vars_lookup(name,axis,array_ids_dict, style):
     #This is different dince ther is only one observable id
@@ -47,6 +31,9 @@ def handle_vars_lookup(name,axis,array_ids_dict, style):
     else:
         try:
             oid=axis['vars_lookup'][style]
+        except KeyError:
+            return None
+        try:
             axis['vars_lookup'].update({'array_id':array_ids_dict[oid]})
         except KeyError:
             print('ERROR: observable id {} not found for axis {}. \nExiting program'.format(oid,name))
@@ -57,24 +44,41 @@ def handle_vars_function(name,axis,array_ids_dict,style):
     axis=recursive_insert_array_ids(axis, style, array_ids_dict)
     return axis
 
-def populate_axes(style,array_ids_dict,axes):
+def get_axes_list_from_spaces(spaces):
+    axes_list=[]
+    if spaces is not None:
+        for space in spaces:
+            for axis in space['axes']:
+                axes_list.append(axis)
+            try:
+                for axis in list(space.get('zaxes')):
+                    axes_list.append(axis)
+            except TypeError:
+                continue
+    return axes_list
+
+def populate_axes(style,array_ids_dict,axes,axes_list=None):
+    out_axes={}
+    #only initialise axes that are defined in spaces
+    if axes_list is not None:
+        axes={name:axes[name] for name in axes_list}
     for name, axis in axes.items():
         if axis.get('gauss_constraint') is not None:
-            continue
+            out_axes[name]=axis
         elif axis.get('contour_constraint') is not None:
-            continue
+            out_axes[name]=axis
         elif axis.get('vars_lookup') is not None:
             axis=handle_vars_lookup(name,axis,array_ids_dict,style)
+            if axis is not None:
+                out_axes[name]=axis
         elif axis.get('vars_function') is not None:
             axis=handle_vars_function(name,axis,array_ids_dict,style)
+            if axis is not None:
+                out_axes[name]=axis
         else:
             print('ERROR: invalid key\nExiting')
             exit(1)
-    return axes
-
-def populate_constraints(style,array_ids_dict,constraints):
-    constraints=recursive_insert_array_ids(constraints, style, array_ids_dict)
-    return constraints
+    return out_axes
 
 def check_axes_defined(axes, axes_names):
     defined=True
@@ -92,18 +96,39 @@ def check_axes_defined(axes, axes_names):
     return defined, name
 
 def populate_spaces(axes_dict,spaces):
-    #check if all axes are defined
+    #check if all 'axes' and 'zaxes' correspond to keys in the axes_dict
+    #also transform e.g. {'axes':'mh'} into {'axes':['mh']}
     axes_names=axes_dict.keys()
     for space in spaces:
-        defined, name= check_axes_defined(space.get('axes'),axes_names)
-        if not defined:
-            print('ERROR: \"{}\" not defined in user/axes.py . Exiting program'.format(name))
+        #handle axes
+        try:
+            axes=space['axes']
+            if not isinstance(axes,list):
+                axes=[axes]
+            for axis in axes:
+                if not axis in axes_names:
+                    print('ERROR: axis \'{}\' is does not exist\nEXITING'.format(axis))
+                    exit(1)
+            space.update({'axes':axes})
+        except KeyError:
+            print('ERROR: one of the spaces in does not have \'axes\'\nEXITING')
             exit(1)
-        defined, name= check_axes_defined(space.get('zaxes'),axes_names)
-        if (not defined) and name:
-            print('ERROR: \"{}\" not defined in user/axes.py . Exiting program'.format(name))
-            exit(1)
+        #handle zaxes
+        zaxes=space.get('zaxes')
+        if zaxes is not None:
+            if not isinstance(zaxes,list):
+                zaxes=[zaxes]
+            for axis in zaxes:
+                if not axis in axes_names:
+                    print('ERROR: axis \'{}\' is does not exist\nEXITING'.format(axis))
+                    exit(1)
+            space.update({'zaxes':zaxes})
     return spaces
+
+def array_ids_dict_from_json_file(filename):
+    with open(filename,'r') as f:
+        array_ids_list=json.load(f)
+    return {(oid1,oid2): array_id for oid1, oid2, array_id in array_ids_list}
 
 def get_array_ids(in_dict,style,array_ids_dict):
     array_ids=in_dict['observable_ids'].get('array_ids')
@@ -111,8 +136,7 @@ def get_array_ids(in_dict,style,array_ids_dict):
         try:
             oids=in_dict['observable_ids'][style]
         except KeyError:
-            print('ERROR: \"{}\" defined nor \"array_ids\" defined for observable_ids. \nExiting program'.format(style))
-            exit(1)
+            return None
         if not isinstance(oids, list): 
             oids=[oids]
         try:
@@ -125,12 +149,26 @@ def get_array_ids(in_dict,style,array_ids_dict):
 
 def recursive_insert_array_ids(in_dict, style, array_ids_dict):
     if 'observable_ids' in in_dict.keys():
-        in_dict['observable_ids']['array_ids']=get_array_ids(in_dict,style,array_ids_dict)
-        return in_dict
+        array_ids=get_array_ids(in_dict,style,array_ids_dict)
+        if array_ids is not None:
+            in_dict['observable_ids']['array_ids']=get_array_ids(in_dict,style,array_ids_dict)
+            return in_dict
+        else:
+            return None
     else:
         for key, val in in_dict.items():
             if isinstance(val,dict):
                 in_dict[key]=recursive_insert_array_ids(val,style,array_ids_dict)
+                if in_dict[key] is None:
+                    return None
             else:
                 continue
         return in_dict
+
+def populate_with_array_ids(in_dict,style,array_ids_dict):
+    out_dict={}
+    for key, val in in_dict.items():
+        new_dict=recursive_insert_array_ids(val,style,array_ids_dict)
+        if new_dict is not None:
+            out_dict[key]=new_dict
+    return out_dict
