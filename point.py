@@ -2,7 +2,7 @@
 #python modules
 import argparse
 #own modules
-import test_vars_lookup
+#import test_vars_lookup
 import test_get_entry
 import py_modules.oldarrayindices 
 import py_modules.tools as tools
@@ -48,4 +48,7 @@ if __name__=='__main__':
         print('./mc_point.py {} {}'.format(flag, ' '.join([ str(vars[array_ids_dict[oid]]) for oid in oids] )))
 #        except:
 #            print('ERROR: FIXME')
-
+    if 'info' in args.verbose:
+        #FIXME: this should be shipped to user/info.py ...
+        for oid in ['X2','m0','m12','A0','tanb','mh','ssmh','squark_l','squark_r','stop1','stop2' ,'sbottom1','sbottom2','gluino','neu1']:
+            print(oid,vars[array_ids_dict[oid]])
