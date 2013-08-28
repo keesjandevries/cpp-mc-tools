@@ -48,11 +48,39 @@ void GetValueManager::AddVarsFunction(const char * name, int* array_ids_p, int n
     AddVarsFunction(name,array_ids,function_name);
 }
 
+void GetValueManager::AddChi2Calculator(const char * name){
+    if (_chi2_calculator_map.find(name)==_chi2_calculator_map.end()){
+        Chi2Calculator * new_chi2_calculator=new Chi2Calculator();
+        _chi2_calculator_map[name]=new_chi2_calculator;
+    }
+}
+
+void GetValueManager::AddConstraintToChi2Calculator(const char * constraint_name, const char * calculator_name){
+    std::map<std::string,BaseGetValueFunction*>::iterator it_con;
+    std::map<std::string,Chi2Calculator*>::iterator it_cal;
+    it_cal=_chi2_calculator_map.find(calculator_name);
+    if (it_cal!=_chi2_calculator_map.end()){
+        it_con=_function_map.find(constraint_name);
+        if (it_con!=_function_map.end()){
+            (it_cal->second)->AddConstraint(it_con->second);
+        }
+        else{
+            std::cout << "ERROR: constraint \"" << constraint_name << "\" not found \nThis if very severe" << std::endl;
+        }
+    }
+}
+
 BaseGetValueFunction * GetValueManager::Get(const char * name){
     std::map<std::string,BaseGetValueFunction*>::iterator it;
-    it=_function_map.find(name); 
+    std::map<std::string,Chi2Calculator*>::iterator it_cal;
+    it=_function_map.find(name);
+    it_cal=_chi2_calculator_map.find(name);
+
     if (it!=_function_map.end()){
         return it->second;
+    }
+    else if (it_cal!=_chi2_calculator_map.end()){
+        return it_cal->second;
     }
     else{
         std::cout << "Function \"" << name << "\" not found" << std::endl;
