@@ -1,5 +1,5 @@
-#ifndef  INC_AXIS_H
-#define INC_AXIS_H
+#ifndef  INCLUDE_AXIS_H_
+#define INCLUDE_AXIS_H_
 #include<iostream>
 #include<string>
 #include<vector>
@@ -41,4 +41,4 @@ class Axis{
         BaseGetValueFunction * _get_value;
 };
 
-#endif
+#endif  // INCLUDE_AXIS_H_
