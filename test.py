@@ -7,10 +7,13 @@ lib=cdll.LoadLibrary('lib/libmylib.so')
 int_array=c_int*2
 array_ids=int_array(0,1)
 
-lib.add_vars_lookup('name'.encode('ascii'),5)
-lib.add_vars_function('name1'.encode('ascii'),array_ids,2,'average'.encode('ascii'))
+lib.add_vars_lookup('name1'.encode('ascii'),5)
+lib.add_vars_function('name2'.encode('ascii'),array_ids,2,'average'.encode('ascii'))
+lib.add_chi2_calculator('chi2'.encode('ascii'))
+lib.add_constraint_to_chi2_calculator('name1'.encode('ascii'),'chi2'.encode('ascii'))
+lib.add_constraint_to_chi2_calculator('name2'.encode('ascii'),'chi2'.encode('ascii'))
 
-lib.test('name'.encode('ascii'))
+lib.test()
 
 
 #my=MyCythonWrappers.PyGetEntry('/vols/cms04/kjd110/budapest_pre_lhc_boxes/cmssm-boxes-combined-pre-lhc.root')
