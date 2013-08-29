@@ -31,7 +31,7 @@ class Space{
         std::vector<Plot*>  _other_plots;
         //default values, set in constructor
         int _chi2_index;
-        double _chi2_init_default;
+        double _reference_init_default;
         double _entry_init_default;
 };
 #endif

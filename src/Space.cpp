@@ -11,11 +11,11 @@ Space::Space(std::vector<Axis*> axes,std::vector<Axis*> zaxes){
 }
 
 void Space::init_reference_plot(std::vector<Axis *> axes){
-    _chi2_init_default=1e9; //FIXME: global variable here?
+    _reference_init_default=1e9; //FIXME: global variable here?
     _chi2_index=0;
     Axis * base_chi2_zaxis = new Axis("chi2");
     _reference_plot = new Plot(axes,base_chi2_zaxis);
-    _reference_plot->fill_default(_chi2_init_default);
+    _reference_plot->fill_default(_reference_init_default);
 }
 
 void Space::init_entry_plot(std::vector<Axis *> axes){
