@@ -3,6 +3,9 @@
 #include "Plot.h"
 #include "Axis.h"
 #include "BaseGetValueFunction.h"
+///FIXME: for compatibility we hard code the chi2 lookup using a vars lookup
+///FIXME: this should ultimately be deprecated
+#include "VarsLookup.h"
 
 class Space{
     public:
@@ -22,16 +25,14 @@ class Space{
     private:
         //private member functions
         void init_reference_plot(std::vector<Axis*>);
+        void init_reference_plot(std::vector<Axis*>,BaseGetValueFunction*);
         void init_entry_plot(std::vector<Axis*>);
         void init_other_plots(std::vector<Axis*>,std::vector<Axis*>);
         //private member objects
         //plots
-        Plot*               _reference_plot;
-        Plot*               _entry_plot;
-        std::vector<Plot*>  _other_plots;
-        //default values, set in constructor
-        int _chi2_index;
-        double _reference_init_default;
-        double _entry_init_default;
+        Plot* _reference_plot;
+        Plot* _entry_plot;
+        std::vector<Plot*> _other_plots;
+        Axis* _reference_zaxis;
 };
 #endif
