@@ -8,10 +8,10 @@ class Space{
     public:
         ///first set of axes contains the binned axes for the projection
         ///second set of axes contains the onces that are to be plotted
-        Space(std::vector<Axis*> axes);
-        Space(std::vector<Axis*> axes,BaseGetValueFunction*);
-        Space(std::vector<Axis*> axes, std::vector<Axis*>);
-        Space(std::vector<Axis*> axes, std::vector<Axis*>,BaseGetValueFunction*);
+        Space(std::vector<Axis*>);
+        Space(std::vector<Axis*>,BaseGetValueFunction*);
+        Space(std::vector<Axis*>,std::vector<Axis*>);
+        Space(std::vector<Axis*>,std::vector<Axis*>,BaseGetValueFunction*);
         //FIXME: destructor should delete some things!!!
         ~Space(){};
         //public member functions
