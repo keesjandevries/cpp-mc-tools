@@ -37,7 +37,7 @@ void AxisManager::AddAxis(const char * axis_name, const char * value_function_na
     binning_inputs.binning_type=binning_type;
     binning_inputs.low=low;
     binning_inputs.high=high;
-    binning_inputs.low=low;
+    binning_inputs.nbins=nbins;
     if (_axis_map.find(axis_name)==_axis_map.end()){
         GetValueManager * get_value_manager=GetValueManager::GetInstance();
         BaseGetValueFunction * get_value_function=get_value_manager->Get(value_function_name);
