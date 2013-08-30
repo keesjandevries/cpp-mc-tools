@@ -6,11 +6,14 @@
 #include <string>
 // my own
 #include "Axis.h"
+#include "GetValueManager.h"
 
 class AxisManager {
     public:
         static AxisManager * GetInstance();
         ~AxisManager();
+        void AddAxis(const char *,const char *);
+        void AddAxis(const char *,const char *,const char *,double,double,int);
     private:
         //private so it cannot be called
         AxisManager(){};//constructor
