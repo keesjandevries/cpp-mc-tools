@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 #import test_vars_lookup
-from ctypes import cdll, c_int
+from ctypes import cdll, c_int, c_double
 import MyCythonWrappers
 lib=cdll.LoadLibrary('lib/libmylib.so')
 
@@ -13,6 +13,7 @@ lib.add_chi2_calculator('chi2'.encode('ascii'))
 lib.add_constraint_to_chi2_calculator('name1'.encode('ascii'),'chi2'.encode('ascii'))
 lib.add_constraint_to_chi2_calculator('name2'.encode('ascii'),'chi2'.encode('ascii'))
 lib.add_axis('axis1'.encode('ascii'),'name1'.encode('ascii'))
+lib.add_axis_with_binning('axis2'.encode('ascii'),'name2'.encode('ascii'),'log'.encode('ascii'),c_double(1.),c_double(1000.),c_int(3))
 
 lib.test()
 
