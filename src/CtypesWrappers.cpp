@@ -2,6 +2,7 @@
 
 GetValueManager * get_value_manager=GetValueManager::GetInstance();
 AxisManager * axis_manager=AxisManager::GetInstance();
+SpaceManager * space_manager=SpaceManager::GetInstance();
 
 void my_test(){
     double a[10];
@@ -40,5 +41,30 @@ void add_axis(const char * axis_name, const char * value_function_name){
 void add_axis_with_binning(const char * axis_name, const char * value_function_name,
         const char * binning_type, double low, double high, int nbins){
     axis_manager->AddAxis(axis_name,value_function_name,binning_type,low,high,nbins);
+}
+void add_space(const char * c_axes_names[], int n_axes_names,const char * c_zaxes_names[], 
+        int n_zaxes_names,const char * reference_function_name){
+    std::vector<std::string> axes_names;
+    std::vector<std::string> zaxes_names;
+    for (int i=0;i<n_axes_names;i++){
+        axes_names.push_back(c_axes_names[i]);
+    }
+    std::cout << "n axes: " << axes_names.size() << std::endl;
+    for (int i=0;i<n_zaxes_names;i++){
+        zaxes_names.push_back(c_zaxes_names[i]);
+    }
+    std::cout << "n zaxes: " << zaxes_names.size() << std::endl;
+    space_manager->AddSpace(axes_names,zaxes_names,reference_function_name);
+}
+void make_plots(const char * root_file_name,int nentries){
+    std::vector<Space*> spaces=space_manager->Get();
+    RootMakePlots root_make_plots(root_file_name,spaces);
+//    int nentries=100;
+    if (nentries==-1){
+        root_make_plots.Run();
+    }
+    else{
+        root_make_plots.Run(nentries);
+    }
 }
 }
