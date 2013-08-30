@@ -14,6 +14,8 @@ void my_test(){
     std::cout << "Now test axis" << std::endl;
     std::cout << "Hope this gives \"axis1\": " << (*(axis_manager->Get("axis1"))).get_name() << std::endl;
     std::cout << "Hope this gives 1: " << (*(axis_manager->Get("axis1"))).get_value(a) << std::endl;
+    std::cout << "Bin edges:" << std::endl;
+    axis_manager->Get("axis2")->print_bin_edges();
 }
     
 extern "C"{
@@ -35,5 +37,8 @@ void test(){
 void add_axis(const char * axis_name, const char * value_function_name){
     axis_manager->AddAxis(axis_name,value_function_name);
 }
+void add_axis_with_binning(const char * axis_name, const char * value_function_name,
+        const char * binning_type, double low, double high, int nbins){
+    axis_manager->AddAxis(axis_name,value_function_name,binning_type,low,high,nbins);
 }
-
+}
