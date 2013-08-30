@@ -12,6 +12,7 @@ lib.add_vars_function('name2'.encode('ascii'),array_ids,2,'average'.encode('asci
 lib.add_chi2_calculator('chi2'.encode('ascii'))
 lib.add_constraint_to_chi2_calculator('name1'.encode('ascii'),'chi2'.encode('ascii'))
 lib.add_constraint_to_chi2_calculator('name2'.encode('ascii'),'chi2'.encode('ascii'))
+lib.add_axis('axis1'.encode('ascii'),'name1'.encode('ascii'))
 
 lib.test()
 
