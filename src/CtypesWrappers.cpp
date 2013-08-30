@@ -1,4 +1,4 @@
-#include "Interfaces.h"
+#include "CtypesWrappers.h"
 
 GetValueManager * my_manager=GetValueManager::GetInstance();
 
