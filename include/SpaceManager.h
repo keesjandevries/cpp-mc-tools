@@ -13,6 +13,7 @@ class SpaceManager {
         static SpaceManager * GetInstance();
         ~SpaceManager();
         void AddSpace(std::vector<std::string>, std::vector<std::string>, std::string);
+        std::vector<Space*> Get();
     private:
         //private so it cannot be called
         SpaceManager(){};//constructor

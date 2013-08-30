@@ -57,3 +57,7 @@ void SpaceManager::AddSpace(std::vector<std::string> axes_names , std::vector<st
     }
 
 }
+
+std::vector<Space*> SpaceManager::Get(){
+    return _space_vector;
+}
