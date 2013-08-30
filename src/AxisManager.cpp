@@ -50,3 +50,14 @@ void AxisManager::AddAxis(const char * axis_name, const char * value_function_na
     }
 }
 
+Axis * AxisManager::Get(const char * name){
+    std::map<std::string,Axis*>::iterator it;
+    it=_axis_map.find(name);
+    if (it!=_axis_map.end()){
+        return it->second;
+    }
+    else{
+        std::cout << "Axis \"" << name << "\" not found" << std::endl;
+        return NULL;
+    }
+}

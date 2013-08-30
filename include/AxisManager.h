@@ -14,6 +14,7 @@ class AxisManager {
         ~AxisManager();
         void AddAxis(const char *,const char *);
         void AddAxis(const char *,const char *,const char *,double,double,int);
+        Axis* Get(const char *);
     private:
         //private so it cannot be called
         AxisManager(){};//constructor
