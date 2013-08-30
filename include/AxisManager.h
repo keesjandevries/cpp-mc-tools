@@ -24,4 +24,4 @@ class AxisManager {
         std::map<std::string,Axis*> _axis_map;
 };
 
-#endif // INCLUDE_AXESMANAGER_H_
+#endif // INCLUDE_AXISMANAGER_H_
