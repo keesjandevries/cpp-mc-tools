@@ -1,0 +1,26 @@
+def get():
+    return {
+        'chi2': {'array_id': 0},
+        'm0': {'mc_old': 'm0', 'mcpp': ('MINPAR', 'M0')},
+        'm12': {'mc_old': 'm12', 'mcpp': ('MINPAR', 'M12')},
+        'tanb': {'mc_old': 'tanb', 'mcpp': ('MINPAR', 'TB')},
+        'A0': {'mc_old': 'A0', 'mcpp': ('MINPAR', 'A')},
+        'mh2': {'mc_old': 'mh2'},
+        'msq12': {'mc_old': 'msq12'},
+        'msq3': {'mc_old': 'msq3'},
+        'msl': {'mc_old': 'msl'},
+        'A': {'mc_old': 'A'},
+        'M1': {'mc_old': 'M1'},
+        'M2': {'mc_old': 'M2'},
+        'M3': {'mc_old': 'M3'},
+        'MA': {'mc_old': 'MA', 'mcpp': ('MASS', 'MA0')},
+        'in_ma': {'mc_old': 'in_ma'},
+        'in_mu': {'mc_old': 'in_mu'},
+        'mg': {'mc_old': 'gluino', 'mcpp': ('MASS', 'MGl')},
+        'mh': {'mc_old': 'mh', 'mcpp': ('MASS', 'Mh0')},
+        'mneu1': {'mc_old': 'neu1', 'mcpp': ('MASS', 'MNeu(1)')},
+        'mstau1': {'mc_old': 'stau1', 'mcpp': ('MASS', 'MSf(1,2,3)')},
+        'mstop1': {'mc_old': 'stop1', 'mcpp': ('MASS', 'MSf(1,3,3)')},
+        'ssmh': {'mc_old': 'ssmh'},
+        }
+
