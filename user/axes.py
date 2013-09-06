@@ -70,12 +70,17 @@ def get():
             'chi2_m3g_only': {'value': 'm3g_universal_limits'},
             'chi2_mg_only': {'value': 'mg_universal_limits'},
             'chi2_mh': {'value': 'Mh125'},
-            'chi2_oh2': {'value': 'Oh2'},
-            'in_ma': {'binning': {'high': 4000.0,
-                                  'low': 0.0,
-                                  'nbins': 100,
-                                  'type': 'linear'},
-                      'value': 'in_ma'},
+            'chi2Oh2': {
+                    'value': 'chi2Oh2',
+                    },
+            'in_ma': {
+                    'binning': {
+                        'high': 4000.0,
+                        'low': 0.0,
+                        'nbins': 100,
+                        'type': 'linear'
+                        },
+                    'value': 'in_ma'},
             'in_mu': {'binning': {'high': 5000.0,
                                   'low': -5000.0,
                                   'nbins': 100,
@@ -211,8 +216,15 @@ def get():
                                'nbins': 100,
                                'type': 'linear'},
                    'value': 'mu'},
-            'oh2': {'binning': {'high': 0.3, 'low': 0.0, 'nbins': 100, 'type': 'linear'},
-                    'value': 'oh2'},
+            'oh2': {
+                    'binning': {
+                        'low': 0.0, 
+                        'high': 0.3, 
+                        'nbins': 100, 
+                        'type': 'linear',
+                        },
+                    'value': 'oh2'
+                    },
             'ssmh': {'binning': {'high': 130.0,
                                  'low': 105.0,
                                  'nbins': 100,
