@@ -56,9 +56,10 @@ void add_space(const char * c_axes_names[], int n_axes_names,const char * c_zaxe
     std::cout << "n zaxes: " << zaxes_names.size() << std::endl;
     space_manager->AddSpace(axes_names,zaxes_names,reference_function_name);
 }
-void make_plots(const char * root_file_name,int nentries){
+
+void make_plots_in_directory(const char * root_file_name,int nentries, const char * directoryname){
     std::vector<Space*> spaces=space_manager->Get();
-    RootMakePlots root_make_plots(root_file_name,spaces);
+    RootMakePlots root_make_plots(root_file_name,spaces,directoryname);
 //    int nentries=100;
     if (nentries==-1){
         root_make_plots.Run();
@@ -66,5 +67,8 @@ void make_plots(const char * root_file_name,int nentries){
     else{
         root_make_plots.Run(nentries);
     }
+}
+void make_plots(const char * root_file_name,int nentries){
+    make_plots_in_directory(root_file_name,nentries,""); 
 }
 }
