@@ -3,12 +3,17 @@
 RootMakePlots::RootMakePlots(const char * filename, std::vector<Space*> spaces):
     _spaces(spaces)
 {
-    _file=new TFile(filename,"UPDATE");
-    _tree=(TTree*)_file->Get("tree");// FIXME: hardcoded
-    _nvars=_tree->GetLeaf("vars")->GetLen();
-    _vars=new double[_nvars];
-    _tree->SetBranchAddress("vars",_vars);
-    _nentries = _tree->GetEntries();
+    init_root_file(filename);
+}
+
+RootMakePlots::RootMakePlots(const char * filename, std::vector<Space*> spaces, const char * directory):
+    _spaces(spaces)
+{
+    init_root_file(filename);
+    if (_file->cd(directory)!=kTRUE){
+        _file->mkdir(directory);
+        _file->cd(directory);
+    }
 }
 
 RootMakePlots::~RootMakePlots(){
@@ -19,6 +24,15 @@ RootMakePlots::~RootMakePlots(){
 void RootMakePlots::Run(){
     int nentries=_nentries;
     Run(nentries);
+}
+
+void RootMakePlots::init_root_file(const char * filename){
+    _file=new TFile(filename,"UPDATE");
+    _tree=(TTree*)_file->Get("tree");// FIXME: hardcoded
+    _nvars=_tree->GetLeaf("vars")->GetLen();
+    _vars=new double[_nvars];
+    _tree->SetBranchAddress("vars",_vars);
+    _nentries = _tree->GetEntries();
 }
 
 void RootMakePlots::Run(int nentries){

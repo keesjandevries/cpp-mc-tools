@@ -11,10 +11,12 @@
 class RootMakePlots{
     public:
         RootMakePlots(const char *, std::vector<Space*>);
+        RootMakePlots(const char *, std::vector<Space*>, const char *);
         virtual ~RootMakePlots();    
         void Run();
         void Run(int);
     private:
+        void init_root_file(const char *);
         TFile * _file;
         TTree * _tree;
         int _nvars;
