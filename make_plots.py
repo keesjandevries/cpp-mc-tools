@@ -19,8 +19,12 @@ runlib=cdll.LoadLibrary('lib/libmylib.so')
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('rootfile', help='define input root file')
-    parser.add_argument('--nentries', help='number of entries to plot',type=int)
+    parser.add_argument('--nentries', default=-1,help='number of entries to plot',type=int)
+    parser.add_argument('--reference', default='chi2',
+        help='Usually chi-functions, but in general the function that is mimimised to project the spaces')
     parser.add_argument('--mc-old-setup', help='select array indices setup from user/mc_old_setup.py')
+    parser.add_argument('--dir-in-root', default='',
+            help='choose directory in which the plots are stored within the root file')
     parser.add_argument('--storage-dict', help='specify json file containing a list [(oid1,oid2,array_id), ... ]')
     parser.add_argument('--spaces', help='select plots from user/spaces.py')
     return parser.parse_args()
@@ -34,7 +38,7 @@ if __name__ == '__main__':
         array_ids_dict=array_ids_dict_from_json_file(args.storage_dict)
         style='mcpp'
     # get spaces for which axis names are defined spaces
-    spaces=populate_spaces(user.axes.get(),user.spaces.get_spaces(args.spaces))
+    spaces=populate_spaces(user.axes.get(),user.spaces.get_spaces(args.spaces),args.reference)
     # populate vars_lookups, vars_functions, and constraints with array ids
     constraints=populate_with_array_ids((user.constraints.get_constraints()),style,array_ids_dict)
     vars_lookups={name: {'observable_ids': oids} for name, oids in user.vars_lookups.get().items()}
@@ -50,4 +54,6 @@ if __name__ == '__main__':
     add_vars_lookups(vars_lookups) 
 #    add_vars_functions(vars_functions) 
     add_axes(axes)
-
+    add_spaces(spaces)
+    #finally make the plots
+    runlib.make_plots_in_directory(args.rootfile.encode('ascii'),args.nentries,args.dir_in_root.encode('ascii'))
