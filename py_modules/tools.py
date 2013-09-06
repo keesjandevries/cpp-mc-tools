@@ -10,7 +10,7 @@ axes_file='user/temp_axes.json'
 spaces_file='user/temp_spaces.json'
 constraints_file='user/temp_constraints.json'
 
-pp=pprint.PrettyPrinter(indent=4)
+pp=pprint.PrettyPrinter(indent=4).pprint
 
 def get_mc_old_array_ids_dict(file_info):
     try:
@@ -57,7 +57,8 @@ def get_axes_list_from_spaces(spaces):
                 continue
     return axes_list
 
-def populate_axes(style,array_ids_dict,axes,axes_list=None):
+def populate_axes(axes,axes_list=None):
+    #FIXME: may want to check that the gauss_constraint etc. are defined
     out_axes={}
     #only initialise axes that are defined in spaces
     if axes_list is not None:
@@ -68,13 +69,9 @@ def populate_axes(style,array_ids_dict,axes,axes_list=None):
         elif axis.get('contour_constraint') is not None:
             out_axes[name]=axis
         elif axis.get('vars_lookup') is not None:
-            axis=handle_vars_lookup(name,axis,array_ids_dict,style)
-            if axis is not None:
-                out_axes[name]=axis
+            out_axes[name]=axis
         elif axis.get('vars_function') is not None:
-            axis=handle_vars_function(name,axis,array_ids_dict,style)
-            if axis is not None:
-                out_axes[name]=axis
+            out_axes[name]=axis
         else:
             print('ERROR: invalid key\nExiting')
             exit(1)
