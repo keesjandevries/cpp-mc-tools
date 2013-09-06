@@ -23,7 +23,7 @@ cw.add_vars_lookup('lm12',1)
 cw.add_axis_with_binning('m0','lm0','linear',0.,4000.,100)
 cw.add_axis_with_binning('m12','lm12','linear',0.,4000.,100)
 cw.add_space(['m0','m12'],[],'chi2')
-cw.lib.make_plots_in_directory('/vols/cms04/kjd110/cmssm_mc9_nuisance/cmssm_mc9_nuisance.root'.encode('ascii'),10,'hans'.encode('ascii'))
+lib.make_plots_in_directory('/vols/cms04/kjd110/cmssm_mc9_nuisance/cmssm_mc9_nuisance.root'.encode('ascii'),10,'hans'.encode('ascii'))
 #lib.test()
 
 
