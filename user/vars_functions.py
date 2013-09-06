@@ -65,6 +65,13 @@ def get():
                         'mc_old': ['squark_r'],
                         'mcpp': [('MASS', 'MSf(2,3,1)'),('MASS', 'MSf(2,3,2)'),('MASS', 'MSf(2,4,1)'),('MASS', 'MSf(2,4,2)')]
                         }
+                    },
+            'mstop2-mstop1': {
+                    'name': 'difference',
+                    'observable_ids': {
+                        'mc_old': ['mstop2','mstop1'],
+                        'mcpp': [('MASS', 'MSf(2,3,3)'),('MASS', 'MSf(1,3,3)')]
+                        }
                     }
             }
 
