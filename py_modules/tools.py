@@ -66,7 +66,7 @@ def check_axes_defined(axes, axes_names):
         defined=False
     return defined, name
 
-def populate_spaces(axes_dict,spaces):
+def populate_spaces(axes_dict,spaces,reference):
     #check if all 'axes' and 'zaxes' correspond to keys in the axes_dict
     #also transform e.g. {'axes':'mh'} into {'axes':['mh']}
     axes_names=axes_dict.keys()
@@ -94,6 +94,7 @@ def populate_spaces(axes_dict,spaces):
                     print('ERROR: axis \'{}\' is does not exist\nEXITING'.format(axis))
                     exit(1)
             space.update({'zaxes':zaxes})
+        space['reference_value']=reference
     return spaces
 
 def array_ids_dict_from_json_file(filename):
@@ -113,8 +114,7 @@ def get_array_ids(in_dict,style,array_ids_dict):
         try:
             array_ids=[array_ids_dict[oid] for oid in oids]
         except KeyError:
-            print('ERROR: observable id \"{}\" not defined for style \"{}\". \nExiting program'.format(oid,style))
-            exit(1)
+            print('WARNING: observable id \"{}\" not defined for style \"{}\". \nExiting program'.format(oids,style))
     return array_ids
 
 
@@ -165,3 +165,10 @@ def add_axes(axes):
                     details['binning']['low'],details['binning']['high'],details['binning']['nbins'])
         else:
             cw.add_axis(name,details['value'])
+
+def add_spaces(spaces):
+    for space in spaces:
+        axes=space['axes']
+        zaxes=space.get('zaxes',[])
+        reference=space['reference_value']
+        cw.add_space(axes,zaxes,reference)
