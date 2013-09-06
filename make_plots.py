@@ -11,6 +11,8 @@ import user.mc_old_setup
 import user.axes
 import user.spaces
 import user.constraints
+import user.vars_lookups
+import user.vars_functions
 # shared library objects
 runlib=cdll.LoadLibrary('lib/libmylib.so')
 
@@ -31,12 +33,16 @@ if __name__ == '__main__':
     elif args.storage_dict:
         array_ids_dict=array_ids_dict_from_json_file(args.storage_dict)
         style='mcpp'
-    # get spaces for which axes are defined spaces
-    spaces=populate_spaces(user.axes.get_axes(),user.spaces.get_spaces(args.spaces))
-    # get axes
+    # get spaces for which axis names are defined spaces
+    spaces=populate_spaces(user.axes.get(),user.spaces.get_spaces(args.spaces))
+    # get axes that are in the spaces
     axes_list=get_axes_list_from_spaces(spaces)
-    axes=populate_axes(style,array_ids_dict,user.axes.get_axes(),axes_list)
+    axes=populate_axes(user.axes.get(),axes_list)
+    # populate vars_lookups, vars_functions, and constraints with array ids
     constraints=populate_with_array_ids((user.constraints.get_constraints()),style,array_ids_dict)
+    vars_lookups={name: {'observable_ids': oids} for name, oids in user.vars_lookups.get().items()}
+    vars_lookups=populate_with_array_ids(vars_lookups,style,array_ids_dict)
+    vars_functions=populate_with_array_ids(user.vars_functions.get(),style,array_ids_dict)
     #FIXME: this should be replaced by files that get deleted after running plotting from python
     with open(axes_file,'w') as json_file:
         json.dump(axes,json_file,indent=3)
