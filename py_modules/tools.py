@@ -151,12 +151,11 @@ def add_vars_lookups(vars_lookups):
             array_id=array_id[0]
         cw.add_vars_lookup(name,array_id)
 
-#def add_vars_functions(vars_functions):
-#    for name, details in vars_functions.items():
-#        array_id=details['observable_ids']['array_ids']
-#        if isinstance(array_id,list):
-#            array_id=array_id[0]
-#        cw.add_vars_lookup(name,array_id)
+def add_vars_functions(vars_functions):
+    for name, details in vars_functions.items():
+        array_ids=details['observable_ids']['array_ids']
+        function_name=details['name']
+        cw.add_vars_function(name,array_ids,function_name)
 
 def add_axes(axes):
     for name, details in axes.items():
