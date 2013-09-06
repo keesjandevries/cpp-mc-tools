@@ -48,6 +48,35 @@ void GetValueManager::AddVarsFunction(const char * name, int* array_ids_p, int n
     AddVarsFunction(name,array_ids,function_name);
 }
 
+
+void GetValueManager::AddGaussConstraint(const char * name, int* array_ids_p, int n_array_ids, double mu, 
+        double* sigmas_p ,int n_sigmas, const char * function_name){
+    std::vector<int> array_ids(array_ids_p,array_ids_p+n_array_ids);    
+    std::vector<double> sigmas(sigmas_p,sigmas_p+n_sigmas);
+    AddGaussConstraint(name,array_ids,mu,sigmas,function_name);
+}
+
+//FIXME: since this is almost a repetition of the above, maybe render more abstract
+void GetValueManager::AddGaussConstraint(const char * name, std::vector<int> array_ids, 
+        double mu, std::vector<double> sigmas, const char * function_name){
+    if (_gauss_func_map.size()==0){
+        _gauss_func_map=get_GaussFunc_map();
+    }
+    if (_function_map.find(name)==_function_map.end()){
+        std::map<std::string,GaussFunc>::iterator it=_gauss_func_map.find(function_name);
+        if (it!=_gauss_func_map.end()){
+            GaussConstraint * new_gauss_constraint=new GaussConstraint(array_ids,mu,sigmas,it->second);
+            _function_map[name]=new_gauss_constraint;
+        }
+        else{
+            std::cout << "function name: \"" << function_name << "\" not found" << std::endl;
+        }
+    }
+    else{
+        std::cout << "Function \"" << name << "\" already defined" << std::endl;  
+    }
+}
+
 void GetValueManager::AddChi2Calculator(const char * name){
     if (_chi2_calculator_map.find(name)==_chi2_calculator_map.end()){
         Chi2Calculator * new_chi2_calculator=new Chi2Calculator();
