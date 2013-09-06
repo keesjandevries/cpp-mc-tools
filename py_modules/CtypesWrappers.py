@@ -4,6 +4,10 @@ lib=cdll.LoadLibrary('lib/libmylib.so')
 def add_vars_lookup(name,array_id):
     lib.add_vars_lookup(name.encode('ascii'),array_id)
 
+def add_vars_function(name,array_ids,function_name):
+    c_array_ids=(c_int*len(array_ids))(*array_ids)
+    lib.add_vars_function(name.encode('ascii'),c_array_ids,len(array_ids),function_name.encode('ascii'))
+
 def add_axis(axis_name,value_function_name):
     c_axis_name=axis_name.encode('ascii')
     c_value_function_name=value_function_name.encode('ascii')
