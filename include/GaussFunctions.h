@@ -9,7 +9,8 @@
 //
 ///Key function that returns a map of function pointers
 std::map<std::string, GaussFunc > get_GaussFunc_map();
-
+///Auxiliry funcitons
+double sum_squares(std::vector<double>);
 ///Individual declarations
 double gauss(double * VARS, std::vector<int> & array_ids , GaussData & data);
 #endif

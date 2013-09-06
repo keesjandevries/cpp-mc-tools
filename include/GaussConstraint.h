@@ -6,7 +6,8 @@
 
 // data structure is always central value mu, st
 struct GaussData{
-    double mu, sigma_square;
+    double mu; 
+    std::vector<double> sigmas;
 }; 
 // typedef for member gaussian X^2 function
 typedef double(*GaussFunc)(double *, std::vector<int> & , GaussData &); 
@@ -20,9 +21,7 @@ class GaussConstraint: public BaseGetValueFunction{
     private:
         // observable ids (Oid) for acces to argument of GetChi2(), in this case double *
         std::vector<int> _array_ids;
-        GaussData        _data; 
-        GaussFunc        _gauss_chi2_function;
-        // FIXME: not sure if this function should be private, in is not used anywhere else
-        double get_sigma_square(std::vector<double>);
+        GaussData _data; 
+        GaussFunc _gauss_chi2_function;
 };
 #endif
