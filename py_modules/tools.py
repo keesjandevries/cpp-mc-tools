@@ -5,6 +5,7 @@ import pprint
 import json
 # custum modules
 import  py_modules.oldarrayindices 
+import py_modules.CtypesWrappers as cw
 # some definitions 
 axes_file='user/temp_axes.json'
 spaces_file='user/temp_spaces.json'
@@ -169,3 +170,15 @@ def populate_with_array_ids(in_dict,style,array_ids_dict):
         if new_dict is not None:
             out_dict[key]=new_dict
     return out_dict
+
+def add_vars_lookups(vars_lookups):
+    for name, details in vars_lookups.items():
+        array_id=details['observable_ids']['array_ids']
+        if isinstance(array_id,list):
+            array_id=array_id[0]
+        cw.add_vars_lookup(name,array_id)
+
+def add_axes(axes):
+    for name, details in axes.items():
+        if details.get('binning') is not None:
+            cw.add_axis_with_binning()
