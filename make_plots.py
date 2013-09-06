@@ -35,14 +35,19 @@ if __name__ == '__main__':
         style='mcpp'
     # get spaces for which axis names are defined spaces
     spaces=populate_spaces(user.axes.get(),user.spaces.get_spaces(args.spaces))
-    # get axes that are in the spaces
-    axes_list=get_axes_list_from_spaces(spaces)
-    axes=populate_axes(user.axes.get(),axes_list)
     # populate vars_lookups, vars_functions, and constraints with array ids
     constraints=populate_with_array_ids((user.constraints.get_constraints()),style,array_ids_dict)
     vars_lookups={name: {'observable_ids': oids} for name, oids in user.vars_lookups.get().items()}
     vars_lookups=populate_with_array_ids(vars_lookups,style,array_ids_dict)
     vars_functions=populate_with_array_ids(user.vars_functions.get(),style,array_ids_dict)
+    # get axes that are in the spaces
+    axes_list=get_axes_list_from_spaces(spaces)
+    # for now the "valid" value functions are those for which array_ids are specified
+    valid_values_list=list(constraints.keys())+list(vars_lookups.keys())+list(vars_functions.keys())
+    # populate the valid-and-required-by-spaces axes
+    axes=populate_axes(user.axes.get(),valid_values_list,axes_list)
     # now add these to the managers
     add_vars_lookups(vars_lookups) 
+#    add_vars_functions(vars_functions) 
+    add_axes(axes)
 
