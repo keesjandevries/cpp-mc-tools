@@ -157,6 +157,15 @@ def add_vars_functions(vars_functions):
         function_name=details['name']
         cw.add_vars_function(name,array_ids,function_name)
 
+def add_gauss_constraints(gauss_constraints):
+    for name, details in gauss_constraints.items():
+        array_ids=details['observable_ids']['array_ids']
+        mu=details['mu']
+        sigmas=details['sigmas']
+        function_name=details['function_name']
+        cw.add_gauss_constraint(name,array_ids,mu,sigmas,function_name)
+
+
 def add_axes(axes):
     for name, details in axes.items():
         if details.get('binning') is not None:

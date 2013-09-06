@@ -10,7 +10,7 @@ from py_modules.tools import *
 import user.mc_old_setup
 import user.axes
 import user.spaces
-import user.constraints
+import user.gauss_constraints
 import user.vars_lookups
 import user.vars_functions
 # shared library objects
@@ -39,20 +39,21 @@ if __name__ == '__main__':
         style='mcpp'
     # get spaces for which axis names are defined spaces
     spaces=populate_spaces(user.axes.get(),user.spaces.get_spaces(args.spaces),args.reference)
-    # populate vars_lookups, vars_functions, and constraints with array ids
-    constraints=populate_with_array_ids((user.constraints.get_constraints()),style,array_ids_dict)
+    # populate vars_lookups, vars_functions, and gauss_constraints with array ids
     vars_lookups={name: {'observable_ids': oids} for name, oids in user.vars_lookups.get().items()}
     vars_lookups=populate_with_array_ids(vars_lookups,style,array_ids_dict)
     vars_functions=populate_with_array_ids(user.vars_functions.get(),style,array_ids_dict)
+    gauss_constraints=populate_with_array_ids((user.gauss_constraints.get()),style,array_ids_dict)
     # get axes that are in the spaces
     axes_list=get_axes_list_from_spaces(spaces)
     # for now the "valid" value functions are those for which array_ids are specified
-    valid_values_list=list(constraints.keys())+list(vars_lookups.keys())+list(vars_functions.keys())
+    valid_values_list=list(gauss_constraints.keys())+list(vars_lookups.keys())+list(vars_functions.keys())
     # populate the valid-and-required-by-spaces axes
     axes=populate_axes(user.axes.get(),valid_values_list,axes_list)
     # now add values to the managers
     add_vars_lookups(vars_lookups) 
     add_vars_functions(vars_functions) 
+    add_gauss_constraints(gauss_constraints)
     # axes and spaces to managers
     add_axes(axes)
     add_spaces(spaces)

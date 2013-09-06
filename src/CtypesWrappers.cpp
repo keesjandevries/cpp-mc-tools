@@ -3,7 +3,7 @@
 GetValueManager * get_value_manager=GetValueManager::GetInstance();
 AxisManager * axis_manager=AxisManager::GetInstance();
 SpaceManager * space_manager=SpaceManager::GetInstance();
-
+//FIXME: remove this test function
 void my_test(){
     double a[10];
     a[5]=1;
@@ -25,6 +25,10 @@ void add_vars_lookup(const char * name, int array_id){
 }
 void add_vars_function(const char * name, int * array_ids, int n_array_ids,const char *function_name){
     get_value_manager->AddVarsFunction(name,array_ids,n_array_ids,function_name);
+}
+void add_gauss_constraint(const char * name, int* array_ids_p, int n_array_ids, double mu, 
+        double* sigmas_p ,int n_sigmas, const char * function_name){
+    get_value_manager->AddGaussConstraint(name, array_ids_p,n_array_ids,mu,sigmas_p,n_sigmas,function_name);
 }
 void add_chi2_calculator(const char * name){
     get_value_manager->AddChi2Calculator(name);
