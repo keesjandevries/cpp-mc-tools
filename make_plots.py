@@ -50,9 +50,10 @@ if __name__ == '__main__':
     valid_values_list=list(constraints.keys())+list(vars_lookups.keys())+list(vars_functions.keys())
     # populate the valid-and-required-by-spaces axes
     axes=populate_axes(user.axes.get(),valid_values_list,axes_list)
-    # now add these to the managers
+    # now add values to the managers
     add_vars_lookups(vars_lookups) 
-#    add_vars_functions(vars_functions) 
+    add_vars_functions(vars_functions) 
+    # axes and spaces to managers
     add_axes(axes)
     add_spaces(spaces)
     #finally make the plots
