@@ -49,11 +49,9 @@ void add_space(const char * c_axes_names[], int n_axes_names,const char * c_zaxe
     for (int i=0;i<n_axes_names;i++){
         axes_names.push_back(c_axes_names[i]);
     }
-    std::cout << "n axes: " << axes_names.size() << std::endl;
     for (int i=0;i<n_zaxes_names;i++){
         zaxes_names.push_back(c_zaxes_names[i]);
     }
-    std::cout << "n zaxes: " << zaxes_names.size() << std::endl;
     space_manager->AddSpace(axes_names,zaxes_names,reference_function_name);
 }
 
