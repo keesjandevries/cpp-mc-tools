@@ -58,24 +58,17 @@ def get_axes_list_from_spaces(spaces):
                 continue
     return axes_list
 
-def populate_axes(axes,axes_list=None):
+def populate_axes(axes,valid_values_list,axes_list=None):
     #FIXME: may want to check that the gauss_constraint etc. are defined
     out_axes={}
     #only initialise axes that are defined in spaces
     if axes_list is not None:
         axes={name:axes[name] for name in axes_list}
     for name, axis in axes.items():
-        if axis.get('gauss_constraint') is not None:
-            out_axes[name]=axis
-        elif axis.get('contour_constraint') is not None:
-            out_axes[name]=axis
-        elif axis.get('vars_lookup') is not None:
-            out_axes[name]=axis
-        elif axis.get('vars_function') is not None:
+        if axis.get('value') in valid_values_list:
             out_axes[name]=axis
         else:
-            print('ERROR: invalid key\nExiting')
-            exit(1)
+            print('WARNING: value \'{}\' not valid for axis \'{}\''.format(axis.get('value'),name))
     return out_axes
 
 def check_axes_defined(axes, axes_names):
@@ -178,7 +171,17 @@ def add_vars_lookups(vars_lookups):
             array_id=array_id[0]
         cw.add_vars_lookup(name,array_id)
 
+#def add_vars_functions(vars_functions):
+#    for name, details in vars_functions.items():
+#        array_id=details['observable_ids']['array_ids']
+#        if isinstance(array_id,list):
+#            array_id=array_id[0]
+#        cw.add_vars_lookup(name,array_id)
+
 def add_axes(axes):
     for name, details in axes.items():
         if details.get('binning') is not None:
-            cw.add_axis_with_binning()
+            cw.add_axis_with_binning(name,details['value'],details['binning']['type'],
+                    details['binning']['low'],details['binning']['high'],details['binning']['nbins'])
+        else:
+            cw.add_axis(name,details['value'])
