@@ -43,17 +43,6 @@ if __name__ == '__main__':
     vars_lookups={name: {'observable_ids': oids} for name, oids in user.vars_lookups.get().items()}
     vars_lookups=populate_with_array_ids(vars_lookups,style,array_ids_dict)
     vars_functions=populate_with_array_ids(user.vars_functions.get(),style,array_ids_dict)
-    #FIXME: this should be replaced by files that get deleted after running plotting from python
-    with open(axes_file,'w') as json_file:
-        json.dump(axes,json_file,indent=3)
-    with open(spaces_file,'w') as json_file:
-        json.dump(spaces,json_file,indent=3)
-    with open(constraints_file,'w') as json_file:
-        json.dump(constraints,json_file,indent=3)
-    # making spaces 
-    pp.pprint(spaces)
-    if args.nentries:
-        runlib.run_n(args.rootfile.encode('ascii'),axes_file.encode('ascii'),spaces_file.encode('ascii'),
-                constraints_file.encode('ascii'),args.nentries)
-    else:
-        runlib.run(args.rootfile.encode('ascii'),axes_file.encode('ascii'),spaces_file.encode('ascii'),constraints_file.encode('ascii'))
+    # now add these to the managers
+    add_vars_lookups(vars_lookups) 
+
