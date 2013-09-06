@@ -25,26 +25,6 @@ def get_mc_old_array_ids_dict(file_info):
         array_ids_dict= py_modules.oldarrayindices.get_array_ids(old_oids['prediction_index'],old_oids['spectrum_index'])
     return array_ids_dict
 
-def handle_vars_lookup(name,axis,array_ids_dict, style):
-    #This is different dince ther is only one observable id
-    if axis['vars_lookup'].get('array_id') is not None:
-        pass
-    else:
-        try:
-            oid=axis['vars_lookup'][style]
-        except KeyError:
-            return None
-        try:
-            axis['vars_lookup'].update({'array_id':array_ids_dict[oid]})
-        except KeyError:
-            print('ERROR: observable id {} not found for axis {}. \nExiting program'.format(oid,name))
-            exit(1)
-    return axis
-
-def handle_vars_function(name,axis,array_ids_dict,style):
-    axis=recursive_insert_array_ids(axis, style, array_ids_dict)
-    return axis
-
 def get_axes_list_from_spaces(spaces):
     axes_list=[]
     if spaces is not None:
