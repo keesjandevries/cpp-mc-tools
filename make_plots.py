@@ -56,6 +56,7 @@ if __name__ == '__main__':
     add_gauss_constraints(gauss_constraints)
     # axes and spaces to managers
     add_axes(axes)
+    pp(spaces)
     add_spaces(spaces)
     #finally make the plots
     runlib.make_plots_in_directory(args.rootfile.encode('ascii'),args.nentries,args.dir_in_root.encode('ascii'))
