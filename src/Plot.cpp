@@ -14,7 +14,7 @@ Plot::Plot(std::vector<Axis*> axes,Axis* zaxis){
             init_root_histogram_2d(axes,zaxis);
             break;
         default:
-            std::cout << "ERROR: no 2 axes have been provided" << std::endl;
+            std::cout << "ERROR: "<< _ndim << "axes have been provided instead of 1 or 2" << std::endl;
             return;
     }
 }
