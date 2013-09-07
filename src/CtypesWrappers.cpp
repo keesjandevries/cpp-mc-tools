@@ -3,21 +3,8 @@
 GetValueManager * get_value_manager=GetValueManager::GetInstance();
 AxisManager * axis_manager=AxisManager::GetInstance();
 SpaceManager * space_manager=SpaceManager::GetInstance();
+ContourManager * contour_manager=ContourManager::GetInstance();
 //FIXME: remove this test function
-void my_test(){
-    double a[10];
-    a[5]=1;
-    a[0]=0;
-    a[1]=1;
-    std::cout << "Hope this gives 1: " << (*(get_value_manager->Get("name1"))).get_value(a) << std::endl;
-    std::cout << "Hope this gives 0.5: " << (*(get_value_manager->Get("name2"))).get_value(a) << std::endl;
-    std::cout << "Hope this gives 1.5: " << (*(get_value_manager->Get("chi2"))).get_value(a) << std::endl;
-    std::cout << "Now test axis" << std::endl;
-    std::cout << "Hope this gives \"axis1\": " << (*(axis_manager->Get("axis1"))).get_name() << std::endl;
-    std::cout << "Hope this gives 1: " << (*(axis_manager->Get("axis1"))).get_value(a) << std::endl;
-    std::cout << "Bin edges:" << std::endl;
-    axis_manager->Get("axis2")->print_bin_edges();
-}
     
 extern "C"{
 void add_vars_lookup(const char * name, int array_id){
@@ -37,7 +24,10 @@ void add_constraint_to_chi2_calculator(const char * constraint_name, const char*
     get_value_manager->AddConstraintToChi2Calculator(constraint_name,calculator_name);
 }
 void test(){
-    my_test();
+    double x[]={1,100};
+    double y[]={0.01,1};
+    contour_manager->AddContour("harry",x,y,2,"log_x_log_y");
+    std::cout << "THIS SHOULD GIVE 0.1: " << contour_manager->Get("harry")->GetContourValue(10) << std::endl;
 }
 void add_axis(const char * axis_name, const char * value_function_name){
     axis_manager->AddAxis(axis_name,value_function_name);
@@ -57,6 +47,9 @@ void add_space(const char * c_axes_names[], int n_axes_names,const char * c_zaxe
         zaxes_names.push_back(c_zaxes_names[i]);
     }
     space_manager->AddSpace(axes_names,zaxes_names,reference_function_name);
+}
+void add_contour(const char * name, double * xs, double * ys, int n_coords, const char * type){
+    contour_manager->AddContour(name,xs,ys,n_coords,type);
 }
 
 void make_plots_in_directory(const char * root_file_name,int nentries, const char * directoryname){
