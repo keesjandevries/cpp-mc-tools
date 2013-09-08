@@ -13,6 +13,7 @@ import user.spaces
 import user.gauss_constraints
 import user.vars_lookups
 import user.vars_functions
+import user.contours
 # shared library objects
 runlib=cdll.LoadLibrary('lib/libmylib.so')
 
@@ -44,6 +45,9 @@ if __name__ == '__main__':
     vars_lookups=populate_with_array_ids(vars_lookups,style,array_ids_dict)
     vars_functions=populate_with_array_ids(user.vars_functions.get(),style,array_ids_dict)
     gauss_constraints=populate_with_array_ids((user.gauss_constraints.get()),style,array_ids_dict)
+    # populate contours and add to managers
+    contours=populate_contours(user.contours.get())
+    add_contours(contours)
     # get axes that are in the spaces
     axes_list=get_axes_list_from_spaces(spaces)
     # for now the "valid" value functions are those for which array_ids are specified
