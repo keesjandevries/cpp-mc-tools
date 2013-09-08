@@ -3,7 +3,6 @@ cpp-mc-tools
 
 requirements
 ============
-* [jansson](http://www.digip.org/jansson/) 
 * [root](http://root.cern.ch/drupal/)
 
 Install
