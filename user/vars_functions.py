@@ -19,14 +19,14 @@ def get():
                     'mc_old': ['mtop', 'mH+-', 'tanb']
                     }
                 },
-            'logssicm2': {
+            'ssicm2': {
                 'name': 'pb_to_cm2',
                 'observable_ids': {
                     'mc_old': 'sigma_pp^SI',
                     'mcpp': ('Micromegas', 'sigma_p_si')
                     }
                 },
-            'logssikocm2': {
+            'ssikocm2': {
                 'name': 'pb_to_cm2',
                 'observable_ids': {
                     'mcpp': ('LSP scattering', 's3out')
@@ -64,6 +64,13 @@ def get():
                     'observable_ids': {
                         'mc_old': ['squark_r'],
                         'mcpp': [('MASS', 'MSf(2,3,1)'),('MASS', 'MSf(2,3,2)'),('MASS', 'MSf(2,4,1)'),('MASS', 'MSf(2,4,2)')]
+                        }
+                    },
+            'mstop2-mstop1': {
+                    'name': 'difference',
+                    'observable_ids': {
+                        'mc_old': ['mstop2','mstop1'],
+                        'mcpp': [('MASS', 'MSf(2,3,3)'),('MASS', 'MSf(1,3,3)')]
                         }
                     }
             }

@@ -6,7 +6,7 @@ GaussConstraint::GaussConstraint(std::vector<int> int_obs_ids, double mu, std::v
     _gauss_chi2_function(chi2function)
 {
     _data.mu=mu;
-    _data.sigma_square  = get_sigma_square(sigmas);
+    _data.sigmas=sigmas;
 }
 
 double GaussConstraint::GetChi2(double* VARS){
@@ -16,13 +16,3 @@ double GaussConstraint::GetChi2(double* VARS){
 double GaussConstraint::operator()(double* VARS){
     return _gauss_chi2_function(VARS,_array_ids ,_data);
 }
-
-double GaussConstraint::get_sigma_square(std::vector<double> sigmas){
-    double sigma_square=0.;
-    //FIXME: use proper iterator, to lazy atm
-    for(unsigned int i=0;i<sigmas.size();i++){
-        sigma_square+= sigmas[i]*sigmas[i] ;
-    }
-    return sigma_square;
-}
-

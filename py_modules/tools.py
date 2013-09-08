@@ -3,14 +3,16 @@
 # python modules
 import pprint
 import json
+import numpy
 # custum modules
 import  py_modules.oldarrayindices 
+import py_modules.CtypesWrappers as cw
 # some definitions 
 axes_file='user/temp_axes.json'
 spaces_file='user/temp_spaces.json'
 constraints_file='user/temp_constraints.json'
 
-pp=pprint.PrettyPrinter(indent=4)
+pp=pprint.PrettyPrinter(indent=4).pprint
 
 def get_mc_old_array_ids_dict(file_info):
     try:
@@ -23,26 +25,6 @@ def get_mc_old_array_ids_dict(file_info):
     if old_oids is not None:
         array_ids_dict= py_modules.oldarrayindices.get_array_ids(old_oids['prediction_index'],old_oids['spectrum_index'])
     return array_ids_dict
-
-def handle_vars_lookup(name,axis,array_ids_dict, style):
-    #This is different dince ther is only one observable id
-    if axis['vars_lookup'].get('array_id') is not None:
-        pass
-    else:
-        try:
-            oid=axis['vars_lookup'][style]
-        except KeyError:
-            return None
-        try:
-            axis['vars_lookup'].update({'array_id':array_ids_dict[oid]})
-        except KeyError:
-            print('ERROR: observable id {} not found for axis {}. \nExiting program'.format(oid,name))
-            exit(1)
-    return axis
-
-def handle_vars_function(name,axis,array_ids_dict,style):
-    axis=recursive_insert_array_ids(axis, style, array_ids_dict)
-    return axis
 
 def get_axes_list_from_spaces(spaces):
     axes_list=[]
@@ -57,27 +39,28 @@ def get_axes_list_from_spaces(spaces):
                 continue
     return axes_list
 
-def populate_axes(style,array_ids_dict,axes,axes_list=None):
+def populate_contours(contours):
+    for name, details in contours.items():
+        try:
+            data_file=details['file']
+            xys=numpy.loadtxt(data_file)
+            contours[name]['xs']=list(xys[:,0])
+            contours[name]['ys']=list(xys[:,1])
+        except KeyError:
+            print('Could not find \'file\' for contour \'{}\''.format(name))
+    return contours
+
+def populate_axes(axes,valid_values_list,axes_list=None):
+    #FIXME: may want to check that the gauss_constraint etc. are defined
     out_axes={}
     #only initialise axes that are defined in spaces
     if axes_list is not None:
         axes={name:axes[name] for name in axes_list}
     for name, axis in axes.items():
-        if axis.get('gauss_constraint') is not None:
+        if axis.get('value') in valid_values_list:
             out_axes[name]=axis
-        elif axis.get('contour_constraint') is not None:
-            out_axes[name]=axis
-        elif axis.get('vars_lookup') is not None:
-            axis=handle_vars_lookup(name,axis,array_ids_dict,style)
-            if axis is not None:
-                out_axes[name]=axis
-        elif axis.get('vars_function') is not None:
-            axis=handle_vars_function(name,axis,array_ids_dict,style)
-            if axis is not None:
-                out_axes[name]=axis
         else:
-            print('ERROR: invalid key\nExiting')
-            exit(1)
+            print('WARNING: value \'{}\' not valid for axis \'{}\''.format(axis.get('value'),name))
     return out_axes
 
 def check_axes_defined(axes, axes_names):
@@ -95,7 +78,7 @@ def check_axes_defined(axes, axes_names):
         defined=False
     return defined, name
 
-def populate_spaces(axes_dict,spaces):
+def populate_spaces(axes_dict,spaces,reference):
     #check if all 'axes' and 'zaxes' correspond to keys in the axes_dict
     #also transform e.g. {'axes':'mh'} into {'axes':['mh']}
     axes_names=axes_dict.keys()
@@ -123,6 +106,7 @@ def populate_spaces(axes_dict,spaces):
                     print('ERROR: axis \'{}\' is does not exist\nEXITING'.format(axis))
                     exit(1)
             space.update({'zaxes':zaxes})
+        space['reference_value']=reference
     return spaces
 
 def array_ids_dict_from_json_file(filename):
@@ -142,8 +126,7 @@ def get_array_ids(in_dict,style,array_ids_dict):
         try:
             array_ids=[array_ids_dict[oid] for oid in oids]
         except KeyError:
-            print('ERROR: observable id \"{}\" not defined for style \"{}\". \nExiting program'.format(oid,style))
-            exit(1)
+            print('WARNING: observable id \"{}\" not defined for style \"{}\".'.format(oids,style))
     return array_ids
 
 
@@ -172,3 +155,51 @@ def populate_with_array_ids(in_dict,style,array_ids_dict):
         if new_dict is not None:
             out_dict[key]=new_dict
     return out_dict
+
+def add_vars_lookups(vars_lookups):
+    for name, details in vars_lookups.items():
+        array_id=details['observable_ids']['array_ids']
+        if isinstance(array_id,list):
+            array_id=array_id[0]
+        cw.add_vars_lookup(name,array_id)
+
+def add_vars_functions(vars_functions):
+    for name, details in vars_functions.items():
+        array_ids=details['observable_ids']['array_ids']
+        function_name=details['name']
+        cw.add_vars_function(name,array_ids,function_name)
+
+def add_gauss_constraints(gauss_constraints):
+    for name, details in gauss_constraints.items():
+        array_ids=details['observable_ids']['array_ids']
+        mu=details['mu']
+        sigmas=details['sigmas']
+        function_name=details['function_name']
+        cw.add_gauss_constraint(name,array_ids,mu,sigmas,function_name)
+
+def add_contour_constraints(contour_constraints):
+    for name, details in contour_constraints.items():
+        array_ids=details['observable_ids']['array_ids']
+        contours=details['contours']
+        function_name=details['function']
+        cw.add_contour_constraint(name,array_ids,contours,function_name)
+
+
+def add_axes(axes):
+    for name, details in axes.items():
+        if details.get('binning') is not None:
+            cw.add_axis_with_binning(name,details['value'],details['binning']['type'],
+                    details['binning']['low'],details['binning']['high'],details['binning']['nbins'])
+        else:
+            cw.add_axis(name,details['value'])
+
+def add_spaces(spaces):
+    for space in spaces:
+        axes=space['axes']
+        zaxes=space.get('zaxes',[])
+        reference=space['reference_value']
+        cw.add_space(axes,zaxes,reference)
+
+def add_contours(contours):
+    for name, details in contours.items():
+        cw.add_contour(name,details['xs'],details['ys'],details['type'])

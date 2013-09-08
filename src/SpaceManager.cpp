@@ -38,7 +38,7 @@ void SpaceManager::AddSpace(std::vector<std::string> axes_names , std::vector<st
     for(axis_names_it=zaxes_names.begin();axis_names_it!=zaxes_names.end();axis_names_it++){
         Axis * zaxis=axis_manager->Get((*axis_names_it).c_str());
         if (zaxis!=NULL){
-            axes.push_back(zaxis);
+            zaxes.push_back(zaxis);
         }
         else{
             std::cout << "ERROR: Z-Axis \""<< *axis_names_it <<"\" is not defined. Skipping space" << std::endl;

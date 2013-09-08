@@ -6,5 +6,6 @@
 #include "GetValueManager.h"
 #include "AxisManager.h"
 #include "SpaceManager.h"
+#include "ContourManager.h"
 #include "RootMakePlots.h"
 #endif // INCLUDE_CTYPESWRAPPERS_H_

@@ -17,7 +17,7 @@ class ContourConstraint: public BaseGetValueFunction{
         virtual double operator()(double *);
     private:
         std::vector<int> _array_ids;
-        std::vector<Contour*> _contours;
         ContourFunc _contour_chi2_function ;
+        std::vector<Contour*> _contours;
 };
 #endif
