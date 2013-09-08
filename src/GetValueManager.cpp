@@ -77,6 +77,40 @@ void GetValueManager::AddGaussConstraint(const char * name, std::vector<int> arr
     }
 }
 
+void GetValueManager::AddContourConstraint(const char * name, std::vector<int> array_ids,
+        std::vector<std::string> contour_names, const char * function_name){
+    if (_contour_chi2_function_map.size()==0){
+        _contour_chi2_function_map=get_ContourFunc_map();
+    }
+    if (_function_map.find(name)==_function_map.end()){
+        std::map<std::string,ContourFunc>::iterator contour_func_it=_contour_chi2_function_map.find(function_name);
+        if (contour_func_it!=_contour_chi2_function_map.end()){
+            std::vector<Contour*> contours;
+            std::vector<std::string>::iterator contour_names_it;
+            ContourManager * contour_manager=ContourManager::GetInstance();
+            for (contour_names_it=contour_names.begin(); contour_names_it!=contour_names.end();contour_names_it++){
+                Contour * contour=contour_manager->Get((*contour_names_it).c_str());    
+                if (contour!=NULL){
+                    contours.push_back(contour);
+                }
+                else{
+                    std::cout << "Contour \"" << *contour_names_it << "\" could not be found" << std::endl;
+                    std::cout << "Skipping contour" << std::endl;
+                    return;
+                }
+                ContourConstraint * new_contour_constraint=new ContourConstraint(array_ids,contours,contour_func_it->second);
+                _function_map[name]=new_contour_constraint;
+            }
+        }
+        else{
+            std::cout << "function name: \"" << function_name << "\" not found" << std::endl;
+        }
+    }
+    else{
+        std::cout << "Function \"" << name << "\" already defined" << std::endl;  
+    }
+}
+
 void GetValueManager::AddChi2Calculator(const char * name){
     if (_chi2_calculator_map.find(name)==_chi2_calculator_map.end()){
         Chi2Calculator * new_chi2_calculator=new Chi2Calculator();
