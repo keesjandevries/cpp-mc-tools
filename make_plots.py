@@ -14,6 +14,7 @@ import user.vars_lookups
 import user.vars_functions
 import user.gauss_constraints
 import user.contour_constraints
+import user.constraints_sets
 import user.contours
 # shared library objects
 runlib=cdll.LoadLibrary('lib/libmylib.so')
@@ -62,6 +63,9 @@ if __name__ == '__main__':
     add_vars_functions(vars_functions) 
     add_gauss_constraints(gauss_constraints)
     add_contour_constraints(contour_constraints)
+    # look for chi2 calculators
+    if args.reference in user.constraints_sets.constraints.keys():
+        add_chi2_calculator(args.reference,user.constraints_sets.get(args.reference))
     # axes and spaces to managers
     add_axes(axes)
     pp(spaces)
