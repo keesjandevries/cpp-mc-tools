@@ -1,4 +1,5 @@
 #own contributions
+temp*
 *~
 *swp
 html/*
@@ -8,6 +9,7 @@ bin/*
 *pdf
 .nf*
 *__pycache__*
+*.npy
 
 #standard c++ git ignore from github
 # Compiled Object files

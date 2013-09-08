@@ -1,104 +1,70 @@
 #! /usr/bin/env python
 # python modules
-import argparse, json
+import argparse
+import json
+import pprint
 from ctypes import cdll
-# custum modules
-import  py_modules.oldarrayindices 
-# dictionaries
+# private modules
+from py_modules.tools import *
+# user defined 
+import user.mc_old_setup
 import user.axes
 import user.spaces
-import user.files
+import user.vars_lookups
+import user.vars_functions
+import user.gauss_constraints
+import user.contour_constraints
+import user.contours
 # shared library objects
 runlib=cdll.LoadLibrary('lib/libmylib.so')
-# some definitions 
-axes_file='user/temp_axes.json'
-spaces_file='user/temp_spaces.json'
-
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='Process some integers.')
+    parser = argparse.ArgumentParser()
     parser.add_argument('rootfile', help='define input root file')
+    parser.add_argument('--nentries', default=-1,help='number of entries to plot',type=int)
+    parser.add_argument('--reference', default='chi2',
+        help='Usually chi-functions, but in general the function that is mimimised to project the spaces')
+    parser.add_argument('--mc-old-setup', help='select array indices setup from user/mc_old_setup.py')
+    parser.add_argument('--dir-in-root', default='',
+            help='choose directory in which the plots are stored within the root file')
+    parser.add_argument('--storage-dict', help='specify json file containing a list [(oid1,oid2,array_id), ... ]')
+    parser.add_argument('--spaces', help='select plots from user/spaces.py')
     return parser.parse_args()
-
-def get_file_info(filename):
-    try:
-        file_info=user.files.get_files()[filename]
-    except KeyError:
-        print("ERROR: file \"{}\" not found in user/files.py. Exiting program".format(filename))
-        exit(1)
-    return file_info
-
-def get_array_ids_dict_style(file_info):
-    try:
-        observable_ids=file_info['observable_ids']
-    except KeyError:
-        print("ERROR: key \"{}\" not found in file_info. Change in \"user/files.py\" Exiting program".format('observable_ids'))
-        exit(1)
-    #Check both, they cannot both be true
-    old_oids= observable_ids.get('mc_old')
-    mcpp_oids= observable_ids.get('mcpp')
-    if old_oids and mcpp_oids: 
-        print("ERROR: in file \"user/files.py \", both mc_old and mcpp observable ids are defined")
-        exit(1)
-    if old_oids:
-        array_ids_dict= py_modules.oldarrayindices.get_array_ids(old_oids['prediction_index'],old_oids['spectrum_index'])
-        style='mc_old'
-    elif mcpp_oids:
-        print("NOTE: atm not implemented. Exiting program")
-        exit(0)
-    return array_ids_dict, style
-
-def populate_axes(style,array_ids_dict,axes):
-    for name, axis in axes.items():
-        if not axis['observable_ids'].get('array_ids')==None:
-            continue 
-        else:
-            oids=axis['observable_ids'][style]
-            if not isinstance(oids, list): oids=[oids]
-            array_ids=[array_ids_dict[oid] for oid in oids]
-            axis['observable_ids'].update({'array_ids':array_ids})
-    return axes
-
-def check_axes_defined(axes, axes_names):
-    defined=True
-    name=None
-    if axes:
-        if not isinstance(axes, list):
-            axes=[axes]
-        for axis in axes:
-            if not axis in axes_names:
-                defined=False
-                name=axis
-                break
-    else:
-        defined=False
-    return defined, name
-
-def populate_spaces(axes_dict):
-    spaces=user.spaces.get_spaces()
-    axes_names=axes_dict.keys()
-    for space in spaces:
-        defined, name= check_axes_defined(space.get('axes'),axes_names)
-        if not defined:
-            print('ERROR: \"{}\" not defined in user/axes.py . Exiting program'.format(name))
-            exit(1)
-        defined, name= check_axes_defined(space.get('zaxes'),axes_names)
-        if (not defined) and name:
-            print('ERROR: \"{}\" not defined in user/axes.py . Exiting program'.format(name))
-            exit(1)
-    return spaces
 
 if __name__ == '__main__':
     args=parse_args()
-    file_info=get_file_info(args.rootfile)
-    array_ids_dict,style=get_array_ids_dict_style(file_info)
-    axes=populate_axes(style,array_ids_dict,user.axes.get_axes())
-    spaces=populate_spaces(axes)
-    #FIXME: this should be replaced by files that get deleted after running plotting from python
-    with open(axes_file,'w') as json_file:
-        json.dump(axes,json_file,indent=3)
-    with open(spaces_file,'w') as json_file:
-        json.dump(spaces,json_file,indent=3)
-    runlib.run(args.rootfile.encode('ascii'),axes_file.encode('ascii'),spaces_file.encode('ascii'))
-        
-
+    if args.mc_old_setup:
+        array_ids_dict=get_mc_old_array_ids_dict(user.mc_old_setup.get(args.mc_old_setup))
+        style='mc_old'
+    elif args.storage_dict:
+        array_ids_dict=array_ids_dict_from_json_file(args.storage_dict)
+        style='mcpp'
+    # get spaces for which axis names are defined spaces
+    spaces=populate_spaces(user.axes.get(),user.spaces.get_spaces(args.spaces),args.reference)
+    # populate vars_lookups, vars_functions, and gauss_constraints with array ids
+    vars_lookups={name: {'observable_ids': oids} for name, oids in user.vars_lookups.get().items()}
+    vars_lookups=populate_with_array_ids(vars_lookups,style,array_ids_dict)
+    vars_functions=populate_with_array_ids(user.vars_functions.get(),style,array_ids_dict)
+    gauss_constraints=populate_with_array_ids((user.gauss_constraints.get()),style,array_ids_dict)
+    contour_constraints=populate_with_array_ids((user.contour_constraints.get()),style,array_ids_dict)
+    # populate contours and add to managers
+    contours=populate_contours(user.contours.get())
+    add_contours(contours)
+    # get axes that are in the spaces
+    axes_list=get_axes_list_from_spaces(spaces)
+    # for now the "valid" value functions are those for which array_ids are specified
+    valid_values_list=list(vars_lookups.keys())+list(vars_functions.keys())+ \
+        list(gauss_constraints.keys())+list(contour_constraints.keys())
+    # populate the valid-and-required-by-spaces axes
+    axes=populate_axes(user.axes.get(),valid_values_list,axes_list)
+    # now add values to the managers
+    add_vars_lookups(vars_lookups) 
+    add_vars_functions(vars_functions) 
+    add_gauss_constraints(gauss_constraints)
+    add_contour_constraints(contour_constraints)
+    # axes and spaces to managers
+    add_axes(axes)
+    pp(spaces)
+    add_spaces(spaces)
+    #finally make the plots
+    runlib.make_plots_in_directory(args.rootfile.encode('ascii'),args.nentries,args.dir_in_root.encode('ascii'))

@@ -4,7 +4,8 @@
 #include "GetValueFunctions.h"
 
 std::map<std::string,Axis*> get_axes_map(std::string axes_file_name,  std::map<std::string, GetValueFunction> function_map ){
-    return parse_axes_from_json_file(axes_file_name,function_map);
+    std::map<std::string, GaussConstraint*> dummy;
+    return parse_axes_from_json_file(axes_file_name,function_map, dummy);
 }
 std::vector< AxesZaxesNames> get_axes_names_list(std::string filename){
     return parse_axes_names_list_from_json_file(filename);

@@ -2,6 +2,7 @@
 
 def get_array_ids(prediction_index,spectrum_index):
     return {
+            'X2'           :0,
             "m0"           : 1 ,
             "m12"          : 2 ,
             "A0"           : 3 ,
@@ -9,6 +10,15 @@ def get_array_ids(prediction_index,spectrum_index):
             "mh2"          : 6 ,
             "mhd2"         : 6 ,
             "mhu2"         : 7 ,
+            'msq12'        :1, 
+            'msq3'         :2, 
+            'msl'          :3, 
+            'A'            :5, 
+            'M1'           :6,
+            'in_mu'        :7,
+            'in_ma'        :8,
+            'M2'           :9,
+            'M3'           :10,
             "mtop"         : prediction_index-4, 
             "MZ"           : prediction_index-3, 
             "GZ_in"        : prediction_index-2, 

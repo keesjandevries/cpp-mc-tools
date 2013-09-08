@@ -37,56 +37,41 @@ std::vector<Space*> my_get_spaces(std::map<std::string,Axis*> axes_map, std::vec
 
 //FIXME: THIS MODULE COULD DO WITH MORE CLEANUP, BUT IT SEEMS TO WORK
 //
-void make_histograms(const char * file, const char * json_axes_file, const char * json_spaces_file){
+void make_histograms(const char * file, const char * json_axes_file, const char * json_spaces_file, 
+        const char * json_constraints_file, int nentries=-1){
     TString infile(file);
-    std::cout << "Making plots for \"" << infile << "\"." << std::endl; 
-// INISTIALISE FILE
-// FIXME: eventually turn this into a function
-    // File
-    TFile* f = new TFile(infile,"UPDATE");  
-    // Tree
-    TTree* t = (TTree*)f->Get("tree");
-    // number of entries
-    int nentries = t->GetEntries();
-    // branch to loop over
-    Int_t nTotVars = t->GetLeaf("vars")->GetLen();
-    double* invars = new double[nTotVars];
-    t->SetBranchAddress("vars",invars);
 
-//FIXME: THIS MODULE COULD DO WITH MORE CLEANUP, BUT IT SEEMS TO WORK
 // INITIALISE spaces
     // make axes list
     std::vector< AxesZaxesNames> axes_list=parse_axes_names_list_from_json_file(json_spaces_file);
     // get value functions map
-    std::map<std::string,GetValueFunction> function_map=get_GetValueFunction_map();
+    std::map<std::string,GetVarsFunction> function_map=get_GetVarsFunction_map();
+    // get constraint map
+    std::map<std::string,GaussFunc> gauss_func_map=get_GaussFunc_map();
+    std::map<std::string,ContourFunc> contour_func_map=get_ContourFunc_map();
+    std::map<std::string, BaseGetValueFunction*> constraints_map=parse_constraints_from_json_file( json_constraints_file,
+        gauss_func_map, contour_func_map);
     // get axes map
-    std::map<std::string,Axis*> axes_map=parse_axes_from_json_file(json_axes_file,function_map);
+    std::map<std::string,Axis*> axes_map=parse_axes_from_json_file(json_axes_file,function_map,constraints_map);
     // get spaces from axes specified in axes_list
     std::vector<Space*> spaces= my_get_spaces(axes_map,axes_list);
-
-    //This if the foreloop that makes the plots
-    for(int i=0; i<nentries; i++){
-        //FIXME: make progress bar
-        if (i%100000==0) std::cout << "Processed: " << i << "entries" << std::endl;
-        // get entry
-        t->GetEntry(i);
-        ///Update all spaces: check whether X^2 is lower than existing X^2
-        for( std::vector<Space*>::iterator it=spaces.begin(); it!=spaces.end() ; it++){
-            (*it)->update(invars,i);
-        }
+    
+    RootMakePlots root_make_plots(file,spaces);
+    if (nentries==-1){
+        root_make_plots.Run();
     }
-    //Write all plots (X^2,entries, *zaxes) to root file
-    for( std::vector<Space*>::iterator it=spaces.begin(); it!=spaces.end() ; it++){
-        (*it)->write_plots();
+    else{
+        root_make_plots.Run(nentries);
     }
-    delete [] invars;
-    f->Close();
 }
 
 //FIXME: THIS MODULE COULD DO WITH MORE CLEANUP, BUT IT SEEMS TO WORK
 
 extern "C" {
-    void run(const char * root_file,const char * json_axes_files, const char * json_spaces_file){
-        make_histograms(root_file,json_axes_files,json_spaces_file);
+    void run(const char * root_file,const char * json_axes_files, const char * json_spaces_file, const char * json_constraints_file){
+        make_histograms(root_file,json_axes_files,json_spaces_file,json_constraints_file);
+    }
+    void run_n(const char * root_file,const char * json_axes_files, const char * json_spaces_file, const char * json_constraints_file, int nentries){
+        make_histograms(root_file,json_axes_files,json_spaces_file,json_constraints_file,nentries);
     }
 }

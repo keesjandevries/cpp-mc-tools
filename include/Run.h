@@ -4,15 +4,14 @@
 #include <sstream>
 #include <cmath>
 
-#include <TFile.h>
-#include <TTree.h>
-#include <TLeaf.h>
-#include <TString.h>
-#include <TH2D.h>
-
 #include "Space.h"
 #include "JsonParsing.h"
-#include "GetValueFunctions.h"
-
+#include "GetVarsFunctions.h"
+#include "GaussFunctions.h"
+#include "Contour.h"
+#include "DefaultContour.h"
+#include "LogXLogYContour.h"
+#include "UniversalLimitsContour.h"
+#include "RootMakePlots.h"
 
 #endif

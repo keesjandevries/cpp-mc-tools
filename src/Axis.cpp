@@ -1,8 +1,7 @@
 #include "Axis.h"
 
-/// If you want to overload constructors, then you need to do it this way 
-///(http://stackoverflow.com/questions/7330296/constructor-overloading-in-c)
-void Axis::init(std::string name,  BinningInputs bin_inp , GetValueFunction get_value ,std::vector<int> array_ids){
+
+void Axis::init_binning(BinningInputs bin_inp ){
     //////////////////////
     //initialise bin edges
     //////////////////////
@@ -23,63 +22,30 @@ void Axis::init(std::string name,  BinningInputs bin_inp , GetValueFunction get_
         if (bin_inp.binning_type=="log") edge=pow(10.,edge);
         _bin_edges.push_back(edge);
     }
-    //array ids tell the get_value function where to look in the array
-    _array_ids=array_ids;
-    //when no function is given, the default get_value is used
-    _get_value=get_value;
-    //set name of axis
-    _name=name;
 }
 
-Axis::Axis(std::string name, BinningInputs bin_inp , GetValueFunction get_value, std::vector<int> array_ids){
-    init( name, bin_inp ,get_value, array_ids);
+
+Axis::Axis(std::string name):
+_name(name)
+{
+    //intentionally empty
 }
 
-Axis::Axis(std::string name, BinningInputs bin_inp ,std::vector<int> array_ids){
-    //call constructor with default_get_value, and the temporary array_ids
-    init(name, bin_inp, default_get_value, array_ids);
-    //set name of axis
-    _name=name;
+Axis::Axis(std::string name,BaseGetValueFunction * func):
+_name(name), _get_value(func)
+{
+    //intentionally empty
 }
 
-Axis::Axis(std::string name, BinningInputs bin_inp ,int array_id){
-    //make temporary array_ids
-    std::vector<int> tmp_array_ids;
-    tmp_array_ids.push_back(array_id);
-    //call constructor with default_get_value, and the temporary array_ids
-    init(name, bin_inp, default_get_value, tmp_array_ids);
-    //set name of axis
-    _name=name;
+Axis::Axis(std::string name,BaseGetValueFunction * func, BinningInputs binning ):
+_name(name), _get_value(func)
+{
+    init_binning(binning);
 }
 
-Axis::Axis(std::string name,int array_id){
-    //array ids tell the get_value function where to look in the array
-    _array_ids.push_back(array_id);
-    //when no function is given, the default get_value is used
-    _get_value=default_get_value;
-    //set name of axis
-    _name=name;
-}
-
-Axis::Axis(std::string name,GetValueFunction get_value, std::vector<int> array_ids){
-    //array ids tell the get_value function where to look in the array
-    _array_ids=array_ids;
-    //when no function is given, the default get_value is used
-    _get_value=get_value;
-    //set name of axis
-    _name=name;
-}
 
 double Axis::get_value(double * VARS){
-    return _get_value(VARS,&_array_ids);
-}
-
-void Axis::print_array_indices(){
-    std::cout << "Array indices of Axis \""<< _name << "\" are: [";
-    for (std::vector<int>::iterator it=_array_ids.begin(); it!=_array_ids.end(); ++it){
-        std::cout << *it << "," ;
-    }
-    std::cout << "]" << std::endl;
+    return (*_get_value)(VARS);
 }
 
 void Axis::print_bin_edges(){
@@ -90,6 +56,3 @@ void Axis::print_bin_edges(){
     std::cout << "]" << std::endl;
 }
 
-double default_get_value(double * VARS, std::vector<int>* array_ids){
-    return VARS[(*array_ids)[0]];
-}
