@@ -28,10 +28,7 @@ void add_constraint_to_chi2_calculator(const char * constraint_name, const char*
     get_value_manager->AddConstraintToChi2Calculator(constraint_name,calculator_name);
 }
 void test(){
-    double x[]={1,100};
-    double y[]={0.01,1};
-    contour_manager->AddContour("harry",x,y,2,"log_x_log_y");
-    std::cout << "THIS SHOULD GIVE 0.1: " << contour_manager->Get("harry")->GetContourValue(10) << std::endl;
+    std::cout << "THIS SHOULD GIVE 2.14692e-09: " << contour_manager->Get("xenon100_july_2012")->GetContourValue(83.2504) << std::endl;
 }
 void add_axis(const char * axis_name, const char * value_function_name){
     axis_manager->AddAxis(axis_name,value_function_name);
