@@ -184,6 +184,10 @@ def add_contour_constraints(contour_constraints):
         function_name=details['function']
         cw.add_contour_constraint(name,array_ids,contours,function_name)
 
+def add_chi2_calculator(name,constraints_list):
+    cw.add_chi2_calculator(name)
+    for constraint in constraints_list:
+        cw.add_constraint_to_chi2_calculator(constraint,name)
 
 def add_axes(axes):
     for name, details in axes.items():
