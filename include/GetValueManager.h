@@ -29,6 +29,7 @@ class GetValueManager {
         void AddGaussConstraint(const char *, std::vector<int>, double, std::vector<double>, const char *);
         void AddGaussConstraint(const char *, int*, int, double, double*,int, const char *);
         void AddContourConstraint(const char *,std::vector<int>,std::vector<std::string>,const char *);
+        void AddContourConstraint(const char *,int*, int,const char **, int ,const char *);
         // FIXME: perhaps separating out the Chi2Calculator
         void AddChi2Calculator(const char *);
         void AddConstraintToChi2Calculator(const char *,const char *);

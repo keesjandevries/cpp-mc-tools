@@ -76,6 +76,12 @@ void GetValueManager::AddGaussConstraint(const char * name, std::vector<int> arr
         std::cout << "Function \"" << name << "\" already defined" << std::endl;  
     }
 }
+void GetValueManager::AddContourConstraint(const char *name ,int* array_ids_p, int n_array_ids,
+        const char ** contour_names_p, int n_contour_names ,const char *function_name){
+    std::vector<int> array_ids(array_ids_p,array_ids_p+n_array_ids);    
+    std::vector<std::string> contour_names(contour_names_p,contour_names_p+n_contour_names);    
+    AddContourConstraint(name,array_ids,contour_names,function_name);
+}
 
 void GetValueManager::AddContourConstraint(const char * name, std::vector<int> array_ids,
         std::vector<std::string> contour_names, const char * function_name){
