@@ -24,6 +24,12 @@ def add_contour_constraint(name,array_ids,contour_names,function_name):
     c_function_name=function_name.encode('ascii')
     lib.add_contour_constraint(c_name,c_array_ids,len(c_array_ids),c_contour_names,len(c_contour_names),c_function_name)
 
+def add_chi2_calculator(name):
+    lib.add_chi2_calculator(name.encode('ascii'))
+
+def add_constraint_to_chi2_calculator(constraint_name,calculator_name):
+    lib.add_constraint_to_chi2_calculator(constraint_name.encode('ascii'),calculator_name.encode('ascii'))
+
 def add_contour(name,xs,ys,type):
     c_name=name.encode('ascii')
     c_xs=(c_double*len(xs))(*xs)

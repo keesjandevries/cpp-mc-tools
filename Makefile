@@ -19,7 +19,7 @@ LIB_NAME = mylib
 
 # Includes and Libraries
 INC_FLAGS += -I${INC_DIR} 
-LIB_FLAGS +=  -ljansson -lsqlite3
+LIB_FLAGS += -lsqlite3
 CCC_FLAGS += ${ROOTXFLAGS}
 
 # Compile-Time Definitions
