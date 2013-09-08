@@ -137,6 +137,9 @@ void GetValueManager::AddConstraintToChi2Calculator(const char * constraint_name
             std::cout << "ERROR: constraint \"" << constraint_name << "\" not found \nThis if very severe" << std::endl;
         }
     }
+    else {
+        std::cout << "ERROR: could not find calculator \'" <<  calculator_name << "\'" << std::endl;
+    }
 }
 
 BaseGetValueFunction * GetValueManager::Get(const char * name){
