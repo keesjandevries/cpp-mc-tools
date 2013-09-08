@@ -3,6 +3,7 @@
 # python modules
 import pprint
 import json
+import numpy
 # custum modules
 import  py_modules.oldarrayindices 
 import py_modules.CtypesWrappers as cw
@@ -37,6 +38,17 @@ def get_axes_list_from_spaces(spaces):
             except TypeError:
                 continue
     return axes_list
+
+def populate_contours(contours):
+    for name, details in contours.items():
+        try:
+            data_file=details['file']
+            xys=numpy.loadtxt(data_file)
+            contours[name]['xs']=list(xys[:,0])
+            contours[name]['ys']=list(xys[:,1])
+        except KeyError:
+            print('Could not find \'file\' for contour \'{}\''.format(name))
+    return contours
 
 def populate_axes(axes,valid_values_list,axes_list=None):
     #FIXME: may want to check that the gauss_constraint etc. are defined
@@ -114,7 +126,7 @@ def get_array_ids(in_dict,style,array_ids_dict):
         try:
             array_ids=[array_ids_dict[oid] for oid in oids]
         except KeyError:
-            print('WARNING: observable id \"{}\" not defined for style \"{}\". \nExiting program'.format(oids,style))
+            print('WARNING: observable id \"{}\" not defined for style \"{}\".'.format(oids,style))
     return array_ids
 
 
@@ -180,3 +192,7 @@ def add_spaces(spaces):
         zaxes=space.get('zaxes',[])
         reference=space['reference_value']
         cw.add_space(axes,zaxes,reference)
+
+def add_contours(contours):
+    for name, details in contours.items():
+        cw.add_contour(name,details['xs'],details['ys'],details['type'])
