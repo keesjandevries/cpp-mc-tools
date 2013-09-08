@@ -24,12 +24,12 @@ def add_contour_constraint(name,array_ids,contour_names,function_name):
     c_function_name=function_name.encode('ascii')
     lib.add_contour_constraint(c_name,c_array_ids,len(c_array_ids),c_contour_names,len(c_contour_names),c_function_name)
 
-def add_contour(name,xs,ys,ncoord,type):
+def add_contour(name,xs,ys,type):
     c_name=name.encode('ascii')
     c_xs=(c_double*len(xs))(*xs)
     c_ys=(c_double*len(ys))(*ys)
     c_type=type.encode('ascii')
-    lib.add_contour(c_name,c_xs,c_yx,len(c_xs),c_type)
+    lib.add_contour(c_name,c_xs,c_ys,len(c_xs),c_type)
 
 def add_axis(axis_name,value_function_name):
     c_axis_name=axis_name.encode('ascii')
