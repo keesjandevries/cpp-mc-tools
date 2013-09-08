@@ -17,6 +17,10 @@ void add_gauss_constraint(const char * name, int* array_ids_p, int n_array_ids, 
         double* sigmas_p ,int n_sigmas, const char * function_name){
     get_value_manager->AddGaussConstraint(name, array_ids_p,n_array_ids,mu,sigmas_p,n_sigmas,function_name);
 }
+void add_contour_constraint(const char *name ,int* array_ids_p, int n_array_ids,
+        const char ** contour_names_p, int n_contour_names ,const char *function_name){
+    get_value_manager->AddContourConstraint(name, array_ids_p,n_array_ids,contour_names_p,n_contour_names, function_name);
+}
 void add_chi2_calculator(const char * name){
     get_value_manager->AddChi2Calculator(name);
 }
