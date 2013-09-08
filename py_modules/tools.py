@@ -177,6 +177,13 @@ def add_gauss_constraints(gauss_constraints):
         function_name=details['function_name']
         cw.add_gauss_constraint(name,array_ids,mu,sigmas,function_name)
 
+def add_contour_constraints(contour_constraints):
+    for name, details in contour_constraints.items():
+        array_ids=details['observable_ids']['array_ids']
+        contours=details['contours']
+        function_name=details['function']
+        cw.add_contour_constraint(name,array_ids,contours,function_name)
+
 
 def add_axes(axes):
     for name, details in axes.items():
