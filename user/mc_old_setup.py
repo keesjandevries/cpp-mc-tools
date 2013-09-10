@@ -22,6 +22,9 @@ mc_old_setups= {
             'mc-old-nuhm1':{
                 'observable_ids':{ 'mc_old' :{ 'prediction_index':12, 'spectrum_index':76  }}, 
                 },
+            'mc-old-nuhm1-mc8-ko':{
+                'observable_ids':{ 'mc_old' :{ 'prediction_index':12, 'spectrum_index':126 }}, 
+                },
             'mc-old-pmssm8':{
                 'observable_ids':{ 'mc_old' :{ 'prediction_index':13, 'spectrum_index':77  }}, 
                 },
