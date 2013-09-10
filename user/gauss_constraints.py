@@ -17,6 +17,30 @@ def get():
                     'mcpp': ('Micromegas', 'Omega')
                     },
                 },
+            'chi2-Mt': {
+                'function_name': 'gauss',
+                'mu': 173.2,
+                'sigmas': [0.78],
+                'observable_ids': {
+                    'mcpp':('SMINPUTS','in_Mt'),
+                    },
+                },
+            'chi2-MZ': {
+                'function_name': 'gauss',
+                'mu':91.1875 ,
+                'sigmas': [0.0021],
+                'observable_ids': {
+                    'mcpp':('SMINPUTS','mod_MZ'),
+                    },
+                },
+            'chi2-Dalpha-had': {
+                'function_name': 'gauss',
+                'mu': 0.02756,
+                'sigmas': [0.0001],
+                'observable_ids': {
+                    'mcpp':('SUSY-POPE', 'DAlpha_had_in'),
+                    },
+                },
             'g-2': {
                 'function_name': 'gauss',
                 'mu': 3.02e-09,
@@ -24,5 +48,5 @@ def get():
                 'observable_ids': {
                     'mc_old': 'Delta(g-2)'
                     },
-                }
+                },
             }
