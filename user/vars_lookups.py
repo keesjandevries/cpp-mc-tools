@@ -1,6 +1,6 @@
 def get():
     return {
-        'chi2': {'array_ids': 0},
+        'chi2-chi2': {'array_ids': 0},
         # general inputs
         'mtop': {'mcpp':('SMINPUTS','in_Mt')},
         'tanb': {'mc_old': 'tanb', 'mcpp': ('MINPAR', 'TB')},
