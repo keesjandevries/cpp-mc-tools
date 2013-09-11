@@ -7,10 +7,10 @@ Contour::Contour(std::vector<double_pair> coordinates):
 }
 
 double Contour::GetContourValue(double parameter){
-    if (parameter < _coordinates_parameters.front()){ 
+    if (parameter <= _coordinates_parameters.front()){ 
         return low_extrapolate(parameter);
     }
-    else if (parameter <=_coordinates_parameters.back()){ 
+    else if (parameter <_coordinates_parameters.back()){ 
         std::pair< double_pair,double_pair > segment=get_segment(parameter);
         return interpolate(parameter,segment);
     }
