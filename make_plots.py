@@ -23,7 +23,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('rootfile', help='define input root file')
     parser.add_argument('--nentries', default=-1,help='number of entries to plot',type=int)
-    parser.add_argument('--reference', default='chi2',
+    parser.add_argument('--reference', default='chi2-chi2',
         help='Usually chi-functions, but in general the function that is mimimised to project the spaces')
     parser.add_argument('--mc-old-setup', help='select array indices setup from user/mc_old_setup.py')
     parser.add_argument('--dir-in-root', default='',
