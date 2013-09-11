@@ -1,7 +1,7 @@
 def get():
     constraints=get_mcpp_constraints()
     #rename to chi2-<constraint name>
-    constraints={'chi2-{}'.format(name):details for name, details in constraints.items{}}
+    constraints={'chi2-{}'.format(name):details for name, details in constraints.items()}
     return constraints
 
 #function converts the constraints below to the format that we want to use here
@@ -24,7 +24,7 @@ mcpp_constraints_dict = {
         'LEP-chargino':{
             'oids': [ ('MASS', 'MCha(1)'), ('MASS', 'MCha(2)')],
             'data': [103., 1.],
-            'func': 'multi_lowerlimit'},
+            'func': 'multi_abs_lowerlimit'},
         'LEP-neutralino':{
             'oids': [ ('MASS', 'MNeu(1)')],
             'data': [50., 1.],
