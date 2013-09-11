@@ -27,6 +27,9 @@ void add_chi2_calculator(const char * name){
 void add_constraint_to_chi2_calculator(const char * constraint_name, const char* calculator_name){
     get_value_manager->AddConstraintToChi2Calculator(constraint_name,calculator_name);
 }
+double get_value(const char * name,double * vars){
+    return (*(get_value_manager->Get(name)))(vars);
+}
 void test(){
     double vars[300];
     vars[71]=83.2504;
