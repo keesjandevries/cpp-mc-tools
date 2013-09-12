@@ -125,7 +125,7 @@ double neutralino_lsp(double * VARS, std::vector<int> & array_ids , GaussData & 
     double mass;
     it++;
     for (;it!=array_ids.end();it++){
-        mass=std::abs(VARS[array_ids[*it]]);
+        mass=std::abs(VARS[*it]);
         if (mass<mneu) chi2+=(mass-mneu)*(mass-mneu);
     }
     return chi2;
