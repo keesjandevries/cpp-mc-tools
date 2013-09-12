@@ -23,7 +23,28 @@ contour_constraints={
                     },
                 'contours':['mc8_ma_tanb'],
                 'function':'mc8_ma_tanb',#FIXME name is consistent with mcpp, but should be renamed
-                }
+                },
+            'atlas5_m0_m12':{
+                'observable_ids':{
+                    'mcpp':[('MINPAR', 'in_M0'),('MINPAR', 'in_M12')],
+                    },
+                'contours':['atlas_5fb_m0_m12'],
+                'function':'m0_m12_power_4',
+                },
+            'atlas20_m0_m12':{
+                'observable_ids':{
+                    'mcpp':[('MINPAR', 'in_M0'),('MINPAR', 'in_M12')],
+                    },
+                'contours':['atlas_20fb_m0_m12'],
+                'function':'m0_m12_power_4',
+                },
+            'mc8_bsmm':{
+                'observable_ids':{
+                    'mcpp':[('BPhysics','Psll')],
+                    },
+                'contours':['mc8_bsmm'],
+                'function':'one_dim_chi2_lookup',
+                },
             }
     #FIXME: tidy up
 #    return {'m3g_universal_limits': {'contours': [{'coordinates': [[0.0, 500.0],
