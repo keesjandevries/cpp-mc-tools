@@ -9,6 +9,7 @@
 #include "DefaultContour.h"
 #include "LogXLogYContour.h"
 #include "UniversalLimitsContour.h"
+#include "RadialContour.h"
 
 class ContourManager {
     public:
