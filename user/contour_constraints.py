@@ -1,12 +1,29 @@
 def get():
-    return {
-            'xenon100_july_2012':{
+    constraints={'chi2-{}'.format(name):details for name, details in contour_constraints.items()}
+    return constraints
+
+contour_constraints={
+            'xenon100':{
                 'observable_ids':{
                     'mcpp':[('MASS', 'MNeu(1)'),('Micromegas','sigma_p_si')],
                     },
                 'contours':['xenon100_july_2012'],
-                'function':'xenon100_mc8',
+                'function':'xenon100_jul_2012',
                 },
+            'xenon100_SpiN_unc':{
+                'observable_ids':{
+                    'mcpp':[('MASS', 'MNeu(1)'),('LSP scattering','s3out'),('LSP scattering','ss3out')] ,
+                    },
+                'contours':['xenon100_july_2012'],
+                'function':'xenon100_jul_2012_Sigma_pi_N_unc',
+                },
+            'MATANB':{
+                'observable_ids':{
+                    'mcpp':[('FeynHiggs', 'mA'),('MINPAR', 'TB')],
+                    },
+                'contours':['mc8_ma_tanb'],
+                'function':'mc8_ma_tanb',#FIXME name is consistent with mcpp, but should be renamed
+                }
             }
     #FIXME: tidy up
 #    return {'m3g_universal_limits': {'contours': [{'coordinates': [[0.0, 500.0],
