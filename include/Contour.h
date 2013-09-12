@@ -29,6 +29,7 @@ class Contour{
         // virtual member functions
         virtual double get_point_value(double_pair&)=0;        //e.g. get_radius(...), get_y(...)
         virtual double get_point_parameter(double_pair&)=0;    //e.g. get_theta(...), get_x(...)
+        //FIXME: since this is always the same, it's better to make it non-virtual
         virtual std::pair<double_pair,double_pair> get_segment(double /*parameter*/)=0;
         virtual double interpolate(double /*parameter*/,std::pair<double_pair,double_pair> /*segment*/)=0;
         virtual double low_extrapolate(double /*parameter*/)=0;
