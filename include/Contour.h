@@ -17,6 +17,7 @@ class Contour{
         virtual ~Contour(){};
         // These are functions that should be available
         double GetPointParameter(std::vector<double> /*point_coordinates*/);
+        //FIXME: make this into const (cf. http://stackoverflow.com/questions/13555556/cannot-convert-parameter-from-int-to-int)
         double GetPointParameter(double_pair&);
         double GetPointValue(std::vector<double> /*point_coordinates*/);
         double GetPointValue(double_pair &);
