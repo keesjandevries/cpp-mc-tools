@@ -1,5 +1,13 @@
 def get():
     return{
+            'mtop': {
+                'binning': {
+                    'high': 175.2,
+                    'low': 171.2,
+                    'nbins': 100,
+                    'type': 'linear'
+                    },
+                'value': 'mtop'},
             'A': {
                 'binning': {
                     'high': 5000.0,
@@ -136,8 +144,8 @@ def get():
                                'nbins': 100,
                                'type': 'linear'},
                    'value': 'mh'},
-            'mh2': {'binning': {'high': 12000000.0,
-                                'low': -12000000.0,
+            'mh2': {'binning': {'high': 20000000.0,
+                                'low': -20000000.0,
                                 'nbins': 100,
                                 'type': 'linear'},
                     'value': 'mh2'},

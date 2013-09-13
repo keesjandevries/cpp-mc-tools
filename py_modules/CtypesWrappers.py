@@ -30,6 +30,13 @@ def add_chi2_calculator(name):
 def add_constraint_to_chi2_calculator(constraint_name,calculator_name):
     lib.add_constraint_to_chi2_calculator(constraint_name.encode('ascii'),calculator_name.encode('ascii'))
 
+def get_value(name,vars):
+    lib.get_value.restype=c_double
+    c_name=name.encode('ascii')
+    c_vars=(c_double*len(vars))(*vars)
+    return lib.get_value(c_name,c_vars)
+
+
 def add_contour(name,xs,ys,type):
     c_name=name.encode('ascii')
     c_xs=(c_double*len(xs))(*xs)

@@ -19,6 +19,8 @@ void ContourManager::AddContour(const char * name, std::vector<double_pair> coor
             new_contour=new LogXLogYContour(coords);
         else if (contour_type=="universal_limits") 
             new_contour=new UniversalLimitsContour(coords);
+        else if (contour_type=="radial") 
+            new_contour=new RadialContour(coords);
         else{
             std::cout << "WARNING: for contour \"" << name << "\" no valid type was specified." << std::endl
                       << "Skipping contour." << std::endl;

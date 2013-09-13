@@ -1,11 +1,13 @@
 def get():
     return {
-        'chi2': {'array_ids': 0},
+        'chi2-chi2': {'array_ids': 0},
+        # general inputs
+        'mtop': {'mcpp':('SMINPUTS','in_Mt')},
+        'tanb': {'mc_old': 'tanb', 'mcpp': ('MINPAR', 'TB')},
         #cmssm/nuhm1 inputs
         'm0': {'mc_old': 'm0', 'mcpp': ('MINPAR', 'in_M0')},
         'm12': {'mc_old': 'm12', 'mcpp': ('MINPAR', 'in_M12')},
         'A0': {'mc_old': 'A0', 'mcpp': ('MINPAR', 'in_A')},
-        'tanb': {'mc_old': 'tanb', 'mcpp': ('MINPAR', 'TB')},
         'mh2': {'mc_old': 'mh2', 'mcpp': ('EXTPAR', 'in_MH2')},
         #pmssm inputs
         'msq12': {'mc_old': 'msq12', 'mcpp': ('MC_EXTPAR', 'in_MC_Msq12')},

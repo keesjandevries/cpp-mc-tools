@@ -31,7 +31,7 @@ INSTALL_DIR =
 
 
 # The Compiler
-CCC = g++ -g  -Wall -Wextra  ${DEFINES} 
+CCC = g++ -g -O3 -Wall -Wextra  ${DEFINES} 
 # CCC = g++ -O2 -Wall -Wextra -pedantic ${DEFINES} # Optimized Compilation
 
 
