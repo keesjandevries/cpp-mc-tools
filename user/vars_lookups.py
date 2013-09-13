@@ -4,6 +4,8 @@ def get():
         # general inputs
         'mtop': {'mcpp':('SMINPUTS','in_Mt')},
         'tanb': {'mc_old': 'tanb', 'mcpp': ('MINPAR', 'TB')},
+        'mz':{'mcpp':('SMINPUTS','mod_MZ')},
+        'Delta_alpha_had':{'mcpp':('SUSY-POPE', 'DAlpha_had_in')},
         #cmssm/nuhm1 inputs
         'm0': {'mc_old': 'm0', 'mcpp': ('MINPAR', 'in_M0')},
         'm12': {'mc_old': 'm12', 'mcpp': ('MINPAR', 'in_M12')},
