@@ -18,6 +18,7 @@ import user.contour_constraints
 import user.constraints_sets
 import user.contours
 import user.parameters
+import user.observables
 
 #NOTE: this is a rather serious attempt to create a very useful tool
 def parse_args():
@@ -28,6 +29,7 @@ def parse_args():
     parser.add_argument('--mc-old-setup', help='select array indices setup from user/mc_old_setup.py')
     parser.add_argument('--storage-dict', help='specify json file containing a list [(oid1,oid2,array_id), ... ]')
     parser.add_argument('--parameters', help='specify parameters as defined in user/parameters.py')
+    parser.add_argument('--observables', help='specify observables as defined in user/observables.py')
     parser.add_argument('--breakdown', help='specify chi2 breakdown according to user/constratins_sets.py')
     return parser.parse_args()
 
@@ -60,18 +62,29 @@ if __name__=='__main__':
     add_vars_functions(vars_functions) 
     add_gauss_constraints(gauss_constraints)
     add_contour_constraints(contour_constraints)
+    format='{:<30}: {:30}'
+    number_format='{:<30}: {:<5.3f}'
+    if args.observables:
+        observables=user.observables.get(args.observables)
+        print('='*50)
+        for observable in observables:
+            value=ctw.get_value(observable,vars)
+            print(number_format.format(observable,value))
     if args.breakdown:
         # look for chi2 calculators
         constraints=user.constraints_sets.get(args.breakdown)
         add_chi2_calculator(args.breakdown,constraints)
-        format='{:<30}: {}'
+        print('='*50)
         print(format.format('constraint','chi2'))
+        print('='*50)
         for constraint in constraints:
             chi2=ctw.get_value(constraint,vars)
             constraint=constraint.replace('chi2-','')
-            print(format.format(constraint,chi2))
-        print(format.format('total',ctw.get_value(args.breakdown,vars)))
-    if args.parameters:
+            print(number_format.format(constraint,chi2))
+        print('='*50)
+        print(number_format.format('total',ctw.get_value(args.breakdown,vars)))
+        print('='*50)
+    if args.parameters is not None:
         parameters=user.parameters.get(args.parameters)
         values=[str(ctw.get_value(parameter,vars)) for parameter in parameters]
         print(' '.join(values))
