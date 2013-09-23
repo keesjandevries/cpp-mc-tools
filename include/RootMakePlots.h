@@ -3,9 +3,7 @@
 //standard library
 #include <vector>
 //root includes
-#include "TSystem.h"
 #include "TFile.h"
-#include "TTree.h"
 #include "TLeaf.h"
 #include "TChain.h"
 //custom includes
