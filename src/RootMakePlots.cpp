@@ -37,12 +37,9 @@ void RootMakePlots::Run(){
 }
 
 void RootMakePlots::init_root_file(const char * filename){
-    _chain=new TChain("tree");// FIXME: hardcoded
-    _chain->Add(filename);
-    _nvars=_chain->GetLeaf("vars")->GetLen();
-    _vars=new double[_nvars];
-    _chain->SetBranchAddress("vars",_vars);
-    _nentries = _chain->GetEntries();
+    std::vector<const char *> filenames;
+    filenames.push_back(filename);
+    init_root_files(filenames);
 }
 
 void RootMakePlots::init_root_files(std::vector<const char *> filenames){
