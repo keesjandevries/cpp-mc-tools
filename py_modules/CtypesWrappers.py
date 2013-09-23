@@ -73,4 +73,4 @@ def make_plots(infiles, outfile, nentries, dir_in_root ):
     c_infiles=infiles_c_strings(*[name.encode('ascii') for name in infiles])
     c_outfile=outfile.encode('ascii')
     c_dir_in_root=dir_in_root.encode('ascii')
-    lib.make_plots_general(c_infiles, len(c_infiles), c_outfile,nentries,c_dir_in_root)
+    lib.make_plots(c_infiles, len(c_infiles), c_outfile,nentries,c_dir_in_root)

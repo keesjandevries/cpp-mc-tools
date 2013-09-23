@@ -59,7 +59,7 @@ void add_space(const char * c_axes_names[], int n_axes_names,const char * c_zaxe
 void add_contour(const char * name, double * xs, double * ys, int n_coords, const char * type){
     contour_manager->AddContour(name,xs,ys,n_coords,type);
 }
-void make_plots_general(const char ** root_file_names,int n_root_file_names,
+void make_plots(const char ** root_file_names,int n_root_file_names,
         const char * outfile, int nentries, const char * directoryname){
     std::vector<const char *> filenames(root_file_names,root_file_names+n_root_file_names);
     std::vector<Space*> spaces=space_manager->Get();
