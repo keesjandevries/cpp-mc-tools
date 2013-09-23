@@ -59,32 +59,16 @@ void add_space(const char * c_axes_names[], int n_axes_names,const char * c_zaxe
 void add_contour(const char * name, double * xs, double * ys, int n_coords, const char * type){
     contour_manager->AddContour(name,xs,ys,n_coords,type);
 }
-
-void make_plots_in_directory(const char * root_file_name,int nentries, const char * directoryname){
-    std::vector<Space*> spaces=space_manager->Get();
-    RootMakePlots root_make_plots(root_file_name,spaces,directoryname);
-//    int nentries=100;
-    if (nentries==-1){
-        root_make_plots.Run();
-    }
-    else{
-        root_make_plots.Run(nentries);
-    }
-}
 void make_plots_general(const char ** root_file_names,int n_root_file_names,
         const char * outfile, int nentries, const char * directoryname){
     std::vector<const char *> filenames(root_file_names,root_file_names+n_root_file_names);
     std::vector<Space*> spaces=space_manager->Get();
     RootMakePlots root_make_plots(filenames,outfile,spaces,directoryname);
-//    int nentries=100;
     if (nentries==-1){
         root_make_plots.Run();
     }
     else{
         root_make_plots.Run(nentries);
     }
-}
-void make_plots(const char * root_file_name,int nentries){
-    make_plots_in_directory(root_file_name,nentries,""); 
 }
 }
