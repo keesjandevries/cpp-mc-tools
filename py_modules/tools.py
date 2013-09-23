@@ -3,6 +3,7 @@
 # python modules
 import pprint
 import json
+import os
 import numpy
 # custum modules
 import  py_modules.oldarrayindices 
@@ -126,7 +127,8 @@ def get_array_ids(in_dict,style,array_ids_dict):
         try:
             array_ids=[array_ids_dict[oid] for oid in oids]
         except KeyError:
-            print('WARNING: observable id \"{}\" not defined for style \"{}\".'.format(oids,style))
+            pass
+#            print('WARNING: observable id \"{}\" not defined for style \"{}\".'.format(oids,style))
     return array_ids
 
 
@@ -207,3 +209,24 @@ def add_spaces(spaces):
 def add_contours(contours):
     for name, details in contours.items():
         cw.add_contour(name,details['xs'],details['ys'],details['type'])
+
+
+def get_all_but_the_last_root_files(basedir,prefix):
+    rootfiles=[]
+    for root, dirs, files in os.walk(basedir):
+        dirfiles=[]
+        dirnumbers=[]
+        for file in files:
+            if prefix in file:
+                dirfiles.append(file)
+        if len(dirfiles)>0:
+            for file in dirfiles:
+                n=int(file.replace(prefix,'').replace('.root',''))
+                dirnumbers.append(n)
+            dirmaxn=max(dirnumbers)
+            for i, file in enumerate(dirfiles):
+                if str(dirmaxn) in file:
+                    dirfiles.pop(i)
+                    break
+            rootfiles+=[os.path.join(root,dirfile) for dirfile in dirfiles]
+    return rootfiles

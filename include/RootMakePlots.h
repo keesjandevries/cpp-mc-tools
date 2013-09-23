@@ -4,21 +4,24 @@
 #include <vector>
 //root includes
 #include "TFile.h"
-#include "TTree.h"
 #include "TLeaf.h"
+#include "TChain.h"
 //custom includes
 #include "Space.h"
 class RootMakePlots{
     public:
         RootMakePlots(const char *, std::vector<Space*>);
         RootMakePlots(const char *, std::vector<Space*>, const char *);
+        RootMakePlots(std::vector<const char *>, const char *, std::vector<Space*>, const char *);
         virtual ~RootMakePlots();    
         void Run();
         void Run(int);
     private:
         void init_root_file(const char *);
-        TFile * _file;
-        TTree * _tree;
+        void init_root_files(std::vector<const char *>);
+        TFile * _outfile;
+        TString _outdir;
+        TChain * _chain;
         int _nvars;
         int _nentries;
         double * _vars;
