@@ -9,6 +9,7 @@
 #include "TChain.h"
 //custom includes
 #include "Space.h"
+#include "Cut.h"
 class RootMakePlots{
     public:
         RootMakePlots(const char *, std::vector<Space*>);
@@ -16,7 +17,9 @@ class RootMakePlots{
         RootMakePlots(std::vector<const char *>, const char *, std::vector<Space*>, const char *);
         virtual ~RootMakePlots();    
         void Run();
+        void Run(std::vector<Cut*>);
         void Run(int);
+        void Run(int,std::vector<Cut*>);
     private:
         void init_root_file(const char *);
         void init_root_files(std::vector<const char *>);
