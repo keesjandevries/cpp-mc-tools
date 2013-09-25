@@ -1,5 +1,18 @@
 #include "RootMakePlots.h"
 
+static inline void loadbar(unsigned int x, unsigned int n, unsigned int w =50)
+{
+    if ( (x != n) && (x % (n/100) != 0) ) return;
+ 
+    float ratio  =  x/(float)n;
+    int   c      =  ratio * w;
+ 
+    std::cout << std::setw(3) << (int)(ratio*100) << "% [";
+    for (int x=0; x<c; x++) std::cout << "=";
+    for (int x=c; x<w; x++) std::cout << " ";
+    std::cout << "]\r" << std::flush;
+}
+
 RootMakePlots::RootMakePlots(const char * filename, std::vector<Space*> spaces):
     _spaces(spaces)
 {
@@ -57,8 +70,8 @@ void RootMakePlots::init_root_files(std::vector<const char *> filenames){
 void RootMakePlots::Run(int nentries){
     std::cout << "Plotting " << nentries << "points" << std::endl; 
     for(int i=0; i<nentries; i++){
-        //FIXME: make progress bar
-        if (i%100000==0) std::cout << "Processed: " << i << "entries" << std::endl;
+        // print progress bar
+        loadbar(i,nentries);
         // get entry
         _chain->GetEntry(i);
         ///Update all _spaces: check whether X^2 is lower than existing X^2

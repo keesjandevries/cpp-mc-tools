@@ -2,6 +2,7 @@
 #define INC_ROOTMAKEPLOTS_H
 //standard library
 #include <vector>
+#include <iomanip>
 //root includes
 #include "TFile.h"
 #include "TLeaf.h"
