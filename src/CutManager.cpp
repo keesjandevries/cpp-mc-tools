@@ -27,3 +27,19 @@ void CutManager::AddCut(const char * name, std::vector<int> array_ids , const ch
         std::cout << "Function \"" << name << "\" already defined" << std::endl;  
     }
 }
+
+void CutManager::AddCut(const char * name, int* array_ids_p, int n_array_ids , const char * function_name){
+    std::vector<int> array_ids(array_ids_p,array_ids_p+n_array_ids);    
+    AddCut(name,array_ids,function_name);
+}
+
+Cut * CutManager::Get(const char * name){
+    std::map<std::string,Cut*>::iterator cut_it=_cut_map.find(name);
+    if (cut_it!=_cut_map.end()){
+        return cut_it->second;
+    }
+    else{
+        std::cout << "Cut \"" << name << "\" not found in CutManager" << std::endl;
+        return NULL;
+    }
+}
