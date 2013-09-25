@@ -1,5 +1,7 @@
 #include "RootMakePlots.h"
 
+// This progress bar is literally taken from 
+// http://www.rosshemsley.co.uk/2011/02/creating-a-progress-bar-in-c-or-any-other-console-app/
 static inline void loadbar(unsigned int x, unsigned int n, unsigned int w =50)
 {
     if ( (x != n) && (x % (n/100) != 0) ) return;
