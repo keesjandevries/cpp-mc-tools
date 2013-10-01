@@ -13,9 +13,11 @@ import user.axes
 import user.spaces
 import user.vars_lookups
 import user.vars_functions
+import user.cuts
 import user.gauss_constraints
 import user.contour_constraints
 import user.constraints_sets
+import user.cuts_sets
 import user.contours
 # shared library objects
 runlib=cdll.LoadLibrary('lib/libmylib.so')
@@ -26,6 +28,7 @@ def parse_args():
     parser.add_argument('--files-dir-and-prefix',help='specify directory and prefix',nargs='+')
     parser.add_argument('--outfile',help='output root file')
     parser.add_argument('--nentries', default=-1,help='number of entries to plot',type=int)
+    parser.add_argument('--cuts', default='',help='specify from user/cuts_sets.py')
     parser.add_argument('--reference', default='chi2-chi2',
         help='Usually chi-functions, but in general the function that is mimimised to project the spaces')
     parser.add_argument('--mc-old-setup', help='select array indices setup from user/mc_old_setup.py')
@@ -51,6 +54,8 @@ if __name__ == '__main__':
     vars_functions=populate_with_array_ids(user.vars_functions.get(),style,array_ids_dict)
     gauss_constraints=populate_with_array_ids((user.gauss_constraints.get()),style,array_ids_dict)
     contour_constraints=populate_with_array_ids((user.contour_constraints.get()),style,array_ids_dict)
+    # populate cuts
+    cuts=populate_with_array_ids(user.cuts.get(),style,array_ids_dict)
     # populate contours and add to managers
     contours=populate_contours(user.contours.get())
     add_contours(contours)
@@ -58,7 +63,8 @@ if __name__ == '__main__':
     axes_list=get_axes_list_from_spaces(spaces)
     # for now the "valid" value functions are those for which array_ids are specified
     valid_values_list=list(vars_lookups.keys())+list(vars_functions.keys())+ \
-        list(gauss_constraints.keys())+list(contour_constraints.keys())
+        list(gauss_constraints.keys())+list(contour_constraints.keys())+\
+        [args.reference]
     # populate the valid-and-required-by-spaces axes
     axes=populate_axes(user.axes.get(),valid_values_list,axes_list)
     # now add values to the managers
@@ -66,9 +72,13 @@ if __name__ == '__main__':
     add_vars_functions(vars_functions) 
     add_gauss_constraints(gauss_constraints)
     add_contour_constraints(contour_constraints)
+    # add cuts to manager
+    add_cuts(cuts) 
     # look for chi2 calculators
     if args.reference in user.constraints_sets.constraints.keys():
         add_chi2_calculator(args.reference,user.constraints_sets.get(args.reference))
+    # look for cut sets
+    cuts_names=user.cuts_sets.get(args.cuts)
     # axes and spaces to managers
     add_axes(axes)
     pp(spaces)
@@ -87,4 +97,4 @@ if __name__ == '__main__':
         for basedir in basedirs:
             infiles+=get_all_but_the_last_root_files(basedir,prefix)
     #finally make the plots
-    cw.make_plots(infiles,outfile,args.nentries,args.dir_in_root)
+    cw.make_plots(infiles,outfile,args.nentries,args.dir_in_root,cuts_names)
