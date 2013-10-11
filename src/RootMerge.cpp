@@ -2,53 +2,6 @@
 
 //FIXME: WARNING THIS IS RESULT ORIENTED AND SHOULD BE KEPT SEPARATE FROM THE REST OF THE MODULES 
 //UNTIL IT IS BETTER
-TH2D * RootMerge2D(std::vector<const char *> filenames, const char * reference_path){
-    std::vector<const char *>::iterator filenames_it=filenames.begin();
-    TH2D * merged_hist=NULL;
-    TFile * first_file=new TFile(*filenames_it);
-    int nbins=0;
-    if (first_file->IsOpen()){
-        if(first_file->Get(reference_path)){
-            merged_hist=(TH2D*)first_file->Get(reference_path)->Clone();
-        }
-        if (merged_hist!=NULL){
-            nbins=merged_hist->GetSize();      
-        }
-        else {
-            std::cout << "ERROR: \"" << *filenames_it << "\" does not contain \"" << reference_path << "\""<< std::endl;
-            return NULL;     
-        }
-    }
-    else {
-        std::cout << "ERROR: could not open \"" << *filenames_it <<"\"" << std::endl;
-        return NULL;
-    }
-    //loop over other files
-    double merged_value;
-    double new_value;
-    for (;filenames_it!=filenames.end();filenames_it++){
-        TFile * file=new TFile(*filenames_it);
-        if (file->IsOpen()){
-            TH2D * new_hist=NULL;
-            if (file->Get(reference_path)){
-                new_hist=(TH2D*)file->Get(reference_path)->Clone();    
-            }
-            else{
-                std::cout << "WARNING: \"" << *filenames_it << "\" does not contain \"" << reference_path << "\""<< std::endl;
-                continue;
-            }
-            for (int i=0;i<nbins;i++){
-                merged_value=merged_hist->GetAt(i);
-                new_value=new_hist->GetAt(i);
-                if (new_value<merged_value){
-                    merged_hist->SetAt(new_value,i);
-                }
-            }
-        }
-    }
-    return merged_hist;
-}
-
 struct RootSpace {
     TH2D * reference_hist;
     std::vector<TH2D *> other_hists;
@@ -69,7 +22,6 @@ RootSpace get_space_from_file(const char * file_name, const char * reference_nam
                 root_space.other_hists.push_back((TH2D*)file->Get(*other_names_it)->Clone());
             }
         }
-//        file->Close();
     }
     else {
         std::cout << "ERROR: could not open \"" << file_name <<"\"" << std::endl;
@@ -114,15 +66,6 @@ RootSpace RootMerge2D(std::vector<const char *> filenames, const char * referenc
 
 
 extern "C"{
-void root_merge_2d(const char ** c_filenames, int n_filenames, const char * outfilename,
-         const char * reference_path){
-    std::vector<const char *> filenames(c_filenames,c_filenames+n_filenames);
-    TH2D * result=RootMerge2D(filenames,reference_path);
-    if (result!=NULL){
-        TFile outfile(outfilename,"UPDATE");
-        result->Write();
-    }
-}
 
 void root_merge_spaces_2d(const char ** c_filenames, int n_filenames, const char * outfilename,
            const char * reference_path, const char ** c_other_hist_paths,int n_other_hist_paths){
