@@ -13,7 +13,8 @@ void SqliteMakePlots::Run(const char * query, std::vector<Space*> spaces){
     int error;
     const char * tail;
     sqlite3_stmt * stmt;
-    error = sqlite3_prepare(_connection,query,1000,&stmt,&tail);
+    std::cout << "The failing query is: " << query << std::endl;
+    error = sqlite3_prepare(_connection,"select * from points;",1000,&stmt,&tail);
     if (error != SQLITE_OK){
         std::cout << "ERROR: prepare stament failed" << std::endl;
         return;
