@@ -80,3 +80,10 @@ def make_plots(infiles, outfile, nentries, dir_in_root,cuts=[] ):
     cuts_c_strings=c_char_p*len(cuts)
     c_cuts=cuts_c_strings(*[name.encode('ascii') for name in cuts])
     lib.make_plots(c_infiles, len(c_infiles), c_outfile,nentries,c_dir_in_root,c_cuts,len(c_cuts))
+
+def sqlite_make_plots(sqlite_db_file, query,outfile_name):
+    c_query=query.encode('ascii')
+    c_sqlite_db_file=sqlite_db_file.encode('ascii')
+    c_outfile_name=outfile_name.encode('ascii')
+    lib.sqlite_make_plots(c_sqlite_db_file, c_query,c_outfile_name)
+
