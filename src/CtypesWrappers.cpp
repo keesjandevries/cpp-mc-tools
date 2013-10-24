@@ -88,7 +88,7 @@ void sqlite_make_plots(const char * sqlite_db_file, const char * query, const ch
     std::vector<Space*> spaces=space_manager->Get();
     SqliteMakePlots plotter(sqlite_db_file);
     plotter.Run(query,spaces);
-    TFile outfile(outfile_name);
+    TFile outfile(outfile_name,"UPDATE");
     for( std::vector<Space*>::iterator it=spaces.begin(); it!=spaces.end() ; it++){
         (*it)->write_plots();
     }
