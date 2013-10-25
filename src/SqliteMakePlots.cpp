@@ -1,4 +1,5 @@
 #include <SqliteMakePlots.h>
+#include <ctime>
 
 SqliteMakePlots::SqliteMakePlots(const char * filename){
     int error;
@@ -9,12 +10,17 @@ SqliteMakePlots::SqliteMakePlots(const char * filename){
 }
 
 void SqliteMakePlots::Run(const char * query, std::vector<Space*> spaces){
+    //FIXME: remove, this is only for testing
+    clock_t t1,t2,t3;
     /// Prepare sql statement
     int error;
     const char * tail;
     sqlite3_stmt * stmt;
-    std::cout << "The failing query is: " << query << std::endl;
+    t1=clock();
     error = sqlite3_prepare(_connection,"select * from points;",1000,&stmt,&tail);
+    t2=clock();
+    std::cout << "SQL preparation took: " << ((float)(t2-t1))/CLOCKS_PER_SEC << " seconds" << std::endl;
+
     if (error != SQLITE_OK){
         std::cout << "ERROR: prepare stament failed" << std::endl;
         return;
@@ -38,4 +44,10 @@ void SqliteMakePlots::Run(const char * query, std::vector<Space*> spaces){
         }
         row_nr++;
     }
+    t3=clock();
+    std::cout << "Looping over results took : " << ((float)(t3-t2))/CLOCKS_PER_SEC << " seconds" << std::endl;
+    sqlite3_finalize(stmt);
+    sqlite3_close(_connection);
+    //FIXME: for now use row nr for row counting
+    std::cout << "Number of rows processed: " << row_nr << std::endl;
 }
