@@ -1,0 +1,121 @@
+#! /usr/bin/env python
+#python modules
+import argparse
+import sqlite3
+#own modules
+#import test_vars_lookup
+#import MyCythonWrappers as cyw
+import py_modules.CtypesWrappers as ctw
+import py_modules.oldarrayindices 
+from py_modules.tools import *
+#user options
+import user.mc_old_setup
+import user.axes
+import user.spaces
+import user.vars_lookups
+import user.vars_functions
+import user.gauss_constraints
+import user.contour_constraints
+import user.constraints_sets
+import user.contours
+import user.inputs
+import user.parameters
+import user.observables
+
+#NOTE: based on the root version of this script point.py
+#       will need substantial altering 
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--sqlite-db', help='define input root file')
+    parser.add_argument('--rowid',type=int,help='rowid of point')
+    parser.add_argument('--inputs', help='specify inputs as defined in user/inputs.py')
+    parser.add_argument('--parameters', help='specify parameters as defined in user/parameters.py')
+    parser.add_argument('--observables', help='specify observables as defined in user/observables.py')
+    parser.add_argument('--breakdown', help='specify chi2 breakdown according to user/constratins_sets.py')
+    return parser.parse_args()
+
+def get_array_ids_and_style(db):
+    #FIXME: also include mc_old 
+    conn=sqlite3.connect(db)
+    cur=conn.cursor()
+    array_ids_dict={}
+    cur.execute('select * from mcpp_observable_ids;')
+    for row in cur.fetchall():
+        coln,key1,key2=row
+        array_id=int(coln.replace('f',''))-1
+        array_ids_dict[(key1,key2)]=array_id
+    conn.close()
+    return array_ids_dict,'mcpp'
+
+def get_vars_from_db(db,rowid):
+    conn=sqlite3.connect(db)
+    cur=conn.cursor()
+    cur.execute('select * from points where rowid=?',(rowid,))
+    row=cur.fetchone()
+    if row is not None:
+        vars=row[1:]
+        conn.close()
+        return vars
+    else:
+        return None
+
+
+if __name__=='__main__':
+    args=parse_args()
+    db=args.sqlite_db
+    #establish lookup
+    array_ids_dict, style=get_array_ids_and_style(db)
+    vars=get_vars_from_db(db,args.rowid)
+    # populate values as usual previously
+    # populate vars_lookups, vars_functions, and gauss_constraints with array ids
+    vars_lookups={name: {'observable_ids': oids} for name, oids in user.vars_lookups.get().items()}
+    vars_lookups=populate_with_array_ids(vars_lookups,style,array_ids_dict)
+    vars_functions=populate_with_array_ids(user.vars_functions.get(),style,array_ids_dict)
+    gauss_constraints=populate_with_array_ids((user.gauss_constraints.get()),style,array_ids_dict)
+    contour_constraints=populate_with_array_ids((user.contour_constraints.get()),style,array_ids_dict)
+    # populate contours and add to managers
+    contours=populate_contours(user.contours.get())
+    add_contours(contours)
+    # now add values to the managers
+    add_vars_lookups(vars_lookups) 
+    add_vars_functions(vars_functions) 
+    add_gauss_constraints(gauss_constraints)
+    add_contour_constraints(contour_constraints)
+    #
+    format='{:<30}: {:30}'
+    number_format='{:<30}: {:<5.3f}'
+    if args.parameters:
+        parameters=user.parameters.get(args.parameters)
+        print('='*50)
+        print(format.format('parameters','value'))
+        print('='*50)
+        for parameter in parameters:
+            value=ctw.get_value(parameter,vars)
+            print(number_format.format(parameter,value))
+    if args.observables:
+        observables=user.observables.get(args.observables)
+        print('='*50)
+        print(format.format('observables','value'))
+        print('='*50)
+        for observable in observables:
+            value=ctw.get_value(observable,vars)
+            print(number_format.format(observable,value))
+    if args.breakdown:
+        # look for chi2 calculators
+        constraints=user.constraints_sets.get(args.breakdown)
+        add_chi2_calculator(args.breakdown,constraints)
+        print('='*50)
+        print(format.format('constraint','chi2'))
+        print('='*50)
+        for constraint in constraints:
+            chi2=ctw.get_value(constraint,vars)
+            constraint=constraint.replace('chi2-','')
+            print(number_format.format(constraint,chi2))
+        print('='*50)
+        print(number_format.format('total',ctw.get_value(args.breakdown,vars)))
+        print('='*50)
+    if args.inputs is not None:
+        inputs=user.inputs.get(args.inputs)
+        values=[str(ctw.get_value(parameter,vars)) for parameter in inputs]
+        print(' '.join(values))
+
