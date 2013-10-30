@@ -87,3 +87,5 @@ def sqlite_make_plots(sqlite_db_file, query,outfile_name):
     c_outfile_name=outfile_name.encode('ascii')
     lib.sqlite_make_plots(c_sqlite_db_file, c_query,c_outfile_name)
 
+def insert_root_into_sqlite(root_file_name, sqlite_db, collection_rowid):
+    lib.insert_root_into_sqlite(root_file_name.encode('ascii'),sqlite_db.encode('ascii'),collection_rowid)
