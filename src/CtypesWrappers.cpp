@@ -94,4 +94,7 @@ void sqlite_make_plots(const char * sqlite_db_file, const char * query, const ch
     }
     outfile.Close();
 }
+void insert_root_into_sqlite(const char * root_file_name, const char * sqlite_db, int collection_rowid){
+    InsertRootIntoSqlite(root_file_name, sqlite_db, collection_rowid);
+}
 }
