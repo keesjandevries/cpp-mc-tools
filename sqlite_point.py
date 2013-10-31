@@ -28,6 +28,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--sqlite-db', help='define input root file')
     parser.add_argument('--rowid',type=int,help='rowid of point')
+    parser.add_argument('--database-info', action='store_true',help='specify inputs as defined in user/inputs.py')
     parser.add_argument('--inputs', help='specify inputs as defined in user/inputs.py')
     parser.add_argument('--parameters', help='specify parameters as defined in user/parameters.py')
     parser.add_argument('--observables', help='specify observables as defined in user/observables.py')
@@ -84,6 +85,13 @@ if __name__=='__main__':
     #
     format='{:<30}: {:30}'
     number_format='{:<30}: {:<5.3f}'
+    float_format='{:<30}: {:<5.3e}'
+    if args.database_info:
+        print('='*50)
+        print(format.format('Data base info',''))
+        print('='*50)
+        print(format.format('Rowid',str(args.rowid)))
+        print(format.format('Database',db))
     if args.parameters:
         parameters=user.parameters.get(args.parameters)
         print('='*50)
@@ -99,7 +107,11 @@ if __name__=='__main__':
         print('='*50)
         for observable in observables:
             value=ctw.get_value(observable,vars)
-            print(number_format.format(observable,value))
+            if not ('ssi' in observable):
+                print(number_format.format(observable,value))
+            else:
+                print(float_format.format(observable,value))
+
     if args.breakdown:
         # look for chi2 calculators
         constraints=user.constraints_sets.get(args.breakdown)
