@@ -2,6 +2,5 @@ def get(name):
     return observables.get(name)
 
 observables={
-        'cmssm':['m0','m12','A0','tanb'],
-        'nuhm1':['m0','m12','A0','tanb','mh2'],
+        'usual':['mneu1','MA','mstau1','mstop1','mchar1','ssikocm2'],
         }
