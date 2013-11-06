@@ -55,8 +55,6 @@ double xenon100_jul_2012_Sigma_pi_N_unc(double * vars, std::vector<int> & array_
 }
 
 double xenon100_Jul12_90CL_ssi_unc(double * vars, std::vector<int> & array_ids,std::vector<Contour *> & contours) {
-    //NOTE: this is the old implementation that should be multiplied by 4.61/2.71
-    //it is only kept for compatibility purposes 
     Contour * xenon100_contour=contours[0];
     double mneu=vars[array_ids[0]];
     double sigma_p_si=vars[array_ids[1]];
@@ -66,6 +64,8 @@ double xenon100_Jul12_90CL_ssi_unc(double * vars, std::vector<int> & array_ids,s
     double N=(sigma_p_si/sigma_p_si_contour)*5.1;
     double D_N=(D_sigma_p_si/sigma_p_si_contour)*5.1;
     double mu=1., sigma=2.7;
+    //multiply by correction factor that transforms 1-d 90CL to 2-d 90CL
+    //(numbers are taken from table 36.2 in pdg.lbl.gov/2013/reviews/rpp2012-rev-statistics.pdf)
     return (4.61/2.71)*(mu-N)*(mu-N)/(sigma*sigma+D_N*D_N);
 }
 
