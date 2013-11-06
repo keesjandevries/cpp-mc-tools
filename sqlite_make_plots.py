@@ -24,11 +24,8 @@ runlib=cdll.LoadLibrary('lib/libmylib.so')
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--rootfiles', help='define input root file',nargs='+')
-    parser.add_argument('--sqlite-db')
-    parser.add_argument('--files-dir-and-prefix',help='specify directory and prefix',nargs='+')
+    parser.add_argument('--sqlite-db',help='sqlite database')
     parser.add_argument('--outfile',help='output root file')
-    parser.add_argument('--nentries', default=-1,help='number of entries to plot',type=int)
     parser.add_argument('--cuts', default='',help='specify from user/cuts_sets.py')
     parser.add_argument('--reference', default='chi2-chi2',
         help='Usually chi-functions, but in general the function that is mimimised to project the spaces')
@@ -86,17 +83,5 @@ if __name__ == '__main__':
     add_spaces(spaces)
     # input and output files
     outfile=args.outfile
-    if args.rootfiles is not None:
-        infiles=args.rootfiles
-        if (len(args.rootfiles)==1) and (outfile is None):
-            outfile=args.rootfiles[0]
-    elif args.files_dir_and_prefix is not None:
-        basedirs=args.files_dir_and_prefix[:-1]
-        prefix=args.files_dir_and_prefix[-1]
-        infiles=[]
-        print(basedirs)
-        for basedir in basedirs:
-            infiles+=get_all_but_the_last_root_files(basedir,prefix)
     #finally make the plots
-#    cw.make_plots(infiles,outfile,args.nentries,args.dir_in_root,cuts_names)
     cw.sqlite_make_plots(args.sqlite_db,'select * from points;',outfile)
