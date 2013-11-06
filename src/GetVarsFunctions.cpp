@@ -4,6 +4,7 @@ std::map<std::string, GetVarsFunction > get_GetVarsFunction_map(){
     function_map["pb_to_cm2"]=pb_to_cm2;
     function_map["bsmm_ratio"]=bsmm_ratio;
     function_map["difference"]=difference;
+    function_map["x_minus_2y"]=x_minus_2y;
     function_map["average"]=average;
     function_map["var1_over_var2_square"]=var1_over_var2_square;
     function_map["var1_over_var2"]=var1_over_var2;
@@ -22,6 +23,11 @@ double pb_to_cm2(double *VARS, std::vector<int>& array_ids){
 
 double difference(double *VARS, std::vector<int>& array_ids){
     return VARS[array_ids[0]]-VARS[array_ids[1]];
+}
+
+double x_minus_2y(double *VARS, std::vector<int>& array_ids){
+    // useful for e.g. m_H/A-2*m_neu1
+    return VARS[array_ids[0]]-2*VARS[array_ids[1]];
 }
 
 double var1_over_var2_square(double *VARS, std::vector<int>& array_ids){
