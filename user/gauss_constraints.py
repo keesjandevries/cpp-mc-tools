@@ -362,7 +362,7 @@ mcpp_constraints_dict = {
             'texname' : r'$R_{\DeltaM_{B_s}}$',
             'texvalue'  : r'$0.97\pm0.20_{th-SM}$',
             },
-        'mc9_R_DMBs/DMBd': {   
+        'mc9_R_DMBs_DMBd': {   
             'oids': [('BPhysics', 'RDMs'),('BPhysics', 'RDMb')],
             'data': [0.86,0.14],
             'func': 'ratio_gauss', 
