@@ -25,7 +25,6 @@ runlib=cdll.LoadLibrary('lib/libmylib.so')
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--rootfiles', help='define input root file',nargs='+')
-    parser.add_argument('--sqlite-db')
     parser.add_argument('--files-dir-and-prefix',help='specify directory and prefix',nargs='+')
     parser.add_argument('--outfile',help='output root file')
     parser.add_argument('--nentries', default=-1,help='number of entries to plot',type=int)
@@ -98,5 +97,4 @@ if __name__ == '__main__':
         for basedir in basedirs:
             infiles+=get_all_but_the_last_root_files(basedir,prefix)
     #finally make the plots
-#    cw.make_plots(infiles,outfile,args.nentries,args.dir_in_root,cuts_names)
-    cw.sqlite_make_plots(args.sqlite_db,'select * from points;',outfile)
+    cw.make_plots(infiles,outfile,args.nentries,args.dir_in_root,cuts_names)
