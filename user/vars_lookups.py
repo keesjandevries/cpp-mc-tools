@@ -2,7 +2,7 @@ def get():
     return {
         'chi2-chi2': {'array_ids': 0},
         # general inputs
-        'mtop': {'mcpp':('SMINPUTS','in_Mt')},
+        'mtop': {'mc_old':'mtop','mcpp':('SMINPUTS','in_Mt')},
         'tanb': {'mc_old': 'tanb', 'mcpp': ('MINPAR', 'TB')},
         'mz':{'mcpp':('SMINPUTS','mod_MZ')},
         'Delta_alpha_had':{'mcpp':('SUSY-POPE', 'DAlpha_had_in')},
