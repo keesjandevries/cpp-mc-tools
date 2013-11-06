@@ -4,6 +4,12 @@ def get():
                     'type':'log_x_log_y',
                     'file':'user/data_files/xenon100_july_1012.dat',
                 },
+            'lux131030':{
+                    'type':'log_x_log_y',
+                    'file':'user/data_files/lux131030.dat',
+                    'info':'''obtained from blue curve, Fig. 5 1310.8214v1 using digitizer. 
+                    subsequently divided ssi by 10e-36: cm2 to picobarn.''',
+                },
             'mc8_ma_tanb':{
                     'type':'default',
                     'file':'user/data_files/mc8_ma_tanb.dat',
