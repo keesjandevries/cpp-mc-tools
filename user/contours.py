@@ -3,6 +3,8 @@ def get():
             'xenon100_july_2012':{
                     'type':'log_x_log_y',
                     'file':'user/data_files/xenon100_july_1012.dat',
+                    'info':'''obtained form Xenon Jul 2012 paper: 1207.2988v2 Fig 3 bleu curve. 
+                    Extended using lus paper: Fig. 5 1310.8214v1 red curve and factor to allign two curves'''
                 },
             'lux131030':{
                     'type':'log_x_log_y',
