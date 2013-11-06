@@ -5,6 +5,10 @@ std::map< std::string, ContourFunc>  get_ContourFunc_map(){
     ContourFunc_map["mc8_ma_tanb"]=mc8_ma_tanb;
     ContourFunc_map["xenon100_jul_2012"]=xenon100_jul_2012;
     ContourFunc_map["xenon100_jul_2012_Sigma_pi_N_unc"]=xenon100_jul_2012_Sigma_pi_N_unc;
+//    ContourFunc_map["lux131030_Sigma_pi_N_unc"]=lux131030_Sigma_pi_N_unc;
+//    ContourFunc_map["lux131030"]=lux131030;
+    ContourFunc_map["lux131030_90CL"]=lux131030_90CL;
+    ContourFunc_map["lux131030_90CL_ssi_unc"]=lux131030_90CL_ssi_unc;
     ContourFunc_map["m0_m12_power_4"]=m0_m12_power_4;
     ContourFunc_map["one_dim_chi2_lookup"]=one_dim_chi2_lookup;
 //    ContourFunc_map["universal_limits"]=universal_limits;
@@ -34,6 +38,30 @@ double xenon100_jul_2012(double * vars, std::vector<int> & array_ids,std::vector
     return (mu-N)*(mu-N)/(sigma*sigma);
 }
 
+//double lux131030(double * vars, std::vector<int> & array_ids,std::vector<Contour *> & contours) {
+//    Contour * lux_contour=contours[0];
+//    double mneu=vars[array_ids[0]];
+//    double sigma_p_si=vars[array_ids[1]];
+//    double sigma_p_si_contour=lux_contour->GetContourValue(mneu);
+//    //number of events
+//    double N=(sigma_p_si/sigma_p_si_contour)*4.6;
+//    double mu=0.5, sigma=2.5;
+//    return (mu-N)*(mu-N)/(sigma*sigma);
+//}
+
+double lux131030_90CL(double * vars, std::vector<int> & array_ids,std::vector<Contour *> & contours) {
+    Contour * lux_contour=contours[0];
+    double mneu=vars[array_ids[0]];
+    double sigma_p_si=vars[array_ids[1]];
+    double sigma_p_si_contour=lux_contour->GetContourValue(mneu);
+    //number of events
+    double N=(sigma_p_si/sigma_p_si_contour)*4.6;
+    double mu=0.5, sigma=2.5;
+    //multiply by correction factor that transforms 1-d 90CL to 2-d 90CL
+    //(numbers are taken from table 36.2 in pdg.lbl.gov/2013/reviews/rpp2012-rev-statistics.pdf)
+    return (4.61/2.71)*(mu-N)*(mu-N)/(sigma*sigma);
+}
+
 double xenon100_jul_2012_Sigma_pi_N_unc(double * vars, std::vector<int> & array_ids,std::vector<Contour *> & contours) {
     Contour * xenon100_contour=contours[0];
     double mneu=vars[array_ids[0]];
@@ -45,6 +73,34 @@ double xenon100_jul_2012_Sigma_pi_N_unc(double * vars, std::vector<int> & array_
     double D_N=(D_sigma_p_si/sigma_p_si_contour)*5.1;
     double mu=1., sigma=2.7;
     return (mu-N)*(mu-N)/(sigma*sigma+D_N*D_N);
+}
+
+//double lux131030_Sigma_pi_N_unc(double * vars, std::vector<int> & array_ids,std::vector<Contour *> & contours) {
+//    Contour * lux_contour=contours[0];
+//    double mneu=vars[array_ids[0]];
+//    double sigma_p_si=vars[array_ids[1]];
+//    double D_sigma_p_si=vars[array_ids[2]];
+//    double sigma_p_si_contour=(lux_contour->GetContourValue(mneu));
+//    //number of events
+//    double N=(sigma_p_si/sigma_p_si_contour)*4.6;
+//    double D_N=(D_sigma_p_si/sigma_p_si_contour)*4.6;
+//    double mu=0.5, sigma=2.5;
+//    return (mu-N)*(mu-N)/(sigma*sigma+D_N*D_N);
+//}
+
+double lux131030_90CL_ssi_unc(double * vars, std::vector<int> & array_ids,std::vector<Contour *> & contours) {
+    Contour * lux_contour=contours[0];
+    double mneu=vars[array_ids[0]];
+    double sigma_p_si=vars[array_ids[1]];
+    double D_sigma_p_si=vars[array_ids[2]];
+    double sigma_p_si_contour=(lux_contour->GetContourValue(mneu));
+    //number of events
+    double N=(sigma_p_si/sigma_p_si_contour)*4.6;
+    double D_N=(D_sigma_p_si/sigma_p_si_contour)*4.6;
+    double mu=0.5, sigma=2.5;
+    //multiply by correction factor that transforms 1-d 90CL to 2-d 90CL
+    //(numbers are taken from table 36.2 in pdg.lbl.gov/2013/reviews/rpp2012-rev-statistics.pdf)
+    return (4.61/2.71)*(mu-N)*(mu-N)/(sigma*sigma+D_N*D_N);
 }
 
 double m0_m12_power_4(double * vars, std::vector<int> & array_ids, std::vector<Contour*> & contours){
