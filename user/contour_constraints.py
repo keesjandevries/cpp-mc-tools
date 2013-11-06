@@ -17,28 +17,21 @@ contour_constraints={
                 'contours':['xenon100_july_2012'],
                 'function':'xenon100_jul_2012_Sigma_pi_N_unc',
                 },
-#            'lux131030_SpiN_unc':{
-#                'observable_ids':{
-#                    'mcpp':[('MASS', 'MNeu(1)'),('LSP scattering','s3out'),('LSP scattering','ss3out')] ,
-#                    },
-#                'contours':['lux131030'],
-#                'function':'lux131030_Sigma_pi_N_unc',
-#                },
-            'lux131030_90CL_SpiN_unc':{
+            'xenon100_90CL_ssi_unc':{
+                'observable_ids':{
+                    'mcpp':[('MASS', 'MNeu(1)'),('LSP scattering','s3out'),('LSP scattering','ss3out')] ,
+                    },
+                'contours':['xenon100_july_2012'],
+                'function':'xenon100_Jul12_90CL_ssi_unc',
+                },
+            'lux131030_unc':{
                 'observable_ids':{
                     'mcpp':[('MASS', 'MNeu(1)'),('LSP scattering','s3out'),('LSP scattering','ss3out')] ,
                     },
                 'contours':['lux131030'],
                 'function':'lux131030_90CL_ssi_unc',
                 },
-#            'lux131030':{
-#                'observable_ids':{
-#                    'mcpp':[('MASS', 'MNeu(1)'),('LSP scattering','s3out')] ,
-#                    },
-#                'contours':['lux131030'],
-#                'function':'lux131030',
-#                },
-            'lux131030_90CL':{
+            'lux131030':{
                 'observable_ids':{
                     'mcpp':[('MASS', 'MNeu(1)'),('LSP scattering','s3out')] ,
                     },
