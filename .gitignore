@@ -10,6 +10,7 @@ bin/*
 .nf*
 *__pycache__*
 *.npy
+*.root
 
 #standard c++ git ignore from github
 # Compiled Object files

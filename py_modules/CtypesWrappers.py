@@ -68,9 +68,15 @@ def add_space(axes_names,zaxes_names,reference_function):
     #add space
     lib.add_space(c_axes_names,len(axes_names),c_zaxes_names,len(zaxes_names),c_reference_function)
 
-def make_plots(infiles, outfile, nentries, dir_in_root ):
+def add_cut(name,array_ids,function_name):
+    c_array_ids=(c_int*len(array_ids))(*array_ids)
+    lib.add_cut(name.encode('ascii'),c_array_ids,len(array_ids),function_name.encode('ascii'))
+
+def make_plots(infiles, outfile, nentries, dir_in_root,cuts=[] ):
     infiles_c_strings=c_char_p*len(infiles)
     c_infiles=infiles_c_strings(*[name.encode('ascii') for name in infiles])
     c_outfile=outfile.encode('ascii')
     c_dir_in_root=dir_in_root.encode('ascii')
-    lib.make_plots(c_infiles, len(c_infiles), c_outfile,nentries,c_dir_in_root)
+    cuts_c_strings=c_char_p*len(cuts)
+    c_cuts=cuts_c_strings(*[name.encode('ascii') for name in cuts])
+    lib.make_plots(c_infiles, len(c_infiles), c_outfile,nentries,c_dir_in_root,c_cuts,len(c_cuts))

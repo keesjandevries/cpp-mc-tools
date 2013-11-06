@@ -72,6 +72,12 @@ def get():
                         'mc_old': ['mstop2','mstop1'],
                         'mcpp': [('MASS', 'MSf(2,3,3)'),('MASS', 'MSf(1,3,3)')]
                         }
-                    }
+                    },
+            'fh-ss': {
+                    'name': 'difference',
+                    'observable_ids': {
+                        'mcpp': [('FeynHiggs', 'mh'),('MASS', 'Mh0')]
+                        }
+                    },
             }
 

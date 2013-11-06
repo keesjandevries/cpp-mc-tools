@@ -171,6 +171,12 @@ def add_vars_functions(vars_functions):
         function_name=details['name']
         cw.add_vars_function(name,array_ids,function_name)
 
+def add_cuts(cuts):
+    for name, details in cuts.items():
+        array_ids=details['observable_ids']['array_ids']
+        function_name=details['function']
+        cw.add_cut(name,array_ids,function_name)
+
 def add_gauss_constraints(gauss_constraints):
     for name, details in gauss_constraints.items():
         array_ids=details['observable_ids']['array_ids']

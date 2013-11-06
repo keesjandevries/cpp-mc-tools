@@ -10,6 +10,58 @@ def get_spaces(choice=None):
         return spaces['pmssm']
 
 spaces={
+    'pmssm-chi2-slices': [
+        {'axes':'pmssm-mc9-chi2','zaxes':['msq3','msq12','msl','M1','M2','M3','A','in_ma','tanb','in_mu','mt','mz','Delta_alpha_had']},
+        ],
+    'cmssm-chi2-slices': [
+        {'axes':'cmssm-mc9-chi2','zaxes':['m0','m12','A0','tanb','mt','mz','Delta_alpha_had']},
+        ],
+    'cmssm-params-and-breakdowns':[
+        {'axes':['m0','m12'],'zaxes':['m0','m12','A0','tanb', 'Al(SLD)', 'Ab', 'Ac', 'mc9_Oh2', 'mc9_Mh',   
+            'Gamma_Z', 'GZ_in', 'R(B->Xsll)', 'Al(P_tau)', 'MZ', 'mc9_R_DMBs', 'MW', 'Afb_l', 
+            'xenon100_SpiN_unc', 'mc9_DAlpha_had', 'mc9_epsilon_K',  'sigma_had^0', 'Afb(c)', 
+            'atlas20_m0_m12', 'Afb(b)',  'mc9_R_B->Xsg', 'mc9_R_DMBs/DMBd', 'mc9_R_B->taunu', 
+            'Rc', 'Rb',  'Rl', 'R_Bsmm_mc9', 'sintheta_eff', 'mc9_Mt', 'R(K->lnu)', 'R(Kp->pinn)', 'gminus2mu', 'MATANB' ,
+            'LEP-chargino', 'LEP-neutralino', 'LEP-slepton', 'LEP-sneutrino', 'LEP-squark','neutralino-lsp'
+            ]},
+        {'axes':['MA','tanb'],'zaxes':['m0','m12','A0','tanb', 'Al(SLD)', 'Ab', 'Ac', 'mc9_Oh2', 'mc9_Mh',   
+            'Gamma_Z', 'GZ_in', 'R(B->Xsll)', 'Al(P_tau)', 'MZ', 'mc9_R_DMBs', 'MW', 'Afb_l', 
+            'xenon100_SpiN_unc', 'mc9_DAlpha_had', 'mc9_epsilon_K',  'sigma_had^0', 'Afb(c)', 
+            'atlas20_m0_m12', 'Afb(b)',  'mc9_R_B->Xsg', 'mc9_R_DMBs/DMBd', 'mc9_R_B->taunu', 
+            'Rc', 'Rb',  'Rl', 'R_Bsmm_mc9', 'sintheta_eff', 'mc9_Mt', 'R(K->lnu)', 'R(Kp->pinn)', 'gminus2mu', 'MATANB' ,
+            'LEP-chargino', 'LEP-neutralino', 'LEP-slepton', 'LEP-sneutrino', 'LEP-squark','neutralino-lsp'
+            ]}
+        ],
+    'pmssm-params-and-breakdowns':[
+        {'axes':['m3g','mneu1'],'zaxes':['msq3','msq12','msl','M1','M2','M3','A','in_ma','tanb','in_mu', 
+            'Al(SLD)', 'Ab', 'Ac', 'mc9_Oh2', 'mc9_Mh',   
+            'Gamma_Z', 'GZ_in', 'R(B->Xsll)', 'Al(P_tau)', 'MZ', 'mc9_R_DMBs', 'MW', 'Afb_l', 
+            'xenon100_SpiN_unc', 'mc9_DAlpha_had', 'mc9_epsilon_K',  'sigma_had^0', 'Afb(c)', 
+            'Afb(b)',  'mc9_R_B->Xsg', 'mc9_R_DMBs/DMBd', 'mc9_R_B->taunu', 
+            'Rc', 'Rb',  'Rl', 'R_Bsmm_mc9', 'sintheta_eff', 'mc9_Mt', 'R(K->lnu)', 'R(Kp->pinn)', 'gminus2mu', 'MATANB' ,
+            'LEP-chargino', 'LEP-neutralino', 'LEP-slepton', 'LEP-sneutrino', 'LEP-squark','neutralino-lsp'
+            ]},
+        {'axes':['mstop1'],'zaxes':['msq3','msq12','msl','M1','M2','M3','A','in_ma','tanb','in_mu', 
+            'Al(SLD)', 'Ab', 'Ac', 'mc9_Oh2', 'mc9_Mh',   
+            'Gamma_Z', 'GZ_in', 'R(B->Xsll)', 'Al(P_tau)', 'MZ', 'mc9_R_DMBs', 'MW', 'Afb_l', 
+            'xenon100_SpiN_unc', 'mc9_DAlpha_had', 'mc9_epsilon_K',  'sigma_had^0', 'Afb(c)', 
+            'Afb(b)',  'mc9_R_B->Xsg', 'mc9_R_DMBs/DMBd', 'mc9_R_B->taunu', 
+            'Rc', 'Rb',  'Rl', 'R_Bsmm_mc9', 'sintheta_eff', 'mc9_Mt', 'R(K->lnu)', 'R(Kp->pinn)', 'gminus2mu', 'MATANB' ,
+            'LEP-chargino', 'LEP-neutralino', 'LEP-slepton', 'LEP-sneutrino', 'LEP-squark','neutralino-lsp'
+            ]},
+        ],
+    'nuhm1-chi2-breakdowns':[
+        {'axes':['m0','mh2'],'zaxes':['m12','tanb','A0', 'Al(SLD)', 'Ab', 'Ac', 'mc9_Oh2', 'mc9_Mh',   
+            'Gamma_Z', 'GZ_in', 'R(B->Xsll)', 'Al(P_tau)', 'MZ', 'mc9_R_DMBs', 'MW', 'Afb_l', 
+            'xenon100_SpiN_unc', 'mc9_DAlpha_had', 'mc9_epsilon_K',  'sigma_had^0', 'Afb(c)', 
+            'atlas20_m0_m12', 'Afb(b)',  'mc9_R_B->Xsg', 'mc9_R_DMBs/DMBd', 'mc9_R_B->taunu', 
+            'Rc', 'Rb',  'Rl', 'R_Bsmm_mc9', 'sintheta_eff', 'mc9_Mt', 'R(K->lnu)', 'R(Kp->pinn)', 'gminus2mu', 'MATANB' ,
+            'LEP-chargino', 'LEP-neutralino', 'LEP-slepton', 'LEP-sneutrino', 'LEP-squark','neutralino-lsp'
+            ]}
+        ],
+    'fh-unc':[
+        {'axes':['fh-ss','Dmh']}
+        ],
     'cmssm': [
             {'axes':'mtop'},
 #            {   'axes':['m0','m12'] , 'zaxes':['mh','chi2_mh','mstop1','A0','BsmmRatio','ssmh'] },
@@ -28,6 +80,7 @@ spaces={
             {   'axes':'mg'},
             {   'axes':'mstop1' },
             {   'axes':'mh' }, 
+            {   'axes':'MA' }, 
             {   'axes':'mstau1' }, 
             {   'axes':'msqr' }, 
 #            {   'axes':'mh' }, 
@@ -55,17 +108,20 @@ spaces={
         {   'axes':'msqr' }, 
 #        {   'axes':['m0','mh_over_m0']},
 #        {   'axes':['m0','mh2_m0^2_Ratio']},
-       ],
+      ],
    'pmssm':[
-            {'axes':['oh2'],'zaxes':['chi2Oh2']},
-            {'axes':'mtop'},
+            {'axes':'mstop1'},
+            {'axes':'msbot1'},
+            {'axes':'mneu1'},
+            {'axes':'mstau1'},
+            {'axes':'mchar1'},
+            {'axes':'mg'},
 #            {'axes':['mg','mneu1'],'zaxes':['chi2_mh','chi2_oh2','chi2_g-2']},
 #            {'axes':['M3','M1']},
 #            {'axes':['M2','M1'],'zaxes':'mneu1'},
 #            {'axes':['M1','mneu1']},
 #            {'axes':['M2','mneu1']},
 #            #
-            {'axes':['oh2'],'zaxes':'chi2Oh2'},
             #mneu vs all physical masses
             {'axes':['mg','mneu1']},
             {'axes':['m3g','mneu1']},

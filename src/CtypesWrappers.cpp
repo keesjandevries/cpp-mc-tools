@@ -4,7 +4,7 @@ GetValueManager * get_value_manager=GetValueManager::GetInstance();
 AxisManager * axis_manager=AxisManager::GetInstance();
 SpaceManager * space_manager=SpaceManager::GetInstance();
 ContourManager * contour_manager=ContourManager::GetInstance();
-//FIXME: remove this test function
+CutManager * cut_manager=CutManager::GetInstance();
     
 extern "C"{
 void add_vars_lookup(const char * name, int array_id){
@@ -59,16 +59,29 @@ void add_space(const char * c_axes_names[], int n_axes_names,const char * c_zaxe
 void add_contour(const char * name, double * xs, double * ys, int n_coords, const char * type){
     contour_manager->AddContour(name,xs,ys,n_coords,type);
 }
+void add_cut(const char * name, int * array_ids, int n_array_ids,const char *function_name){
+    cut_manager->AddCut(name,array_ids,n_array_ids,function_name);
+}
 void make_plots(const char ** root_file_names,int n_root_file_names,
-        const char * outfile, int nentries, const char * directoryname){
+        const char * outfile, int nentries, const char * directoryname, const char ** cut_names, int n_cut_names){
     std::vector<const char *> filenames(root_file_names,root_file_names+n_root_file_names);
+    std::vector<const char *> cut_names_v(cut_names,cut_names+n_cut_names);
     std::vector<Space*> spaces=space_manager->Get();
+    std::vector<Cut*> cuts;
+    std::vector<const char*>::iterator cut_names_it;
+    for (cut_names_it=cut_names_v.begin();cut_names_it!=cut_names_v.end();cut_names_it++){
+        Cut * cut=cut_manager->Get(*cut_names_it);
+        if (cut!=NULL){
+            cuts.push_back(cut);
+        }
+    }
+//    std::vector<Cut*> cuts=cut_manager->Get();
     RootMakePlots root_make_plots(filenames,outfile,spaces,directoryname);
     if (nentries==-1){
-        root_make_plots.Run();
+        root_make_plots.Run(cuts);
     }
     else{
-        root_make_plots.Run(nentries);
+        root_make_plots.Run(nentries,cuts);
     }
 }
 }
