@@ -9,4 +9,7 @@
 #include "ContourManager.h"
 #include "CutManager.h"
 #include "RootMakePlots.h"
+#include "SqliteMakePlots.h"
+#include "SqliteInserter.h"
+#include "TFile.h"
 #endif // INCLUDE_CTYPESWRAPPERS_H_
