@@ -1,8 +1,7 @@
 #! /usr/bin/env python
 # python modules
 import argparse
-import json
-import pprint
+import sqlite3
 from ctypes import cdll
 # private modules
 from py_modules.tools import *
@@ -13,11 +12,9 @@ import user.axes
 import user.spaces
 import user.vars_lookups
 import user.vars_functions
-import user.cuts
 import user.gauss_constraints
 import user.contour_constraints
 import user.constraints_sets
-import user.cuts_sets
 import user.contours
 # shared library objects
 runlib=cdll.LoadLibrary('lib/libmylib.so')
@@ -26,24 +23,29 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--sqlite-db',help='sqlite database')
     parser.add_argument('--outfile',help='output root file')
-    parser.add_argument('--cuts', default='',help='specify from user/cuts_sets.py')
     parser.add_argument('--reference', default='chi2-chi2',
         help='Usually chi-functions, but in general the function that is mimimised to project the spaces')
-    parser.add_argument('--mc-old-setup', help='select array indices setup from user/mc_old_setup.py')
-    parser.add_argument('--dir-in-root', default='',
-            help='choose directory in which the plots are stored within the root file')
-    parser.add_argument('--storage-dict', help='specify json file containing a list [(oid1,oid2,array_id), ... ]')
     parser.add_argument('--spaces', help='select plots from user/spaces.py')
     return parser.parse_args()
 
+def get_array_ids_and_style(db):
+    #FIXME: also include mc_old 
+    conn=sqlite3.connect(db)
+    cur=conn.cursor()
+    array_ids_dict={}
+    cur.execute('select * from mcpp_observable_ids;')
+    for row in cur.fetchall():
+        coln,key1,key2=row
+        array_id=int(coln.replace('f',''))-1
+        array_ids_dict[(key1,key2)]=array_id
+    conn.close()
+    return array_ids_dict,'mcpp'
+
 if __name__ == '__main__':
     args=parse_args()
-    if args.mc_old_setup:
-        array_ids_dict=get_mc_old_array_ids_dict(user.mc_old_setup.get(args.mc_old_setup))
-        style='mc_old'
-    elif args.storage_dict:
-        array_ids_dict=array_ids_dict_from_json_file(args.storage_dict)
-        style='mcpp'
+    #FIXME: we need to only select the relevant columns and populate the various value functions accordingly
+    # get array ids
+    array_ids_dict, style=get_array_ids_and_style(args.sqlite_db)
     # get spaces for which axis names are defined spaces
     spaces=populate_spaces(user.axes.get(),user.spaces.get_spaces(args.spaces),args.reference)
     # populate vars_lookups, vars_functions, and gauss_constraints with array ids
@@ -52,8 +54,6 @@ if __name__ == '__main__':
     vars_functions=populate_with_array_ids(user.vars_functions.get(),style,array_ids_dict)
     gauss_constraints=populate_with_array_ids((user.gauss_constraints.get()),style,array_ids_dict)
     contour_constraints=populate_with_array_ids((user.contour_constraints.get()),style,array_ids_dict)
-    # populate cuts
-    cuts=populate_with_array_ids(user.cuts.get(),style,array_ids_dict)
     # populate contours and add to managers
     contours=populate_contours(user.contours.get())
     add_contours(contours)
@@ -70,13 +70,9 @@ if __name__ == '__main__':
     add_vars_functions(vars_functions) 
     add_gauss_constraints(gauss_constraints)
     add_contour_constraints(contour_constraints)
-    # add cuts to manager
-    add_cuts(cuts) 
     # look for chi2 calculators
     if args.reference in user.constraints_sets.constraints.keys():
         add_chi2_calculator(args.reference,user.constraints_sets.get(args.reference))
-    # look for cut sets
-    cuts_names=user.cuts_sets.get(args.cuts)
     # axes and spaces to managers
     add_axes(axes)
     pp(spaces)
