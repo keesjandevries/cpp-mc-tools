@@ -40,7 +40,7 @@ def parse_args():
 #        array_ids_dict[(key1,key2)]=array_id
 #    conn.close()
 #    return array_ids_dict,'mcpp'
-def get_oid_column_dict_and_style():
+def get_oid_column_dict_and_style(db):
     #FIXME: also include mc_old 
     conn=sqlite3.connect(db)
     cur=conn.cursor()
@@ -96,7 +96,7 @@ def recursively_get_oids(in_dict, style):
                 continue
         return oids
     
-def get_oids_list(value_names,value_dict_list,style):
+def get_array_ids_dict(value_names,value_dict_list,style):
     value_dict={}
     oids_list=[]
     for d in value_dict_list:
@@ -107,12 +107,17 @@ def get_oids_list(value_names,value_dict_list,style):
         if not isinstance(oids,list):
             oids=[oids]
         oids_list+=oids
-    return oids_list
-
+    array_ids_dict=OrderedDict([(key,'a') for key in oids_list])
+    for array_id, oid in enumerate(array_ids_dict.keys()):
+        array_ids_dict[oid]=array_id
+    return array_ids_dict
+        
 if __name__ == '__main__':
     args=parse_args()
+    db=args.sqlite_db
     # get array ids
-#    array_ids_dict, style=get_array_ids_and_style(args.sqlite_db)
+#    oid_column_dict, style=get_oid_column_dict_and_style(db)
+    style='mcpp'
     # get spaces for which axis names are defined spaces
     spaces=prepare_spaces(user.spaces.get_spaces(args.spaces),args.reference)
     axes=prepare_axes(user.axes.get(),spaces)
@@ -125,37 +130,31 @@ if __name__ == '__main__':
     contour_constraints=user.contour_constraints.get()
     # get all possible values
     value_dict_list=[vars_lookups,vars_functions,gauss_constraints,contour_constraints]
-    oids_list=get_oids_list(values,value_dict_list,'mcpp') 
+    array_ids_dict=get_array_ids_dict(values,value_dict_list,style) 
+    # prepare select statement
+    columns=','.join([ oid_column_dict[oid] for oid in array_ids_dict.keys()])
+    sql_selection='select rowid, {} from points;'.format(columns)
     # get unique items in the list ordered
-    oids_list=list(OrderedDict([(key,'a') for key in oids_list]).keys())
-#    vars_lookups=populate_with_array_ids(vars_lookups,style,array_ids_dict)
-#    vars_functions=populate_with_array_ids(user.vars_functions.get(),style,array_ids_dict)
-#    gauss_constraints=populate_with_array_ids((user.gauss_constraints.get()),style,array_ids_dict)
-#    contour_constraints=populate_with_array_ids((user.contour_constraints.get()),style,array_ids_dict)
-#    # populate contours and add to managers
-#    contours=populate_contours(user.contours.get())
-#    add_contours(contours)
-#    # get axes that are in the spaces
-#    axes_list=get_axes_list_from_spaces(spaces)
-#    # for now the "valid" value functions are those for which array_ids are specified
-#    valid_values_list=list(vars_lookups.keys())+list(vars_functions.keys())+ \
-#        list(gauss_constraints.keys())+list(contour_constraints.keys())+\
-#        [args.reference]
-#    # populate the valid-and-required-by-spaces axes
-#    axes=populate_axes(user.axes.get(),valid_values_list,axes_list)
-#    # now add values to the managers
-#    add_vars_lookups(vars_lookups) 
-#    add_vars_functions(vars_functions) 
-#    add_gauss_constraints(gauss_constraints)
-#    add_contour_constraints(contour_constraints)
-#    # look for chi2 calculators
-#    if args.reference in user.constraints_sets.constraints.keys():
-#        add_chi2_calculator(args.reference,user.constraints_sets.get(args.reference))
-#    # axes and spaces to managers
-#    add_axes(axes)
-#    pp(spaces)
-#    add_spaces(spaces)
-#    # input and output files
-#    outfile=args.outfile
-#    #finally make the plots
-#    cw.sqlite_make_plots(args.sqlite_db,'select * from points;',outfile)
+    vars_lookups=tools.populate_with_array_ids(vars_lookups,style,array_ids_dict)
+    vars_functions=tools.populate_with_array_ids(vars_functions,style,array_ids_dict)
+    gauss_constraints=tools.populate_with_array_ids(gauss_constraints,style,array_ids_dict)
+    contour_constraints=tools.populate_with_array_ids(contour_constraints,style,array_ids_dict)
+    # populate contours and add to managers
+    contours=populate_contours(user.contours.get())
+    add_contours(contours)
+    # now add values to the managers
+    tools.add_vars_lookups(vars_lookups) 
+    tools.add_vars_functions(vars_functions) 
+    tools.add_gauss_constraints(gauss_constraints)
+    tools.add_contour_constraints(contour_constraints)
+    # look for chi2 calculators
+    if args.reference in user.constraints_sets.constraints.keys():
+        add_chi2_calculator(args.reference,user.constraints_sets.get(args.reference))
+    # axes and spaces to managers
+    add_axes(axes)
+    tools.pp(spaces)
+    tools.add_spaces(spaces)
+    # input and output files
+    outfile=args.outfile
+    #finally make the plots
+    cw.sqlite_make_plots(args.sqlite_db,sql_selection,outfile)
