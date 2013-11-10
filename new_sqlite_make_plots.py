@@ -16,6 +16,7 @@ import user.gauss_constraints
 import user.contour_constraints
 import user.constraints_sets
 import user.contours
+
 # shared library objects
 runlib=cdll.LoadLibrary('lib/libmylib.so')
 
@@ -26,6 +27,7 @@ def parse_args():
     parser.add_argument('--reference', default='chi2-chi2',
         help='Usually chi-functions, but in general the function that is mimimised to project the spaces')
     parser.add_argument('--spaces', help='select plots from user/spaces.py')
+    parser.add_argument('--sql-where',help='provide the "where-part" of the sql statement')
     return parser.parse_args()
 
 def get_oid_column_dict_and_style(db):
@@ -120,7 +122,11 @@ if __name__ == '__main__':
     array_ids_dict=get_array_ids_dict(values,value_dict_list,style) 
     # prepare select statement
     columns=','.join([ oid_column_dict[oid] for oid in array_ids_dict.keys()])
-    sql_selection='select rowid, {} from points;'.format(columns)
+    sql_where=''
+    if args.sql_where is not None:
+        sql_where='where ' + args.sql_where
+    sql_selection='select rowid,collection_rowid, {} from points {};'.format(columns,sql_where)
+    print('the sql query is:\n{}'.format(sql_selection))
     # get unique items in the list ordered
     vars_lookups=tools.populate_with_array_ids(vars_lookups,style,array_ids_dict)
     vars_functions=tools.populate_with_array_ids(vars_functions,style,array_ids_dict)
