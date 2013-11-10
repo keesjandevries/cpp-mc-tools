@@ -28,18 +28,6 @@ def parse_args():
     parser.add_argument('--spaces', help='select plots from user/spaces.py')
     return parser.parse_args()
 
-#def get_array_ids_and_style(db):
-#    #FIXME: also include mc_old 
-#    conn=sqlite3.connect(db)
-#    cur=conn.cursor()
-#    array_ids_dict={}
-#    cur.execute('select * from mcpp_observable_ids;')
-#    for row in cur.fetchall():
-#        coln,key1,key2=row
-#        array_id=int(coln.replace('f',''))-1
-#        array_ids_dict[(key1,key2)]=array_id
-#    conn.close()
-#    return array_ids_dict,'mcpp'
 def get_oid_column_dict_and_style(db):
     #FIXME: also include mc_old 
     conn=sqlite3.connect(db)
@@ -116,8 +104,7 @@ if __name__ == '__main__':
     args=parse_args()
     db=args.sqlite_db
     # get array ids
-#    oid_column_dict, style=get_oid_column_dict_and_style(db)
-    style='mcpp'
+    oid_column_dict, style=get_oid_column_dict_and_style(db)
     # get spaces for which axis names are defined spaces
     spaces=prepare_spaces(user.spaces.get_spaces(args.spaces),args.reference)
     axes=prepare_axes(user.axes.get(),spaces)
@@ -140,8 +127,8 @@ if __name__ == '__main__':
     gauss_constraints=tools.populate_with_array_ids(gauss_constraints,style,array_ids_dict)
     contour_constraints=tools.populate_with_array_ids(contour_constraints,style,array_ids_dict)
     # populate contours and add to managers
-    contours=populate_contours(user.contours.get())
-    add_contours(contours)
+    contours=tools.populate_contours(user.contours.get())
+    tools.add_contours(contours)
     # now add values to the managers
     tools.add_vars_lookups(vars_lookups) 
     tools.add_vars_functions(vars_functions) 
@@ -149,9 +136,9 @@ if __name__ == '__main__':
     tools.add_contour_constraints(contour_constraints)
     # look for chi2 calculators
     if args.reference in user.constraints_sets.constraints.keys():
-        add_chi2_calculator(args.reference,user.constraints_sets.get(args.reference))
+        tools.add_chi2_calculator(args.reference,user.constraints_sets.get(args.reference))
     # axes and spaces to managers
-    add_axes(axes)
+    tools.add_axes(axes)
     tools.pp(spaces)
     tools.add_spaces(spaces)
     # input and output files
