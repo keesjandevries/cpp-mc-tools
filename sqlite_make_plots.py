@@ -80,4 +80,4 @@ if __name__ == '__main__':
     # input and output files
     outfile=args.outfile
     #finally make the plots
-    cw.sqlite_make_plots(args.sqlite_db,'select * from points;',outfile)
+    cw.sqlite_make_plots(args.sqlite_db,'select rowid, * from points;',outfile)
