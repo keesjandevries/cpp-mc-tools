@@ -7,7 +7,7 @@ class SqliteMakePlots {
         SqliteMakePlots(){};
         SqliteMakePlots(const char * filename);
         ~SqliteMakePlots(){};
-        void Run(const char *, std::vector<Space*> );
+        void Run(const char *,int, std::vector<Space*> );
     private:
         sqlite3 * _connection;
 };
