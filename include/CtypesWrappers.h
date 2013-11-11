@@ -12,4 +12,5 @@
 #include "SqliteMakePlots.h"
 #include "SqliteInserter.h"
 #include "TFile.h"
+#include "TH2D.h"
 #endif // INCLUDE_CTYPESWRAPPERS_H_
