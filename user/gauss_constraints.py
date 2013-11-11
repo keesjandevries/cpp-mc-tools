@@ -209,6 +209,10 @@ mcpp_constraints_dict = {
             'oids' :[('FeynHiggs', 'mh')], 
             'data' : [125.,1.0,1.5], 
             'func' : 'gauss'},
+        'mc8new_Mh': {
+            'oids' :[('FeynHiggs', 'mh')], 
+            'data' : [125.,1.0], 
+            'func' : 'higgs_gauss'},
         'mc9_Mh': {
             'oids' :[('FeynHiggs', 'mh'),('FeynHiggs','Dmh')], 
             'data' : [125.7,0.4], 
@@ -275,6 +279,13 @@ mcpp_constraints_dict = {
             'func': 'R_bsmm_chi2',
             'mode': 'default',
             'info': 'formula from Diego\'s slides, on 2013/08/13 first page, number from last slide'
+            },
+        'RmmNov13_mc9': {   
+            'oids': [('BPhysics', 'Psll')],
+            'data': [0.92,0.21,-0.20],
+            'func': 'R_bsmm_chi2',
+            'mode': 'default',
+            'info': 'formula from Diego\'s slides, on 2013/08/13 first page, number from mail 131108'
             },
         'mc-old-bsmm': {   
             'oids': [('BPhysics', 'Psll')],

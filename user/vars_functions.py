@@ -23,13 +23,20 @@ def get():
                 'name': 'pb_to_cm2',
                 'observable_ids': {
                     'mc_old': 'sigma_pp^SI',
-                    'mcpp': ('Micromegas', 'sigma_p_si')
+                    'mcpp': ('Micromegas', 'sigma_p_si'),
                     }
                 },
             'ssikocm2': {
                 'name': 'pb_to_cm2',
                 'observable_ids': {
-                    'mcpp': ('LSP scattering', 's3out')
+                    'mcpp': ('LSP scattering', 's3out'),
+                    'mc_old': 'KOsigma_pp^SI',
+                    }
+                },
+            'Dssikocm2': {
+                'name': 'pb_to_cm2',
+                'observable_ids': {
+                    'mcpp': ('LSP scattering', 'ss3out'),
                     }
                 },
             'm12g': {
@@ -71,6 +78,24 @@ def get():
                     'observable_ids': {
                         'mc_old': ['mstop2','mstop1'],
                         'mcpp': [('MASS', 'MSf(2,3,3)'),('MASS', 'MSf(1,3,3)')]
+                        }
+                    },
+            'mstau1-mneu1': {
+                    'name': 'difference',
+                    'observable_ids': {
+                        'mcpp': [('MASS', 'MSf(1,2,3)'),('MASS', 'MNeu(1)')],
+                        }
+                    },
+            'mchar1-mneu1': {
+                    'name': 'difference',
+                    'observable_ids': {
+                        'mcpp': [('MASS', 'MCha(1)'),('MASS', 'MNeu(1)')],
+                        }
+                    },
+            'MA-2mneu1': {
+                    'name': 'x_minus_2y',
+                    'observable_ids': {
+                        'mcpp': [('MASS', 'MA0'),('MASS', 'MNeu(1)')],
                         }
                     },
             'fh-ss': {

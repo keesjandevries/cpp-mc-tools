@@ -16,6 +16,7 @@ contour_constraints={
                     },
                 'contours':['xenon100_july_2012'],
                 'function':'xenon100_jul_2012_Sigma_pi_N_unc',
+                'info':'DONT USE: use 90CL instead. Only kept for compatibility'
                 },
             'xenon100_90CL_ssi_unc':{
                 'observable_ids':{

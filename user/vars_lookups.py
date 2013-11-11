@@ -36,4 +36,5 @@ def get():
         'mu': {'mc_old': 'mu', 'mcpp': ('HMIX', 'MUE')},
         'oh2': {'mcpp': ('Micromegas', 'Omega')},
         'ssmh': {'mc_old': 'ssmh'},
+        'Dssi':{'mcpp':('LSP scattering', 'ss3out')},
         }
