@@ -59,6 +59,9 @@ void add_space(const char * c_axes_names[], int n_axes_names,const char * c_zaxe
 void add_contour(const char * name, double * xs, double * ys, int n_coords, const char * type){
     contour_manager->AddContour(name,xs,ys,n_coords,type);
 }
+double get_contour_value(const char * name,double parameter_value){
+    return contour_manager->Get(name)->GetContourValue(parameter_value);
+}
 void add_cut(const char * name, int * array_ids, int n_array_ids,const char *function_name){
     cut_manager->AddCut(name,array_ids,n_array_ids,function_name);
 }
@@ -96,5 +99,29 @@ void sqlite_make_plots(const char * sqlite_db_file, const char * query, const ch
 }
 void insert_root_into_sqlite(const char * root_file_name, const char * sqlite_db, int collection_rowid){
     InsertRootIntoSqlite(root_file_name, sqlite_db, collection_rowid);
+}
+void get_2d_hist_content(const char* root_file_name, const char * th2d_name, int n, double * content){
+    TFile file(root_file_name);
+    if (file.IsOpen()){
+        if(file.Get(th2d_name)){
+            TH2D* hist=(TH2D*)file.Get(th2d_name)->Clone();
+            if (n==hist->fN){
+                for (int i=0;i<n;i++){
+                    content[i]=hist->GetAt(i);
+                }
+            
+            }
+            else{
+                std::cout << "Number provided doesn't equal the number of elements in the 2d hist"<< std::endl;
+            }
+        }
+        else{
+            std::cout<< "Couldn't find hist name \"" << th2d_name <<"\"" << std::endl; 
+        }
+    }
+    else{
+        std::cout << "Couldn't open rootfile: \"" << root_file_name <<"\"" << std::endl;
+    }
+    file.Close();
 }
 }
