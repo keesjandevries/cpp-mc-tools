@@ -87,10 +87,10 @@ void make_plots(const char ** root_file_names,int n_root_file_names,
         root_make_plots.Run(nentries,cuts);
     }
 }
-void sqlite_make_plots(const char * sqlite_db_file, const char * query, const char * outfile_name){
+void sqlite_make_plots(const char * sqlite_db_file, const char * query,int query_length, const char * outfile_name){
     std::vector<Space*> spaces=space_manager->Get();
     SqliteMakePlots plotter(sqlite_db_file);
-    plotter.Run(query,spaces);
+    plotter.Run(query,query_length,spaces);
     TFile outfile(outfile_name,"UPDATE");
     for( std::vector<Space*>::iterator it=spaces.begin(); it!=spaces.end() ; it++){
         (*it)->write_plots();
