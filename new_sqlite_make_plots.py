@@ -111,7 +111,10 @@ if __name__ == '__main__':
     spaces=prepare_spaces(user.spaces.get_spaces(args.spaces),args.reference)
     axes=prepare_axes(user.axes.get(),spaces)
     values=[axis['value'] for axis in axes.values()]
-    values+=user.constraints_sets.get(args.reference)
+    if  args.reference == 'chi2-chi2':
+        values+=['chi2-chi2']
+    else:
+        values+=user.constraints_sets.get(args.reference)
     # populate vars_lookups, vars_functions, and gauss_constraints with array ids
     vars_lookups={name: {'observable_ids': oids} for name, oids in user.vars_lookups.get().items()}
     vars_functions=user.vars_functions.get()
@@ -125,7 +128,7 @@ if __name__ == '__main__':
     sql_where=''
     if args.sql_where is not None:
         sql_where='where ' + args.sql_where
-    sql_selection='select rowid,collection_rowid, {} from points {};'.format(columns,sql_where)
+    sql_selection='select rowid,collections_rowid, {} from points {};'.format(columns,sql_where)
     print('the sql query is:\n{}'.format(sql_selection))
     # get unique items in the list ordered
     vars_lookups=tools.populate_with_array_ids(vars_lookups,style,array_ids_dict)
