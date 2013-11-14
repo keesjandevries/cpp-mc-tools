@@ -10,7 +10,7 @@ def get_spaces(choice=None):
         return spaces['pmssm']
 
 spaces={
-    'test':[{'axes':'m0'}],
+        'test':[{'axes':['m0_7K','m12']},{'axes':'m0'}],
     'mlsp-ssi':[
         {   'axes':['logmneu1','logssikocm2'],'zaxes': ['Dssicm2','Dssi']},
 #            {   'axes':['logmneu1','logssicm2']},
@@ -27,14 +27,14 @@ spaces={
         {'axes':'cmssm-mc9-chi2','zaxes':['m0','m12','A0','tanb','mt','mz','Delta_alpha_had']},
         ],
     'cmssm-params-and-breakdowns':[
-        {'axes':['m0','m12'],'zaxes':['m0','m12','A0','tanb', 'Al(SLD)', 'Ab', 'Ac', 'mc9_Oh2', 'mc9_Mh',   
+        {'axes':['m0_7K','m12'],'zaxes':['m0','m12','A0','tanb', 'Al(SLD)', 'Ab', 'Ac', 'mc9_Oh2', 'mc9_Mh',   
             'Gamma_Z', 'GZ_in', 'R(B->Xsll)', 'Al(P_tau)', 'MZ', 'mc9_R_DMBs', 'MW', 'Afb_l', 
             'xenon100_SpiN_unc', 'mc9_DAlpha_had', 'mc9_epsilon_K',  'sigma_had^0', 'Afb(c)', 
             'atlas20_m0_m12', 'Afb(b)',  'mc9_R_B->Xsg', 'mc9_R_DMBs_DMBd', 'mc9_R_B->taunu', 
             'Rc', 'Rb',  'Rl', 'R_Bsmm_mc9', 'sintheta_eff', 'mc9_Mt', 'R(K->lnu)', 'R(Kp->pinn)', 'gminus2mu', 'MATANB' ,
             'LEP-chargino', 'LEP-neutralino', 'LEP-slepton', 'LEP-sneutrino', 'LEP-squark','neutralino-lsp'
             ]},
-        {'axes':['m0','tanb'],'zaxes':['m0','m12','A0','tanb', 'Al(SLD)', 'Ab', 'Ac', 'mc9_Oh2', 'mc9_Mh',   
+        {'axes':['m0_7K','tanb'],'zaxes':['m0','m12','A0','tanb', 'Al(SLD)', 'Ab', 'Ac', 'mc9_Oh2', 'mc9_Mh',   
             'Gamma_Z', 'GZ_in', 'R(B->Xsll)', 'Al(P_tau)', 'MZ', 'mc9_R_DMBs', 'MW', 'Afb_l', 
             'xenon100_SpiN_unc', 'mc9_DAlpha_had', 'mc9_epsilon_K',  'sigma_had^0', 'Afb(c)', 
             'atlas20_m0_m12', 'Afb(b)',  'mc9_R_B->Xsg', 'mc9_R_DMBs_DMBd', 'mc9_R_B->taunu', 
@@ -150,11 +150,14 @@ spaces={
             {   'axes':['logmneu1','logssicm2']},
             {   'axes':'BsmmRatio'}, 
             {   'axes':'mg_6K'},
+            {   'axes':'mg_5K'},
             {   'axes':'mstop1_6K' },
+            {   'axes':'mstop1_5K' },
             {   'axes':'mh' }, 
             {   'axes':'logssicm2' }, 
             {   'axes':'MA' }, 
             {   'axes':'mstau1_6K' }, 
+            {   'axes':'mstau1_5K' }, 
             {   'axes':'msqr' }, 
 #            {   'axes':'mh' }, 
 #            {   'axes':'m3g' },
@@ -185,7 +188,9 @@ spaces={
         {   'axes':'mstau1' }, 
         {   'axes':'msqr' }, 
         {   'axes':'mg_6K'},
+        {   'axes':'mg_5K'},
         {   'axes':'mstop1_6K' },
+        {   'axes':'mstop1_5K' },
         {   'axes':'mstau1_6K' }, 
         {   'axes':'MA' }, 
 #        {   'axes':['m0','mh_over_m0']},
