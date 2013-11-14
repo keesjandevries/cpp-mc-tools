@@ -210,7 +210,7 @@ mcpp_constraints_dict = {
             'data' : [125.,1.0,1.5], 
             'func' : 'gauss'},
         'mc8new_Mh': {
-            'oids' :[('FeynHiggs', 'mh')], 
+            'oids' :[('FeynHiggs', 'mh'),('FeynHiggs','Dmh')], 
             'data' : [125.,1.0], 
             'func' : 'higgs_gauss'},
         'mc9_Mh': {
