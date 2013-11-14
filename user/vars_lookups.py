@@ -1,6 +1,6 @@
 def get():
     return {
-        'chi2-chi2': {'array_ids': 0},
+        'chi2-chi2': {'mcpp':('tot_X2','all')},
         # general inputs
         'mtop': {'mc_old':'mtop','mcpp':('SMINPUTS','in_Mt')},
         'tanb': {'mc_old': 'tanb', 'mcpp': ('MINPAR', 'TB')},
@@ -22,6 +22,7 @@ def get():
         'in_ma': {'mc_old': 'in_ma', 'mcpp': ('EXTPAR', 'in_MA0')},
         'in_mu': {'mc_old': 'in_mu', 'mcpp': ('EXTPAR', 'in_MUE')},
         #observables
+        'MW': {'mcpp':('SUSY-POPE', 'MW')},
         'MA': {'mc_old': 'MA', 'mcpp': ('MASS', 'MA0')},
         'mg': {'mc_old': 'gluino', 'mcpp': ('MASS', 'MGl')},
         'mh': {'mc_old': 'mh', 'mcpp': ('FeynHiggs', 'mh')},
