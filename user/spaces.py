@@ -15,6 +15,9 @@ spaces={
         {   'axes':['logmneu1','logssikocm2'],'zaxes': ['Dssicm2','Dssi']},
 #            {   'axes':['logmneu1','logssicm2']},
         ],
+    'm0-A0':[
+        {'axes':['m0','A0']},
+        ],
     'mass-differences':[ 
         {'axes':'mstau1-mneu1'},
         {'axes':'mchar1-mneu1'},
@@ -26,35 +29,48 @@ spaces={
     'cmssm-chi2-slices': [
         {'axes':'cmssm-mc9-chi2','zaxes':['m0','m12','A0','tanb','mt','mz','Delta_alpha_had']},
         ],
+    'mh':[
+        {'axes':'mh'},
+        {'axes':['mh','mstop1'],'zaxes':'atlas20_m0_m12'},
+        ],
     'cmssm-params-and-breakdowns':[
-        {'axes':['m0_7K','m12'],'zaxes':['m0','m12','A0','tanb', 'Al(SLD)', 'Ab', 'Ac', 'mc9_Oh2', 'mc9_Mh',   
+        {   'axes':['m0_6K','m12'],
+            'zaxes':[ 
+            'm0','m12','A0','tanb','mh' ,'Al(SLD)', 'Ab', 'Ac', 'mc9_Oh2', 'mc9_Mh',   
             'Gamma_Z', 'GZ_in', 'R(B->Xsll)', 'Al(P_tau)', 'MZ', 'mc9_R_DMBs', 'MW', 'Afb_l', 
-            'xenon100_SpiN_unc', 'mc9_DAlpha_had', 'mc9_epsilon_K',  'sigma_had^0', 'Afb(c)', 
+            'lux131030_unc', 'mc9_DAlpha_had', 'mc9_epsilon_K',  'sigma_had^0', 'Afb(c)', 
             'atlas20_m0_m12', 'Afb(b)',  'mc9_R_B->Xsg', 'mc9_R_DMBs_DMBd', 'mc9_R_B->taunu', 
-            'Rc', 'Rb',  'Rl', 'R_Bsmm_mc9', 'sintheta_eff', 'mc9_Mt', 'R(K->lnu)', 'R(Kp->pinn)', 'gminus2mu', 'MATANB' ,
+            'Rc', 'Rb',  'Rl', 'RmmNov13_mc9', 'sintheta_eff', 'mc9_Mt', 'R(K->lnu)', 'R(Kp->pinn)', 'gminus2mu', 'MATANB' ,
             'LEP-chargino', 'LEP-neutralino', 'LEP-slepton', 'LEP-sneutrino', 'LEP-squark','neutralino-lsp'
             ]},
-        {'axes':['m0_7K','tanb'],'zaxes':['m0','m12','A0','tanb', 'Al(SLD)', 'Ab', 'Ac', 'mc9_Oh2', 'mc9_Mh',   
+        {'axes':['m0_6K','tanb'],
+            'zaxes':[ 
+            'm0','m12','A0','tanb', 'mh' ,'Al(SLD)', 'Ab', 'Ac', 'mc9_Oh2', 'mc9_Mh',   
             'Gamma_Z', 'GZ_in', 'R(B->Xsll)', 'Al(P_tau)', 'MZ', 'mc9_R_DMBs', 'MW', 'Afb_l', 
-            'xenon100_SpiN_unc', 'mc9_DAlpha_had', 'mc9_epsilon_K',  'sigma_had^0', 'Afb(c)', 
+            'lux131030_unc', 'mc9_DAlpha_had', 'mc9_epsilon_K',  'sigma_had^0', 'Afb(c)', 
             'atlas20_m0_m12', 'Afb(b)',  'mc9_R_B->Xsg', 'mc9_R_DMBs_DMBd', 'mc9_R_B->taunu', 
-            'Rc', 'Rb',  'Rl', 'R_Bsmm_mc9', 'sintheta_eff', 'mc9_Mt', 'R(K->lnu)', 'R(Kp->pinn)', 'gminus2mu', 'MATANB' ,
+            'Rc', 'Rb',  'Rl', 'RmmNov13_mc9', 'sintheta_eff', 'mc9_Mt', 'R(K->lnu)', 'R(Kp->pinn)', 'gminus2mu', 'MATANB' ,
             'LEP-chargino', 'LEP-neutralino', 'LEP-slepton', 'LEP-sneutrino', 'LEP-squark','neutralino-lsp'
             ]},
-        {'axes':['tanb','m12'],'zaxes':['m0','m12','A0','tanb', 'Al(SLD)', 'Ab', 'Ac', 'mc9_Oh2', 'mc9_Mh',   
+        {'axes':['tanb','m12'],
+            'zaxes':[ 
+            'm0','m12','A0','tanb', 'mh' ,'Al(SLD)', 'Ab', 'Ac', 'mc9_Oh2', 'mc9_Mh',   
             'Gamma_Z', 'GZ_in', 'R(B->Xsll)', 'Al(P_tau)', 'MZ', 'mc9_R_DMBs', 'MW', 'Afb_l', 
-            'xenon100_SpiN_unc', 'mc9_DAlpha_had', 'mc9_epsilon_K',  'sigma_had^0', 'Afb(c)', 
+            'lux131030_unc', 'mc9_DAlpha_had', 'mc9_epsilon_K',  'sigma_had^0', 'Afb(c)', 
             'atlas20_m0_m12', 'Afb(b)',  'mc9_R_B->Xsg', 'mc9_R_DMBs_DMBd', 'mc9_R_B->taunu', 
-            'Rc', 'Rb',  'Rl', 'R_Bsmm_mc9', 'sintheta_eff', 'mc9_Mt', 'R(K->lnu)', 'R(Kp->pinn)', 'gminus2mu', 'MATANB' ,
+            'Rc', 'Rb',  'Rl', 'RmmNov13_mc9', 'sintheta_eff', 'mc9_Mt', 'R(K->lnu)', 'R(Kp->pinn)', 'gminus2mu', 'MATANB' ,
             'LEP-chargino', 'LEP-neutralino', 'LEP-slepton', 'LEP-sneutrino', 'LEP-squark','neutralino-lsp'
             ]},
-        {'axes':['MA','tanb'],'zaxes':['m0','m12','A0','tanb', 'Al(SLD)', 'Ab', 'Ac', 'mc9_Oh2', 'mc9_Mh',   
+        {'axes':['MA','tanb'],
+            'zaxes':[ 
+            'm0','m12','A0','tanb', 'mh' ,'Al(SLD)', 'Ab', 'Ac', 'mc9_Oh2', 'mc9_Mh',   
             'Gamma_Z', 'GZ_in', 'R(B->Xsll)', 'Al(P_tau)', 'MZ', 'mc9_R_DMBs', 'MW', 'Afb_l', 
-            'xenon100_SpiN_unc', 'mc9_DAlpha_had', 'mc9_epsilon_K',  'sigma_had^0', 'Afb(c)', 
+            'lux131030_unc', 'mc9_DAlpha_had', 'mc9_epsilon_K',  'sigma_had^0', 'Afb(c)', 
             'atlas20_m0_m12', 'Afb(b)',  'mc9_R_B->Xsg', 'mc9_R_DMBs_DMBd', 'mc9_R_B->taunu', 
-            'Rc', 'Rb',  'Rl', 'R_Bsmm_mc9', 'sintheta_eff', 'mc9_Mt', 'R(K->lnu)', 'R(Kp->pinn)', 'gminus2mu', 'MATANB' ,
+            'Rc', 'Rb',  'Rl', 'RmmNov13_mc9', 'sintheta_eff', 'mc9_Mt', 'R(K->lnu)', 'R(Kp->pinn)', 'gminus2mu', 'MATANB' ,
             'LEP-chargino', 'LEP-neutralino', 'LEP-slepton', 'LEP-sneutrino', 'LEP-squark','neutralino-lsp'
-            ]}
+            ]},
+        {   'axes':'mg_6K'},
         ],
     'nuhm1-params-and-breakdowns':[
         {'axes':['m0','m12'],'zaxes':['m0','m12','A0','tanb','mh2', 'Al(SLD)', 'Ab', 'Ac', 'mc9_Oh2', 'mc9_Mh',   
@@ -121,10 +137,68 @@ spaces={
             ]}
         ],
     'fh-unc':[
-        {'axes':['fh-ss','Dmh']}
+        {'axes':['fh-ss','Dmh'],'zaxes':['m0','m12','A0','tanb','mt','mz','Delta_alpha_had']},
+        {'axes':['fh-ss_20','Dmh_20'],'zaxes':['m0','m12','A0','tanb','mt','mz','Delta_alpha_had']},
+        {'axes':['fh-ss_10','Dmh_10'],'zaxes':['m0','m12','A0','tanb','mt','mz','Delta_alpha_had']},
+        {'axes':['fh-ss_5','Dmh_5'],'zaxes':['m0','m12','A0','tanb','mt','mz','Delta_alpha_had']},
         ],
     'mg':[
             {'axes':'mg','zaxes':['xenon100_SpiN_unc','xenon100']},
+            ],
+    'mneu':[
+            {'axes':'mneu1_50gev'} 
+            ],
+    'm0-6K-m12':[
+            {   'axes':['m0_6K','m12'] },
+            ],
+    'm0-m12':[
+            {   'axes':['m0','m12'] },
+            ],
+    'cmssm-mc9-planes':[
+            {   'axes':['m0_6K','m12'] },
+            {   'axes':['m0_6K','tanb']},
+            {   'axes':['tanb','m12']},
+            {   'axes':['MA','tanb']},
+            {   'axes':['logmneu1','logssikocm2']},
+            ],
+    'cmssm-mc9-1d-lhoods':[
+            {   'axes':['mg_5K'] },
+            {   'axes':['msqr']},
+            {   'axes':['mstop1_5K']},
+            {   'axes':['mstau1']},
+            {   'axes':['mh']},
+            {   'axes':['MA_2500']},
+            {   'axes':['BsmmRatio']},
+            ],
+    'neg-mu-cmssm-mc9-1d-lhoods':[
+            {   'axes':['mg_5K'] },
+            {   'axes':['msqr']},
+            {   'axes':['mstop1_5K']},
+            {   'axes':['mstau1']},
+            {   'axes':['mh']},
+            {   'axes':['MA']},
+            {   'axes':['BsmmRatio']},
+            ],
+    'neg-mu-cmssm-limits':[
+            {   'axes':['mg_6K'] },
+            {   'axes':['msqr_8K']},
+            {   'axes':['mstop1_6K']},
+            {   'axes':['mstau1_6K']},
+            {   'axes':['MA_6K']},
+            ],
+    'neg-mu-cmssm-mc9-planes':[
+            {   'axes':['m0_6K','m12'] },
+            {   'axes':['m0_6K','tanb40']},
+            {   'axes':['tanb40','m12']},
+            {   'axes':['MA','tanb40']},
+            {   'axes':['logmneu1','logssikocm2']},
+            ],
+    'nuhm1-mc9-planes':[
+            {   'axes':['m0','m12'] },
+            {   'axes':['m0','tanb']},
+            {   'axes':['tanb','m12']},
+            {   'axes':['MA','tanb']},
+            {   'axes':['logmneu1','logssikocm2']},
             ],
     'cmssm': [
             {'axes':'mtop'},
@@ -153,11 +227,13 @@ spaces={
             {   'axes':'mg_5K'},
             {   'axes':'mstop1_6K' },
             {   'axes':'mstop1_5K' },
-            {   'axes':'mh' }, 
+            {   'axes':'mh','zaxes':'Dmh' }, 
             {   'axes':'logssicm2' }, 
             {   'axes':'MA' }, 
+            {   'axes':'MA_2500' }, 
             {   'axes':'mstau1_6K' }, 
             {   'axes':'mstau1_5K' }, 
+            {   'axes':'mstau1' }, 
             {   'axes':'msqr' }, 
 #            {   'axes':'mh' }, 
 #            {   'axes':'m3g' },
@@ -236,6 +312,13 @@ spaces={
             {'axes':['MA','mh']},
             {'axes':['tanb','mh']},
             {'axes':['A','mh']},
+            #additional plots
+            {'axes':['mstop1_750','mneu1_750']},
+            {'axes':['mselL_750','mneu1_750']},
+            {'axes':['msmuL_750','mneu1_750']},
+            {'axes':['mstau1_750','mneu1_750']},
+            {'axes':['mchar1_750','mneu1_750']},
+            {'axes':['mneu2_750','mneu1_750']},
 #            {'axes':['mstop1','mh']},
 #            {'axes':['mstop2','mh']},
 #            {'axes':['msbot1','mh']},
@@ -251,6 +334,7 @@ spaces={
 #            {'axes':['in_mu','mu']},
 #            #other parameters
             {   'axes':['logmneu1','logssikocm2']},
+            {   'axes':['logmneu1','logssikocm2_50']},
 #            {'axes':['MA','tanb']},
 #            {'axes':['A','mu']},
 #            {'axes':['M1','mg']},
