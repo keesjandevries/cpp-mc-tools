@@ -213,13 +213,21 @@ mcpp_constraints_dict = {
             'oids' :[('FeynHiggs', 'mh'),('FeynHiggs','Dmh')], 
             'data' : [125.,1.0], 
             'func' : 'higgs_gauss'},
-        'mc9_Mh': {
+        'mc9_Mh_DMh': {
             'oids' :[('FeynHiggs', 'mh'),('FeynHiggs','Dmh')], 
             'data' : [125.7,0.4], 
             'func' : 'higgs_gauss',
             'info' : 'http://gfitter.desy.de/Figures/Standard_Model/2013_05_29_ShowFullFitTable_large.gif',
             'texname': r'$M_h$',
             'texvalue': r'$125.7\pm0.4\pm\Delta(M_h)_{FH}$',
+            },
+        'mc9_Mh': {
+            'oids' :[('FeynHiggs', 'mh')], 
+            'data' : [125.7,0.4,1.5], 
+            'func' : 'gauss',
+            'info' : 'http://gfitter.desy.de/Figures/Standard_Model/2013_05_29_ShowFullFitTable_large.gif',
+            'texname': r'$M_h$',
+            'texvalue': r'$125.7\pm0.4_{exp}\pm1.5_{th}$',
             },
         'HiggsLEP': {   
             'oids': [('FeynHiggs', 'mh')],
