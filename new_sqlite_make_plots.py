@@ -21,7 +21,9 @@ import user.contours
 runlib=cdll.LoadLibrary('lib/libmylib.so')
 
 def parse_args():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(
+            formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+            fromfile_prefix_chars='@')
     parser.add_argument('--sqlite-db',help='sqlite database')
     parser.add_argument('--outfile',help='output root file')
     parser.add_argument('--reference', default='chi2-chi2',
@@ -153,4 +155,4 @@ if __name__ == '__main__':
     # input and output files
     outfile=args.outfile
     #finally make the plots
-    cw.sqlite_make_plots(args.sqlite_db,sql_selection,outfile)
+    cw.sqlite_make_plots(args.sqlite_db,sql_selection,outfile,args.reference)

@@ -13,4 +13,5 @@
 #include "SqliteInserter.h"
 #include "TFile.h"
 #include "TH2D.h"
+#include "TMath.h"
 #endif // INCLUDE_CTYPESWRAPPERS_H_

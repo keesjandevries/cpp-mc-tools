@@ -20,6 +20,7 @@ class Space{
         //public member functions
         /// THE CRUCIAL FUNCTION
         void update(double*,int);    
+        void update(double*,int,double);    
         void print_axes_names();
         void write_plots();
     private:

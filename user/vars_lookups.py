@@ -11,6 +11,8 @@ def get():
         'm12': {'mc_old': 'm12', 'mcpp': ('MINPAR', 'in_M12')},
         'A0': {'mc_old': 'A0', 'mcpp': ('MINPAR', 'in_A')},
         'mh2': {'mc_old': 'mh2', 'mcpp': ('EXTPAR', 'in_MH2')},
+        'mhd2': {'mc_old': 'mh2', 'mcpp': ('EXTPAR', 'in_MHd2')},
+        'mhu2': {'mc_old': 'mh2', 'mcpp': ('EXTPAR', 'in_MHu2')},
         #pmssm inputs
         'msq12': {'mc_old': 'msq12', 'mcpp': ('MC_EXTPAR', 'in_MC_Msq12')},
         'msq3': {'mc_old': 'msq3', 'mcpp': ('MC_EXTPAR', 'in_MC_Msq3')},
@@ -21,8 +23,7 @@ def get():
         'M3': {'mc_old': 'M3', 'mcpp': ('EXTPAR', 'in_M3')},
         'in_ma': {'mc_old': 'in_ma', 'mcpp': ('EXTPAR', 'in_MA0')},
         'in_mu': {'mc_old': 'in_mu', 'mcpp': ('EXTPAR', 'in_MUE')},
-        #observables
-        'MW': {'mcpp':('SUSY-POPE', 'MW')},
+        #Other observables
         'MA': {'mc_old': 'MA', 'mcpp': ('MASS', 'MA0')},
         'MHp': {'mc_old': 'MA', 'mcpp': ('MASS', 'MHp')},
         'bsmm':{'mcpp':('BPhysics','Psll')},
@@ -32,10 +33,20 @@ def get():
         'mneu1': {'mc_old': 'neu1', 'mcpp': ('MASS', 'MNeu(1)')},
         'mneu2': {'mcpp': ('MASS', 'MNeu(2)')},
         'mchar1': {'mc_old': 'chi1', 'mcpp': ('MASS', 'MCha(1)')},
+        #squarks
         'msbot1': {'mc_old': 'sbottom1', 'mcpp': ('MASS', 'MSf(1,4,3)')},
         'msbot2': {'mc_old': 'sbottom2', 'mcpp': ('MASS', 'MSf(2,4,3)')},
         'mstop1': {'mc_old': 'stop1', 'mcpp': ('MASS', 'MSf(1,3,3)')},
         'mstop2': {'mc_old': 'stop2', 'mcpp': ('MASS', 'MSf(2,3,3)')},
+        'msuL':{'mcpp': ('MASS', 'MSf(1,3,1)')},
+        'mscL':{'mcpp': ('MASS', 'MSf(1,3,2)')},
+        'msdL':{'mcpp': ('MASS', 'MSf(1,4,1)')},
+        'mssL':{'mcpp': ('MASS', 'MSf(1,4,2)')},
+        'msuR':{'mcpp': ('MASS', 'MSf(2,3,1)')},
+        'mscR':{'mcpp': ('MASS', 'MSf(2,3,2)')},
+        'msdR':{'mcpp': ('MASS', 'MSf(2,4,1)')},
+        'mssR':{'mcpp': ('MASS', 'MSf(2,4,2)')},
+
         'mselL': {'mcpp': ('MASS', 'MSf(1,2,1)')},
         'msmuL': {'mcpp': ('MASS', 'MSf(1,2,2)')},
         'mstau1': {'mc_old': 'stau1', 'mcpp': ('MASS', 'MSf(1,2,3)')},
@@ -43,4 +54,25 @@ def get():
         'oh2': {'mcpp': ('Micromegas', 'Omega')},
         'ssmh': {'mc_old': 'ssmh'},
         'Dssi':{'mcpp':('LSP scattering', 'ss3out')},
+        #EWPOs
+        'Afb(c)':{'mcpp':('SUSY-POPE', 'Afb_c')},
+        'GZ_in':{'mcpp':('SUSY-POPE', 'GZ_in')},
+        'DAlpha_had':{'mcpp':('SUSY-POPE', 'DAlpha_had_in')},
+        'Afb_l':{'mcpp':('SUSY-POPE', 'Afb_l')},
+        'DAlpha_had':{'mcpp':('SUSY-POPE', 'DAlpha_had_in')},
+        'Afb(b)':{'mcpp':('SUSY-POPE', 'Afb_b')},
+        'Gamma_Z':{'mcpp':('SUSY-POPE', 'Gamma_z')},
+        'sigma_had^0':{'mcpp':('SUSY-POPE', 'sigma_had')},
+        'Al':{'mcpp':('SUSY-POPE', 'Al')},
+        'Rc':{'mcpp':('SUSY-POPE', 'Rc')},
+        'Rb':{'mcpp':('SUSY-POPE', 'Rb')},
+        'Al(P_tau)':{'mcpp':('SUSY-POPE', 'Al')},
+        'Rl':{'mcpp':('SUSY-POPE', 'Rl')},
+        'sintheta_eff':{'mcpp':('SUSY-POPE', 'sin_theta_eff')},
+        'MW-mc-old':{'mcpp':('SUSY-POPE', 'MW')},
+        'Ac':{'mcpp':('SUSY-POPE', 'Ac')},
+        'Ab':{'mcpp':('SUSY-POPE', 'Ab')},
+        'MW':{'mcpp':('SUSY-POPE', 'MW')},
         }
+
+

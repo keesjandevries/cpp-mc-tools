@@ -54,6 +54,20 @@ def get():
                     'mcpp': [('MASS', 'MSf(1,3,3)'),('MASS', 'MSf(2,3,3)'),('MASS', 'MSf(1,4,3)'),('MASS', 'MSf(2,4,3)')]
                     }
                 },
+            'm3g_new': {
+                'name': 'power_4_weighted_average',
+                'observable_ids': {
+                    'mc_old': ['stop1','stop2','sbottom1','sbottom2'],
+                    'mcpp': [('MASS', 'MSf(1,3,3)'),('MASS', 'MSf(2,3,3)'),('MASS', 'MSf(1,4,3)'),('MASS', 'MSf(2,4,3)')]
+                    }
+                },
+            'sigma_m3g': {
+                'name': 'standard_deviation',
+                'observable_ids': {
+                    'mc_old': ['stop1','stop2','sbottom1','sbottom2'],
+                    'mcpp': [('MASS', 'MSf(1,3,3)'),('MASS', 'MSf(2,3,3)'),('MASS', 'MSf(1,4,3)'),('MASS', 'MSf(2,4,3)')]
+                    }
+                },
             'mh2_m0^2_Ratio': {
                 'name': 'var1_over_var2_square',
                 'observable_ids': {

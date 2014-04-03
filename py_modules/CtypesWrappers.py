@@ -88,11 +88,12 @@ def make_plots(infiles, outfile, nentries, dir_in_root,cuts=[] ):
     c_cuts=cuts_c_strings(*[name.encode('ascii') for name in cuts])
     lib.make_plots(c_infiles, len(c_infiles), c_outfile,nentries,c_dir_in_root,c_cuts,len(c_cuts))
 
-def sqlite_make_plots(sqlite_db_file, query,outfile_name):
+def sqlite_make_plots(sqlite_db_file, query,outfile_name,reference_name):
     c_query=query.encode('ascii')
     c_sqlite_db_file=sqlite_db_file.encode('ascii')
     c_outfile_name=outfile_name.encode('ascii')
-    lib.sqlite_make_plots(c_sqlite_db_file, c_query,len(c_query),c_outfile_name)
+    c_reference_name=reference_name.encode('ascii')
+    lib.sqlite_make_plots(c_sqlite_db_file, c_query,len(c_query),c_outfile_name,c_reference_name)
 
 def insert_root_into_sqlite(root_file_name, sqlite_db, collection_rowid):
     lib.insert_root_into_sqlite(root_file_name.encode('ascii'),sqlite_db.encode('ascii'),collection_rowid)
@@ -103,4 +104,15 @@ def get_2d_hist(root_file_name,hist_name,nx,ny):
     lib.get_2d_hist_content(root_file_name.encode('ascii'),hist_name.encode('ascii'),n,double_array)
     array=numpy.array([v for v in double_array])
     array=array.reshape(nx+2,ny+2)
-    return array[1:-1,1:-2]
+    return array[1:-1,1:-1]
+
+def get_1d_hist(root_file_name,hist_name,nbins):
+    n=nbins+2
+    double_array=(c_double*n)(*([0.]*n))
+    lib.get_1d_hist_content(root_file_name.encode('ascii'),hist_name.encode('ascii'),n,double_array)
+    array=numpy.array([v for v in double_array])
+    return array[1:-1]
+
+def chi2_ndof_to_cl(chi2, ndof):
+    lib.chi2_ndof_to_cl.restype=c_double
+    return lib.chi2_ndof_to_cl(c_double(chi2),ndof)

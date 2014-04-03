@@ -87,10 +87,12 @@ void make_plots(const char ** root_file_names,int n_root_file_names,
         root_make_plots.Run(nentries,cuts);
     }
 }
-void sqlite_make_plots(const char * sqlite_db_file, const char * query,int query_length, const char * outfile_name){
+void sqlite_make_plots(const char * sqlite_db_file, const char * query,int query_length, 
+        const char * outfile_name, const char * reference_name){
     std::vector<Space*> spaces=space_manager->Get();
+    BaseGetValueFunction * reference_function=get_value_manager->Get(reference_name);
     SqliteMakePlots plotter(sqlite_db_file);
-    plotter.Run(query,query_length,spaces);
+    plotter.Run(query,query_length,spaces,reference_function);
     TFile outfile(outfile_name,"UPDATE");
     for( std::vector<Space*>::iterator it=spaces.begin(); it!=spaces.end() ; it++){
         (*it)->write_plots();
@@ -123,5 +125,32 @@ void get_2d_hist_content(const char* root_file_name, const char * th2d_name, int
         std::cout << "Couldn't open rootfile: \"" << root_file_name <<"\"" << std::endl;
     }
     file.Close();
+}
+void get_1d_hist_content(const char* root_file_name, const char * th1d_name, int n, double * content){
+    TFile file(root_file_name);
+    if (file.IsOpen()){
+        if(file.Get(th1d_name)){
+            TH1D* hist=(TH1D*)file.Get(th1d_name)->Clone();
+            if (n==hist->fN){
+                for (int i=0;i<n;i++){
+                    content[i]=hist->GetAt(i);
+                }
+            
+            }
+            else{
+                std::cout << "Number provided doesn't equal the number of elements in the 1d hist"<< std::endl;
+            }
+        }
+        else{
+            std::cout<< "Couldn't find hist name \"" << th1d_name <<"\"" << std::endl; 
+        }
+    }
+    else{
+        std::cout << "Couldn't open rootfile: \"" << root_file_name <<"\"" << std::endl;
+    }
+    file.Close();
+}
+double chi2_ndof_to_cl(double chi2, int ndof){
+    return TMath::Prob(chi2,ndof);
 }
 }

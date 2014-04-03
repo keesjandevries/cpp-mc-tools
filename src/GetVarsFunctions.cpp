@@ -6,6 +6,8 @@ std::map<std::string, GetVarsFunction > get_GetVarsFunction_map(){
     function_map["difference"]=difference;
     function_map["x_minus_2y"]=x_minus_2y;
     function_map["average"]=average;
+    function_map["power_4_weighted_average"]=power_4_weighted_average;
+    function_map["standard_deviation"]=standard_deviation;
     function_map["var1_over_var2_square"]=var1_over_var2_square;
     function_map["var1_over_var2"]=var1_over_var2;
     function_map["sqrt_var1_over_var2"]=sqrt_var1_over_var2;
@@ -48,12 +50,37 @@ double sqrt_var1_over_var2(double *VARS, std::vector<int>& array_ids){
 }
 
 double average(double * VARS, std::vector<int> & array_ids){
-    double average;
+    double average=0;
     for (std::vector<int>::iterator it=array_ids.begin(); it!=array_ids.end();it++){
         average += VARS[*it];
     }
     average/=array_ids.size();
     return average;
+}
+
+double power_4_weighted_average(double * VARS, std::vector<int> & array_ids){
+    double summed_weighted_avarage=0;
+    double summed_weights=0;
+    for (std::vector<int>::iterator it=array_ids.begin(); it!=array_ids.end();it++){
+        double mass=VARS[*it];
+        summed_weighted_avarage += mass/pow(mass,4);
+        summed_weights+=1/pow(mass,4);
+    }
+    return summed_weighted_avarage/summed_weights;;
+}
+
+double standard_deviation(double * VARS, std::vector<int> & array_ids){
+    double average=0;
+    int N=array_ids.size();
+    for (std::vector<int>::iterator it=array_ids.begin(); it!=array_ids.end();it++){
+        average += VARS[*it];
+    }
+    average/=N;
+    double sum_squared_differences=0;
+    for (std::vector<int>::iterator it=array_ids.begin(); it!=array_ids.end();it++){
+        sum_squared_differences += (VARS[*it]-average)*(VARS[*it]-average);
+    }
+    return sqrt(sum_squared_differences/N);
 }
 
 // Equation 30 arXiv:1308.1501

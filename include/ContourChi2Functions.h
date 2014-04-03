@@ -17,6 +17,7 @@ double xenon100_Jul12_90CL_ssi_unc(double * , std::vector<int> & , std::vector<C
 double lux131030_90CL(double * , std::vector<int> & , std::vector<Contour*> &);
 double lux131030_90CL_ssi_unc(double * , std::vector<int> & , std::vector<Contour*> &);
 double m0_m12_power_4(double *, std::vector<int>&, std::vector<Contour*> &);
+double msqr_mg_power_4(double *, std::vector<int>&, std::vector<Contour*> &);
 double one_dim_chi2_lookup(double *, std::vector<int>&, std::vector<Contour*> &);
 //double universal_limits(double * , std::vector<int> & , std::vector<Contour*> &);
 //double m3g_universal_limits(double * , std::vector<int> & , std::vector<Contour*> &);

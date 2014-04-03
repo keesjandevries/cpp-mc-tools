@@ -128,7 +128,6 @@ def get_array_ids(in_dict,style,array_ids_dict):
             array_ids=[array_ids_dict[oid] for oid in oids]
         except KeyError:
             pass
-#            print('WARNING: observable id \"{}\" not defined for style \"{}\".'.format(oids,style))
     return array_ids
 
 
