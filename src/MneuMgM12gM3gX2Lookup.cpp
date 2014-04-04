@@ -16,6 +16,7 @@ MgM12gM3gX2Lookup::MgM12gM3gX2Lookup(double * X2, double default_X2, std::vector
         _X2[i]=X2[i];
     }
 }
+
 MgM12gM3gX2Lookup::~MgM12gM3gX2Lookup(){
     delete  _X2;
 }
@@ -34,8 +35,6 @@ double MgM12gM3gX2Lookup::get_X2(double mg, double m12g, double m3g){
     //result
     double X2_interp=0;
     for (int i=0;i<3;i++){
-    //    std::cout << *_mg_m12g_m3g_ranges[i].begin() << std::endl;
-    //    std::cout << *(--_mg_m12g_m3g_ranges[i].end()) << std::endl;
         m_begin=_mg_m12g_m3g_ranges[i].begin();
         m_end=_mg_m12g_m3g_ranges[i].end();
         m_it=std::upper_bound(m_begin,m_end,m[i]);
@@ -46,15 +45,10 @@ double MgM12gM3gX2Lookup::get_X2(double mg, double m12g, double m3g){
             lower_index[i]=(m_it-_mg_m12g_m3g_ranges[i].begin()-1);
         }
         else{
-            //FIXME: remove print statement 
-            //std::cerr << "m[" << i << "] = " << m[i] << " out of range" << std::endl;
             break;
         }
-        //FIXME: remove print statement
-    //    std::cout << "lower_index[" << i << "]: " << lower_index[i] << std::endl; 
     }
     if (outside){
-    //    std::cerr << "one of the masses was outside the ranges\nExiting" <<   std::endl;
         return _default_X2;
     }
     double temp;
@@ -63,14 +57,6 @@ double MgM12gM3gX2Lookup::get_X2(double mg, double m12g, double m3g){
             for (int a_m3g=0; a_m3g<2; a_m3g++){
                 i_mg=lower_index[0]+a_mg; i_m12g=lower_index[1]+a_m12g; i_m3g=lower_index[2]+a_m3g;
                 temp=c[0][a_mg]*c[1][a_m12g]*c[2][a_m3g]*_X2[i_mg*_nm12g*_nm3g+i_m12g*_nm3g+i_m3g];
-                //std::cout << " mg: " << _mg_m12g_m3g_ranges[0][i_mg]
-                //          << " c_mg: " << c[0][a_mg]
-                //          << " m12g: " << _mg_m12g_m3g_ranges[1][i_m12g]
-                //          << " c_m12g: " << c[1][a_m12g]
-                //          << " m3g: " << _mg_m12g_m3g_ranges[2][i_m3g]
-                //          << " c_m3g: " << c[2][a_m3g]
-                //          << " X2: " << _X2[i_mg*_nm12g*_nm3g+i_m12g*_nm3g+i_m3g] 
-                //          << " X2_eff: " << temp << std::endl;
                 X2_interp+=c[0][a_mg]*c[1][a_m12g]*c[2][a_m3g]*_X2[i_mg*_nm12g*_nm3g+i_m12g*_nm3g+i_m3g];
             }
         }
