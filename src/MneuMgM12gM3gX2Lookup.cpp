@@ -118,13 +118,6 @@ double MneuMgM12gM3gX2Lookup::operator()(double * vars){
     else{
         X2=_default_X2;
     }
-//    std::cout << 
-//        mneu << " " << 
-//        mg << " " << 
-//        m12g << " " << 
-//        m3g << " " << 
-//        X2 << " " << 
-//        std::endl;
     return X2;
 }
 
