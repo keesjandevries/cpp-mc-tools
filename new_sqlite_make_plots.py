@@ -14,6 +14,7 @@ import user.vars_lookups
 import user.vars_functions
 import user.gauss_constraints
 import user.contour_constraints
+import user.mneu_mg_m12g_m3g_X2_lookups
 import user.constraints_sets
 import user.contours
 
@@ -122,8 +123,9 @@ if __name__ == '__main__':
     vars_functions=user.vars_functions.get()
     gauss_constraints=user.gauss_constraints.get()
     contour_constraints=user.contour_constraints.get()
+    mneu_mg_m12g_m3g_X2_lookups=user.mneu_mg_m12g_m3g_X2_lookups.get()
     # get all possible values
-    value_dict_list=[vars_lookups,vars_functions,gauss_constraints,contour_constraints]
+    value_dict_list=[vars_lookups,vars_functions,gauss_constraints,contour_constraints,mneu_mg_m12g_m3g_X2_lookups]
     array_ids_dict=get_array_ids_dict(values,value_dict_list,style) 
     # prepare select statement
     columns=','.join([ oid_column_dict[oid] for oid in array_ids_dict.keys()])
@@ -137,6 +139,9 @@ if __name__ == '__main__':
     vars_functions=tools.populate_with_array_ids(vars_functions,style,array_ids_dict)
     gauss_constraints=tools.populate_with_array_ids(gauss_constraints,style,array_ids_dict)
     contour_constraints=tools.populate_with_array_ids(contour_constraints,style,array_ids_dict)
+    mneu_mg_m12g_m3g_X2_lookups=tools.populate_with_array_ids(mneu_mg_m12g_m3g_X2_lookups,style,array_ids_dict)
+    # pupulate mneu_mg_m12g_m3g_X2_lookups with the lookup data
+    mneu_mg_m12g_m3g_X2_lookups=tools.populate_mneu_mg_m12g_m3g_X2_lookups(mneu_mg_m12g_m3g_X2_lookups)
     # populate contours and add to managers
     contours=tools.populate_contours(user.contours.get())
     tools.add_contours(contours)
@@ -145,6 +150,7 @@ if __name__ == '__main__':
     tools.add_vars_functions(vars_functions) 
     tools.add_gauss_constraints(gauss_constraints)
     tools.add_contour_constraints(contour_constraints)
+    tools.add_mneu_mg_m12g_m3g_X2_lookups(mneu_mg_m12g_m3g_X2_lookups)
     # look for chi2 calculators
     if args.reference in user.constraints_sets.constraints.keys():
         tools.add_chi2_calculator(args.reference,user.constraints_sets.get(args.reference))

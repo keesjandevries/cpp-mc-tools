@@ -1,5 +1,6 @@
 #ifndef INC_MNEUMGM12GM3GX2LOOKUP_H
 #define INC_MNEUMGM12GM3GX2LOOKUP_H
+#include <cmath>
 #include <iostream>
 #include <vector>
 #include <algorithm>

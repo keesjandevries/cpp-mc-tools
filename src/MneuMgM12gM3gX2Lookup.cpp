@@ -87,8 +87,20 @@ MneuMgM12gM3gX2Lookup::~MneuMgM12gM3gX2Lookup(){
 double MneuMgM12gM3gX2Lookup::operator()(double * vars){
     double mneu=vars[_array_ids[0]];
     double mg=vars[_array_ids[1]];
-    double m12g=vars[_array_ids[2]];
-    double m3g=vars[_array_ids[3]];
+    double m12g, m3g;
+    // m12g is the avarage over first 2 generation squark masses
+    for (int i=2; i<10; i++){
+        m12g+=vars[_array_ids[i]]/8;
+    }
+    // m3g calculated as "m3g=(4/sum(M**a))**1/a"
+    // this is based on the assumption that the xsection scales as 1/M**a
+    // hence sum(1/M**a)=4/m3g**a
+    double sum_1_over_M_to_a=0;
+    double a=8;
+    for (int i=10; i<14; i++){
+        sum_1_over_M_to_a+=pow(vars[_array_ids[i]],-a);
+    }
+    m3g=pow(4/sum_1_over_M_to_a,1/a);
     //calculate X2
     std::vector<double>::iterator m_begin=_mneu.begin();
     std::vector<double>::iterator m_end=_mneu.end();
@@ -106,6 +118,13 @@ double MneuMgM12gM3gX2Lookup::operator()(double * vars){
     else{
         X2=_default_X2;
     }
+//    std::cout << 
+//        mneu << " " << 
+//        mg << " " << 
+//        m12g << " " << 
+//        m3g << " " << 
+//        X2 << " " << 
+//        std::endl;
     return X2;
 }
 
