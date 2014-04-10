@@ -32,6 +32,7 @@ class MneuMgM12gM3gX2Lookup: public BaseGetValueFunction{
         //the get value functions
         virtual double operator()(double *);
     private:
+        double _default_X2;
         std::vector<int> _array_ids;
         std::vector<double> _mneu;
         std::vector<MgM12gM3gX2Lookup*> _mg_m12g_m3g_X2_lookups;

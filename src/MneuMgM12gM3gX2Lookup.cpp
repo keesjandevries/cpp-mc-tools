@@ -38,7 +38,7 @@ double MgM12gM3gX2Lookup::get_X2(double mg, double m12g, double m3g){
         m_begin=_mg_m12g_m3g_ranges[i].begin();
         m_end=_mg_m12g_m3g_ranges[i].end();
         m_it=std::upper_bound(m_begin,m_end,m[i]);
-        outside=(m_it==_mg_m12g_m3g_ranges[i].begin()) || (m_it==_mg_m12g_m3g_ranges[i].end());
+        outside=(m_it==m_begin) || (m_it==m_end);
         if (!outside){
             c[i][0]=c1(m_it,m[i]);
             c[i][1]=c2(m_it,m[i]);
@@ -66,6 +66,7 @@ MneuMgM12gM3gX2Lookup::MneuMgM12gM3gX2Lookup(std::vector<int> array_ids,
                 std::vector<double *> X2_s,double default_X2,std::vector<double> mneu,
                 std::vector< std::vector<double> > grid_mgs,std::vector< std::vector<double> > grid_m12gs,
                 std::vector< std::vector<double> > grid_m3gs):
+    _default_X2(default_X2),
     _array_ids(array_ids),
     _mneu(mneu)
 {
@@ -89,13 +90,23 @@ double MneuMgM12gM3gX2Lookup::operator()(double * vars){
     double m12g=vars[_array_ids[2]];
     double m3g=vars[_array_ids[3]];
     //calculate X2
-    std::vector<double>::iterator m_it=std::upper_bound(_mneu.begin(),_mneu.end(),mneu);
-    double c1_mneu=c1(m_it,mneu);
-    double c2_mneu=c2(m_it,mneu);
-    int i_mneu=(m_it-_mneu.begin()-1);
-    double X2_1=_mg_m12g_m3g_X2_lookups[i_mneu]->get_X2(mg,m12g,m3g);
-    double X2_2=_mg_m12g_m3g_X2_lookups[i_mneu+1]->get_X2(mg,m12g,m3g);
-    return c1_mneu*X2_1+c2_mneu*X2_2;
+    std::vector<double>::iterator m_begin=_mneu.begin();
+    std::vector<double>::iterator m_end=_mneu.end();
+    std::vector<double>::iterator m_it=std::upper_bound(m_begin,m_end,mneu);
+    bool outside=(m_it==m_begin) || (m_it==m_end);
+    double X2;
+    if (!outside){
+        double c1_mneu=c1(m_it,mneu);
+        double c2_mneu=c2(m_it,mneu);
+        int i_mneu=(m_it-_mneu.begin()-1);
+        double X2_1=_mg_m12g_m3g_X2_lookups[i_mneu]->get_X2(mg,m12g,m3g);
+        double X2_2=_mg_m12g_m3g_X2_lookups[i_mneu+1]->get_X2(mg,m12g,m3g);
+        X2=c1_mneu*X2_1+c2_mneu*X2_2;
+    }
+    else{
+        X2=_default_X2;
+    }
+    return X2;
 }
 
 double c1(std::vector<double>::iterator m_it , double m){
