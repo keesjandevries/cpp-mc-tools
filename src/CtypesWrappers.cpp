@@ -21,6 +21,11 @@ void add_contour_constraint(const char *name ,int* array_ids_p, int n_array_ids,
         const char ** contour_names_p, int n_contour_names ,const char *function_name){
     get_value_manager->AddContourConstraint(name, array_ids_p,n_array_ids,contour_names_p,n_contour_names, function_name);
 }
+void add_mneu_mg_m12g_m3g_X2_lookup(const char * name, int * array_ids_p, int n_array_ids, 
+        double default_X2, double * mneu_mg_m12g_m3g_X2_table, int n_rows){
+    get_value_manager->AddMneuMgM12gM3gX2Lookup(name, array_ids_p,  n_array_ids, 
+         default_X2,  mneu_mg_m12g_m3g_X2_table,  n_rows);
+}
 void add_chi2_calculator(const char * name){
     get_value_manager->AddChi2Calculator(name);
 }

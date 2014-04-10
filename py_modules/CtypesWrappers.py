@@ -26,6 +26,16 @@ def add_contour_constraint(name,array_ids,contour_names,function_name):
     c_function_name=function_name.encode('ascii')
     lib.add_contour_constraint(c_name,c_array_ids,len(c_array_ids),c_contour_names,len(c_contour_names),c_function_name)
 
+def add_mneu_mg_m12g_m3g_X2_lookup(name,array_ids,default_X2,mneu_mg_m12g_m3g_X2_table):
+    c_array_ids=(c_int*len(array_ids))(*array_ids)
+    n=5*len(mneu_mg_m12g_m3g_X2_table)
+    values=sum(mneu_mg_m12g_m3g_X2_table,[])
+    c_mneu_mg_m12g_m3g_X2_table=(c_double*n)(*values)
+    lib.add_mneu_mg_m12g_m3g_X2_lookup(name.encode('ascii'),c_array_ids,len(c_array_ids),c_double(default_X2),
+            c_mneu_mg_m12g_m3g_X2_table,n)
+#void add_mneu_mg_m12g_m3g_X2_lookup(const char * name, int * array_ids_p, int n_array_ids, 
+#        double default_X2, double * mneu_mg_m12g_m3g_X2_table, int n_rows){
+
 def add_chi2_calculator(name):
     lib.add_chi2_calculator(name.encode('ascii'))
 
