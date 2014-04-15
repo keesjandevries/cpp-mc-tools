@@ -85,8 +85,9 @@ MneuMgM12gM3gX2Lookup::~MneuMgM12gM3gX2Lookup(){
 }
 
 double MneuMgM12gM3gX2Lookup::operator()(double * vars){
-    double mneu=vars[_array_ids[0]];
-    double mg=vars[_array_ids[1]];
+    // mneu & mg: fermion masses can be negative
+    double mneu=abs(vars[_array_ids[0]]);
+    double mg=abs(vars[_array_ids[1]]);
     double m12g, m3g;
     // m12g is the avarage over first 2 generation squark masses
     for (int i=2; i<10; i++){
