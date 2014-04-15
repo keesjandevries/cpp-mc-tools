@@ -91,4 +91,5 @@ if not rowid==-1 and args.sqlite_db is not None:
 elif rowid==-1:
     print('Selected invalid point o')
 else:
+    print('rowid is {}'.format(rowid))
     print('No sqlite database selected')
