@@ -8,12 +8,13 @@ SqliteMakePlots::SqliteMakePlots(const char * filename){
     }
 }
 
-void SqliteMakePlots::Run(const char * query, std::vector<Space*> spaces){
+void SqliteMakePlots::Run(const char * query,int query_length, std::vector<Space*> spaces){
+    ///FIXME: atm the 'collection_rowid' columns has to be selected. This should be only optional
     /// Prepare sql statement
     int error;
     const char * tail;
     sqlite3_stmt * stmt;
-    error = sqlite3_prepare(_connection,"select rowid, * from points;",1000,&stmt,&tail);
+    error = sqlite3_prepare(_connection,query,query_length,&stmt,&tail);
     if (error != SQLITE_OK){
         std::cout << "ERROR: prepare stament failed" << std::endl;
         return;
@@ -21,7 +22,7 @@ void SqliteMakePlots::Run(const char * query, std::vector<Space*> spaces){
     /// for retrieving tha vars
     int rowid;
     int ncols=sqlite3_column_count(stmt);
-    double *vars = new double[ncols];
+    double *vars = new double[ncols-2];
     /// Space iterator
     std::vector<Space*>::iterator space_it;
     /// loop over selected rows
