@@ -292,10 +292,18 @@ spaces={
 #        {   'axes':['m0','mh_over_m0']},
 #        {   'axes':['m0','mh2_m0^2_Ratio']},
       ],
+   'cmssm_universal_limits_test':[
+            {'axes':['m0','m12'],'zaxes':['chi2_universal_limits_7TeV','chi2_m0_m12_7TeV']},
+            {'axes':['mg_2K','mneu1_750'],'zaxes':['chi2_universal_limits_7TeV','chi2_m0_m12_7TeV']},
+            {'axes':['mstop1_2K','mneu1_750'],'zaxes':['chi2_universal_limits_7TeV','chi2_m0_m12_7TeV']},
+            {'axes':['m12g_2K','mneu1_750'],'zaxes':['chi2_universal_limits_7TeV','chi2_m0_m12_7TeV']},
+           ],
    'universal_limits_test':[
-            {'axes':['mg_2K','mneu1_750']},
-            {'axes':['mstop1_2K','mneu1_750']},
-            {'axes':['m12g_2K','mneu1_750']},
+            {'axes':['mg_2K','mneu1_750'],'zaxes':['chi2_universal_limits_7TeV']},
+            {'axes':['m12g_2K','mneu1_750'],'zaxes':['chi2_universal_limits_7TeV']},
+            {'axes':['m3g_2K','mneu1_750'],'zaxes':['chi2_universal_limits_7TeV']},
+            {'axes':['mchar1_2K','mneu1_750'],'zaxes':['chi2_universal_limits_7TeV']},
+            {'axes':['mstau1_2K','mneu1_750'],'zaxes':['chi2_universal_limits_7TeV']},
            ],
    'mg-mneu1':[
             {'axes':['mg','mneu1']},

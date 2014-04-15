@@ -65,6 +65,30 @@ d= {
         'chi2_minimum_fill_color':'g',
         'chi2_minimum_edge_color':'g',
     },
+    'solid_constraint_2d_contours':{
+        'contours': True,    
+        'levels':[5.99],
+        'contour_colors':['b','r'],
+        'contour_linestyle':'solid',
+    },
+    'solid_constraint_1d_contours':{
+        'contours': True,    
+        'levels':[3.84],
+        'contour_colors':['b','r'],
+        'contour_linestyle':'solid',
+    },
+    'dashed_constraint_2d_contours':{
+        'contours': True,    
+        'levels':[5.99],
+        'contour_colors':['b','r'],
+        'contour_linestyle':'dashed',
+    },
+    'dashed_constraint_1d_contours':{
+        'contours': True,    
+        'levels':[3.84],
+        'contour_colors':['b','r'],
+        'contour_linestyle':'dashed',
+    },
     'stau_contours':{
         'contours': True,    
         'levels':[250,500,1500],
