@@ -1,23 +1,25 @@
 #include "SqliteReduceDb.h"
 
-std::string get_create_table_statement(int ncols){
-    //return string  "create table if not exists points(collections_rowid integer, f1 real, ..., f'ncols' real );"
-    std::stringstream sql_ss;
-    sql_ss << "create table if not exists points(points_rowid integer" ;
-    for (int i =0;i<ncols;i++){
-        sql_ss << ", f" << i+1 << " real";
+namespace SqliteReduceDb{
+    std::string get_create_table_statement(int ncols){
+        //return string  "create table if not exists points(collections_rowid integer, f1 real, ..., f'ncols' real );"
+        std::stringstream sql_ss;
+        sql_ss << "create table if not exists points(points_rowid integer" ;
+        for (int i =0;i<ncols;i++){
+            sql_ss << ", f" << i+1 << " real";
+        }
+        sql_ss << ");" ;
+        return sql_ss.str();
     }
-    sql_ss << ");" ;
-    return sql_ss.str();
-}
 
-std::string get_insert_statement(int ncols){
-    //return string "INSERT INTO points VALUES (?,?, ...);" with ncols+1 question marks
-    std::stringstream insert_sql_ss;
-    insert_sql_ss << "insert into points values (?";
-    for (int i=0;i<ncols;i++) insert_sql_ss << ",?" ;
-    insert_sql_ss  <<  ")";
-    return insert_sql_ss.str();
+    std::string get_insert_statement(int ncols){
+        //return string "INSERT INTO points VALUES (?,?, ...);" with ncols+1 question marks
+        std::stringstream insert_sql_ss;
+        insert_sql_ss << "insert into points values (?";
+        for (int i=0;i<ncols;i++) insert_sql_ss << ",?" ;
+        insert_sql_ss  <<  ")";
+        return insert_sql_ss.str();
+    }
 }
 
 void SqliteReduceDB(const char * input_name, const char * output_name, const char * select_query, 
@@ -55,7 +57,7 @@ void SqliteReduceDB(const char * input_name, const char * output_name, const cha
     //create table in output file
     char* errorMessage;
     //sql query for creating table
-    const std::string sql_s(get_create_table_statement(ncols));
+    const std::string sql_s(SqliteReduceDb::get_create_table_statement(ncols));
     const char * sql_c=sql_s.c_str();
     // execute creation of table
     error=sqlite3_exec(conn_out,sql_c, NULL, NULL, &errorMessage);
@@ -69,7 +71,7 @@ void SqliteReduceDB(const char * input_name, const char * output_name, const cha
     // start transaction
     sqlite3_exec(conn_out, "BEGIN TRANSACTION", NULL, NULL, &errorMessage);
     //sql query for inserting values
-    const std::string insert_sql_s(get_insert_statement(ncols));
+    const std::string insert_sql_s(SqliteReduceDb::get_insert_statement(ncols));
     const char * insert_sql_c(insert_sql_s.c_str());
     //prepare statement
     sqlite3_stmt* stmt_out;

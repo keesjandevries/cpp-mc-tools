@@ -1,22 +1,24 @@
 #include "SqliteInserter.h"
 
-std::string get_create_table_statement(int nvars){
-    //return string  "create table if not exists points(collections_rowid integer, f1 real, ..., f'nvars' real );"
-    std::stringstream sql_ss;
-    sql_ss << "create table if not exists points(collections_rowid integer" ;
-    for (int i =0;i<nvars;i++){
-        sql_ss << ", f" << i+1 << " real";
+namespace SqliteInserter{
+    std::string get_create_table_statement(int nvars){
+        //return string  "create table if not exists points(collections_rowid integer, f1 real, ..., f'nvars' real );"
+        std::stringstream sql_ss;
+        sql_ss << "create table if not exists points(collections_rowid integer" ;
+        for (int i =0;i<nvars;i++){
+            sql_ss << ", f" << i+1 << " real";
+        }
+        sql_ss << ");" ;
+        return sql_ss.str();
     }
-    sql_ss << ");" ;
-    return sql_ss.str();
-}
-std::string get_insert_statement(int nvars){
-    //return string "INSERT INTO points VALUES (?,?, ...);" with nvars+1 question marks
-    std::stringstream insert_sql_ss;
-    insert_sql_ss << "insert into points values (?";
-    for (int i=0;i<nvars;i++) insert_sql_ss << ",?" ;
-    insert_sql_ss  <<  ")";
-    return insert_sql_ss.str();
+    std::string get_insert_statement(int nvars){
+        //return string "INSERT INTO points VALUES (?,?, ...);" with nvars+1 question marks
+        std::stringstream insert_sql_ss;
+        insert_sql_ss << "insert into points values (?";
+        for (int i=0;i<nvars;i++) insert_sql_ss << ",?" ;
+        insert_sql_ss  <<  ")";
+        return insert_sql_ss.str();
+    }
 }
 
 void InsertRootIntoSqlite(const char * root_file_name, const char * sqlite_db, int collection_rowid){
@@ -58,7 +60,7 @@ void InsertRootIntoSqlite(const char * root_file_name, const char * sqlite_db, i
     //prepare sqlite stuff
     char* errorMessage;
     //sql query for creating table
-    const std::string sql_s(get_create_table_statement(nvars));
+    const std::string sql_s(SqliteInserter::get_create_table_statement(nvars));
     const char * sql_c=sql_s.c_str();
     // execute creation of table
     error=sqlite3_exec(conn,sql_c, NULL, NULL, &errorMessage);
@@ -74,7 +76,7 @@ void InsertRootIntoSqlite(const char * root_file_name, const char * sqlite_db, i
     // start transaction
     sqlite3_exec(conn, "BEGIN TRANSACTION", NULL, NULL, &errorMessage);
     //sql query for inserting values
-    const std::string insert_sql_s(get_insert_statement(nvars));
+    const std::string insert_sql_s(SqliteInserter::get_insert_statement(nvars));
     const char * insert_sql_c(insert_sql_s.c_str());
     //prepare statement
     sqlite3_stmt* stmt;
