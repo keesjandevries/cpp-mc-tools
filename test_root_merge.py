@@ -48,7 +48,7 @@ for space in spaces:
     if len(axes) == 1:
         reference_path='{}_chi2'.format(*axes)
         other_hist_paths=[]
-        zaxes=list(space.get('zaxes',[]))
+        zaxes=list(space.get('zaxes',[]))+['entries']
         for zaxis in zaxes:
             other_hist_paths.append('{}_{}'.format(axes[0],zaxis))
         print('Merging space {}, and zaxes {}'.format(reference_path,zaxes))
@@ -56,7 +56,7 @@ for space in spaces:
     if len(axes) == 2:
         reference_path='{}_{}_chi2'.format(*axes)
         other_hist_paths=[]
-        zaxes=list(space.get('zaxes',[]))
+        zaxes=list(space.get('zaxes',[]))+['entries']
         for zaxis in zaxes:
             other_hist_paths.append('{}_{}_{}'.format(axes[0],axes[1],zaxis))
         print('Merging space {}, and zaxes {}'.format(reference_path,zaxes))
