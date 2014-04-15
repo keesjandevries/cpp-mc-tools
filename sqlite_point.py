@@ -16,6 +16,7 @@ import user.vars_lookups
 import user.vars_functions
 import user.gauss_constraints
 import user.contour_constraints
+import user.mneu_mg_m12g_m3g_X2_lookups
 import user.constraints_sets
 import user.contours
 import user.inputs
@@ -66,7 +67,6 @@ def get_vars_from_db(db,rowid):
     else:
         return None
 
-
 def main(args):
     db=args.sqlite_db
     #establish lookup
@@ -79,6 +79,9 @@ def main(args):
     vars_functions=populate_with_array_ids(user.vars_functions.get(),style,array_ids_dict)
     gauss_constraints=populate_with_array_ids((user.gauss_constraints.get()),style,array_ids_dict)
     contour_constraints=populate_with_array_ids((user.contour_constraints.get()),style,array_ids_dict)
+    mneu_mg_m12g_m3g_X2_lookups=populate_with_array_ids((user.mneu_mg_m12g_m3g_X2_lookups.get()),style,array_ids_dict)
+    # pupulate mneu_mg_m12g_m3g_X2_lookups with the lookup data
+    mneu_mg_m12g_m3g_X2_lookups=populate_mneu_mg_m12g_m3g_X2_lookups(mneu_mg_m12g_m3g_X2_lookups)
     # populate contours and add to managers
     contours=populate_contours(user.contours.get())
     add_contours(contours)
@@ -87,6 +90,7 @@ def main(args):
     add_vars_functions(vars_functions) 
     add_gauss_constraints(gauss_constraints)
     add_contour_constraints(contour_constraints)
+    add_mneu_mg_m12g_m3g_X2_lookups(mneu_mg_m12g_m3g_X2_lookups)
     #
     format='{:<30}: {:30}'
     number_format='{:<30}: {:<5.'+str(args.ndigits)+'f}'
