@@ -1,4 +1,6 @@
 from ctypes import cdll, c_int, c_double, c_char_p
+import numpy
+
 lib=cdll.LoadLibrary('lib/libmylib.so')
 
 def add_vars_lookup(name,array_id):
@@ -36,6 +38,11 @@ def get_value(name,vars):
     c_vars=(c_double*len(vars))(*vars)
     return lib.get_value(c_name,c_vars)
 
+def get_contour_value(name,parameter):
+    lib.get_contour_value.restype=c_double
+    c_name=name.encode('ascii')
+    c_parameter=c_double(parameter)
+    return lib.get_contour_value(c_name,c_parameter)
 
 def add_contour(name,xs,ys,type):
     c_name=name.encode('ascii')
@@ -89,3 +96,11 @@ def sqlite_make_plots(sqlite_db_file, query,outfile_name):
 
 def insert_root_into_sqlite(root_file_name, sqlite_db, collection_rowid):
     lib.insert_root_into_sqlite(root_file_name.encode('ascii'),sqlite_db.encode('ascii'),collection_rowid)
+
+def get_2d_hist(root_file_name,hist_name,nx,ny):
+    n=(nx+2)*(ny+2)
+    double_array=(c_double*n)(*([0.]*n))
+    lib.get_2d_hist_content(root_file_name.encode('ascii'),hist_name.encode('ascii'),n,double_array)
+    array=numpy.array([v for v in double_array])
+    array=array.reshape(nx+2,ny+2)
+    return array[1:-1,1:-2]

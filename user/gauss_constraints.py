@@ -209,13 +209,25 @@ mcpp_constraints_dict = {
             'oids' :[('FeynHiggs', 'mh')], 
             'data' : [125.,1.0,1.5], 
             'func' : 'gauss'},
-        'mc9_Mh': {
+        'mc8new_Mh': {
+            'oids' :[('FeynHiggs', 'mh'),('FeynHiggs','Dmh')], 
+            'data' : [125.,1.0], 
+            'func' : 'higgs_gauss'},
+        'mc9_Mh_DMh': {
             'oids' :[('FeynHiggs', 'mh'),('FeynHiggs','Dmh')], 
             'data' : [125.7,0.4], 
             'func' : 'higgs_gauss',
             'info' : 'http://gfitter.desy.de/Figures/Standard_Model/2013_05_29_ShowFullFitTable_large.gif',
             'texname': r'$M_h$',
             'texvalue': r'$125.7\pm0.4\pm\Delta(M_h)_{FH}$',
+            },
+        'mc9_Mh': {
+            'oids' :[('FeynHiggs', 'mh')], 
+            'data' : [125.7,0.4,1.5], 
+            'func' : 'gauss',
+            'info' : 'http://gfitter.desy.de/Figures/Standard_Model/2013_05_29_ShowFullFitTable_large.gif',
+            'texname': r'$M_h$',
+            'texvalue': r'$125.7\pm0.4_{exp}\pm1.5_{th}$',
             },
         'HiggsLEP': {   
             'oids': [('FeynHiggs', 'mh')],
@@ -275,6 +287,13 @@ mcpp_constraints_dict = {
             'func': 'R_bsmm_chi2',
             'mode': 'default',
             'info': 'formula from Diego\'s slides, on 2013/08/13 first page, number from last slide'
+            },
+        'RmmNov13_mc9': {   
+            'oids': [('BPhysics', 'Psll')],
+            'data': [0.92,0.21,-0.20],
+            'func': 'R_bsmm_chi2',
+            'mode': 'default',
+            'info': 'formula from Diego\'s slides, on 2013/08/13 first page, number from mail 131108'
             },
         'mc-old-bsmm': {   
             'oids': [('BPhysics', 'Psll')],
@@ -362,7 +381,7 @@ mcpp_constraints_dict = {
             'texname' : r'$R_{\DeltaM_{B_s}}$',
             'texvalue'  : r'$0.97\pm0.20_{th-SM}$',
             },
-        'mc9_R_DMBs/DMBd': {   
+        'mc9_R_DMBs_DMBd': {   
             'oids': [('BPhysics', 'RDMs'),('BPhysics', 'RDMb')],
             'data': [0.86,0.14],
             'func': 'ratio_gauss', 

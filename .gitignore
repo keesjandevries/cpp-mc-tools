@@ -12,6 +12,8 @@ bin/*
 *__pycache__*
 *.npy
 *.root
+*.pyc
+MyCythonWrappers.cpp
 
 #standard c++ git ignore from github
 # Compiled Object files

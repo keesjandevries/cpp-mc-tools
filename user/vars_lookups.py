@@ -1,8 +1,8 @@
 def get():
     return {
-        'chi2-chi2': {'array_ids': 0},
+            'chi2-chi2': {'mcpp':('tot_X2','all'),'mc_old':'X2'},
         # general inputs
-        'mtop': {'mcpp':('SMINPUTS','in_Mt')},
+        'mtop': {'mc_old':'mtop','mcpp':('SMINPUTS','in_Mt')},
         'tanb': {'mc_old': 'tanb', 'mcpp': ('MINPAR', 'TB')},
         'mz':{'mcpp':('SMINPUTS','mod_MZ')},
         'Delta_alpha_had':{'mcpp':('SUSY-POPE', 'DAlpha_had_in')},
@@ -22,18 +22,25 @@ def get():
         'in_ma': {'mc_old': 'in_ma', 'mcpp': ('EXTPAR', 'in_MA0')},
         'in_mu': {'mc_old': 'in_mu', 'mcpp': ('EXTPAR', 'in_MUE')},
         #observables
+        'MW': {'mcpp':('SUSY-POPE', 'MW')},
         'MA': {'mc_old': 'MA', 'mcpp': ('MASS', 'MA0')},
+        'MHp': {'mc_old': 'MA', 'mcpp': ('MASS', 'MHp')},
+        'bsmm':{'mcpp':('BPhysics','Psll')},
         'mg': {'mc_old': 'gluino', 'mcpp': ('MASS', 'MGl')},
         'mh': {'mc_old': 'mh', 'mcpp': ('FeynHiggs', 'mh')},
         'Dmh': {'mc_old': 'mh', 'mcpp': ('FeynHiggs', 'Dmh')},
         'mneu1': {'mc_old': 'neu1', 'mcpp': ('MASS', 'MNeu(1)')},
+        'mneu2': {'mcpp': ('MASS', 'MNeu(2)')},
         'mchar1': {'mc_old': 'chi1', 'mcpp': ('MASS', 'MCha(1)')},
         'msbot1': {'mc_old': 'sbottom1', 'mcpp': ('MASS', 'MSf(1,4,3)')},
         'msbot2': {'mc_old': 'sbottom2', 'mcpp': ('MASS', 'MSf(2,4,3)')},
-        'mstau1': {'mc_old': 'stau1', 'mcpp': ('MASS', 'MSf(1,2,3)')},
         'mstop1': {'mc_old': 'stop1', 'mcpp': ('MASS', 'MSf(1,3,3)')},
         'mstop2': {'mc_old': 'stop2', 'mcpp': ('MASS', 'MSf(2,3,3)')},
+        'mselL': {'mcpp': ('MASS', 'MSf(1,2,1)')},
+        'msmuL': {'mcpp': ('MASS', 'MSf(1,2,2)')},
+        'mstau1': {'mc_old': 'stau1', 'mcpp': ('MASS', 'MSf(1,2,3)')},
         'mu': {'mc_old': 'mu', 'mcpp': ('HMIX', 'MUE')},
         'oh2': {'mcpp': ('Micromegas', 'Omega')},
         'ssmh': {'mc_old': 'ssmh'},
+        'Dssi':{'mcpp':('LSP scattering', 'ss3out')},
         }
