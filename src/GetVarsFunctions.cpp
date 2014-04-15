@@ -6,6 +6,7 @@ std::map<std::string, GetVarsFunction > get_GetVarsFunction_map(){
     function_map["difference"]=difference;
     function_map["x_minus_2y"]=x_minus_2y;
     function_map["average"]=average;
+    function_map["m3g"]=m3g;
     function_map["power_4_weighted_average"]=power_4_weighted_average;
     function_map["standard_deviation"]=standard_deviation;
     function_map["var1_over_var2_square"]=var1_over_var2_square;
@@ -56,6 +57,18 @@ double average(double * VARS, std::vector<int> & array_ids){
     }
     average/=array_ids.size();
     return average;
+}
+
+double m3g(double * VARS, std::vector<int> & array_ids){
+    // m3g calculated as "m3g=(4/sum(M**a))**1/a"
+    // this is based on the assumption that the xsection scales as 1/M**a
+    // hence sum(1/M**a)=4/m3g**a
+    double sum_1_over_M_to_a=0;
+    double a=8;
+    for (int i=0; i<4; i++){
+        sum_1_over_M_to_a+=pow(VARS[array_ids[i]],-a);
+    }
+    return pow(4/sum_1_over_M_to_a,1/a);
 }
 
 double power_4_weighted_average(double * VARS, std::vector<int> & array_ids){

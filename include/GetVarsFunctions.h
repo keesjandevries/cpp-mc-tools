@@ -15,6 +15,7 @@ double bsmm_ratio(double *VARS, std::vector<int>& array_ids);
 double difference(double *VARS, std::vector<int>& array_ids);
 double x_minus_2y(double *VARS, std::vector<int>& array_ids);
 double average(double *VARS, std::vector<int>& array_ids);
+double m3g(double *VARS, std::vector<int>& array_ids);
 double power_4_weighted_average(double *VARS, std::vector<int>& array_ids);
 double standard_deviation(double *VARS, std::vector<int>& array_ids);
 double var1_over_var2_square(double *VARS, std::vector<int>& array_ids);
