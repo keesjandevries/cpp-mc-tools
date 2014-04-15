@@ -144,7 +144,6 @@ if __name__ == '__main__':
             plot=cw.get_2d_hist(filename,plotname,nxbins,nybins)
             entries_plotname='{}_entries'.format('_'.join([axis['name'] for axis in axes_details]))
             entries_plot=cw.get_2d_hist(filename,entries_plotname,nxbins,nybins)
-            print(numpy.max(entries_plot))
             chi2_plotname='{}_chi2'.format('_'.join([axis['name'] for axis in axes_details]))
             chi2_plot=cw.get_2d_hist(filename,chi2_plotname,nxbins,nybins)
             if layer_options.get('colz',False):
