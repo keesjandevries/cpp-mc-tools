@@ -73,8 +73,6 @@ def prepare_axes(axes,spaces):
         axes_names+=space['axes']+space.get('zaxes',[])
     return {name:axes[name] for name in axes_names}
 
-#def get_values_list(axes):
-#    return [axis['value'] for axis in axes.values()]
 def recursively_get_oids(in_dict, style):
     if 'observable_ids' in in_dict.keys():
         return in_dict['observable_ids'][style]
