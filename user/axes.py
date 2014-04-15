@@ -3,6 +3,18 @@ def get():
     axes.update(chi2_axes)
     return axes
 axes={
+            'chi2_universal_limits_7TeV':{
+                'value':'chi2-universal_limits_7TeV',
+                'vmin':0,
+                'vmax':4,
+                'texname':r'$\chi^2(universal@7TeV)$'
+                },
+            'chi2_m0_m12_7TeV':{
+                'value':'chi2-atlas5_m0_m12',
+                'vmin':0,
+                'vmax':5.99,
+                'texname':r'$\chi^2(atlas@7TeV)$'
+                },
             'pmssm-mc9-chi2':{
                 'binning':{
                     'low':24,
@@ -237,16 +249,31 @@ axes={
                                  'low': 0.0,
                                  'nbins': 100,
                                  'type': 'linear'},
+                    'texname':'m12g',
                      'value': 'm12g'},
             'm3g': {'binning': {'high': 4000.0,
                                 'low': 0.0,
                                 'nbins': 100,
                                 'type': 'linear'},
+
                     'value': 'm3g'},
+            'm3g_2K': {'binning': {'high': 2000.0,
+                                'low': 0.0,
+                                'nbins': 100,
+                                'type': 'linear'},
+                    'value': 'm3g',
+                    'texname':'m3g',
+                    },
             'mchar1': {'binning': {'high':4000.0,
                                    'low': 0.0,
                                    'nbins': 100,
                                    'type': 'linear'},
+                       'value': 'mchar1'},
+            'mchar1_2K': {'binning': {'high':2000.0,
+                                   'low': 0.0,
+                                   'nbins': 100,
+                                   'type': 'linear'},
+                         'texname': r'$m_{\tilde{\chi}^{\pm}_1}$[GeV]',
                        'value': 'mchar1'},
             'mchar1_2_5K': {'binning': {'high':2500.0,
                                    'low': 0.0,
@@ -473,6 +500,13 @@ axes={
                        'value': 'mstau1',
                        'texname':r'$m_{\tilde{\tau}_1}$[GeV]',
                        },
+            'mstau1_2K': {'binning': {'high': 2000.0,
+                                   'low': 0.0,
+                                   'nbins': 100,
+                                   'type': 'linear'},
+                       'value': 'mstau1',
+                       'texname':r'$m_{\tilde{\tau}_1}$[GeV]',
+                       },
             'mstop1': {'binning': {'high': 4000.0,
                                    'low': 0.0,
                                    'nbins': 100,
@@ -542,6 +576,7 @@ axes={
                                    'nbins': 100,
                                    'type': 'linear'},
                        'value': 'mneu1',
+                         'texname': r'$m_{\tilde{\chi}^0_1}$[GeV]',
                        },
             'mneu2_750': {'binning': {'high': 750.0,
                                    'low': 0.0,
