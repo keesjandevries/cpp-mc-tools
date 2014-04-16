@@ -33,8 +33,6 @@ def add_mneu_mg_m12g_m3g_X2_lookup(name,array_ids,default_X2,mneu_mg_m12g_m3g_X2
     c_mneu_mg_m12g_m3g_X2_table=(c_double*n)(*values)
     lib.add_mneu_mg_m12g_m3g_X2_lookup(name.encode('ascii'),c_array_ids,len(c_array_ids),c_double(default_X2),
             c_mneu_mg_m12g_m3g_X2_table,n)
-#void add_mneu_mg_m12g_m3g_X2_lookup(const char * name, int * array_ids_p, int n_array_ids, 
-#        double default_X2, double * mneu_mg_m12g_m3g_X2_table, int n_rows){
 
 def add_chi2_calculator(name):
     lib.add_chi2_calculator(name.encode('ascii'))
@@ -97,6 +95,14 @@ def make_plots(infiles, outfile, nentries, dir_in_root,cuts=[] ):
     cuts_c_strings=c_char_p*len(cuts)
     c_cuts=cuts_c_strings(*[name.encode('ascii') for name in cuts])
     lib.make_plots(c_infiles, len(c_infiles), c_outfile,nentries,c_dir_in_root,c_cuts,len(c_cuts))
+
+def sqlite_reduce_db(input_name,output_name,select_query,chi2_function_name,max_chi2):
+    c_input_name=input_name.encode('ascii')
+    c_output_name=output_name.encode('ascii')
+    c_select_query=select_query.encode('ascii')
+    c_chi2_function_name=chi2_function_name.encode('ascii')
+    c_max_chi2=c_double(max_chi2)
+    lib.sqlite_reduce_db(c_input_name,c_output_name,c_select_query,len(c_select_query),c_chi2_function_name,c_max_chi2)
 
 def sqlite_make_plots(sqlite_db_file, query,outfile_name,reference_name):
     c_query=query.encode('ascii')
