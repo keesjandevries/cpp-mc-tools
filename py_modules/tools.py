@@ -59,7 +59,6 @@ def populate_mneu_mg_m12g_m3g_X2_lookups(lookups):
         for masses_X2 in data[ind]:
             table.append(list(masses_X2))
         lookups[name]['table']=table
-        print('HERE')
     return lookups
 
 

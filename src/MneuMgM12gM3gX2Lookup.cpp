@@ -38,18 +38,17 @@ double MgM12gM3gX2Lookup::get_X2(double mg, double m12g, double m3g){
         m_begin=_mg_m12g_m3g_ranges[i].begin();
         m_end=_mg_m12g_m3g_ranges[i].end();
         m_it=std::upper_bound(m_begin,m_end,m[i]);
-        outside=(m_it==m_begin) || (m_it==m_end);
-        if (!outside){
-            c[i][0]=c1(m_it,m[i]);
-            c[i][1]=c2(m_it,m[i]);
-            lower_index[i]=(m_it-m_begin-1);
+        if(m_it==m_begin){
+            m[i]=*m_begin;
+            m_it++;
+        } 
+        else if (m_it==m_end){
+            m[i]=*(--m_end);
+            m_it--;
         }
-        else{
-            break;
-        }
-    }
-    if (outside){
-        return _default_X2;
+        c[i][0]=c1(m_it,m[i]);
+        c[i][1]=c2(m_it,m[i]);
+        lower_index[i]=(m_it-m_begin-1);
     }
     for (int a_mg=0; a_mg<2; a_mg++){
         for (int a_m12g=0; a_m12g<2; a_m12g++){

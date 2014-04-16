@@ -26,8 +26,9 @@ constraints_dict={
             'sbottom1','sbottom2','stop1','stop2',
             ],
         },
-    'file':'user/data_files/140410_7TeV_mneu_mg_m12g_m3g_X2_lookup.dat',
-    'info':'this data is already sorted',
+#    'file':'user/data_files/140410_7TeV_mneu_mg_m12g_m3g_X2_lookup.dat',
+    'file':'user/data_files/140416_7TeV_mneu_mg_m12g_m3g_X2_lookup.dat',
+    'info':'grid with mneu=10,100,200,300,400,500; mg=m12g=(mneu+100)-1700,2500,5000; m3g=(mneu+200)-1300,2500,5000',
     'default_X2':0,
     },
 }
