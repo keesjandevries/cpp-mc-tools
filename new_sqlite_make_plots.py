@@ -31,6 +31,8 @@ def parse_args():
         help='Usually chi-functions, but in general the function that is mimimised to project the spaces')
     parser.add_argument('--spaces', help='select plots from user/spaces.py')
     parser.add_argument('--sql-where',help='provide the "where-part" of the sql statement')
+    parser.add_argument('--reduced-db',action='store_true',
+            help='Select if file was produced with sqlite_reduce_db.py. This is needed for the preparation of the sql query')
     return parser.parse_args()
 
 def get_oid_column_dict_and_style(db):
@@ -126,11 +128,15 @@ if __name__ == '__main__':
     value_dict_list=[vars_lookups,vars_functions,gauss_constraints,contour_constraints,mneu_mg_m12g_m3g_X2_lookups]
     array_ids_dict=get_array_ids_dict(values,value_dict_list,style) 
     # prepare select statement
-    columns=','.join([ oid_column_dict[oid] for oid in array_ids_dict.keys()])
+    if not args.reduced_db:
+        first_two_columns=['rowid','collections_rowid']
+    else:
+        first_two_columns=['points_rowid','rowid']
+    columns=','.join(first_two_columns+[ oid_column_dict[oid] for oid in array_ids_dict.keys()])
     sql_where=''
     if args.sql_where is not None:
         sql_where='where ' + args.sql_where
-    sql_selection='select rowid,collections_rowid, {} from points {};'.format(columns,sql_where)
+    sql_selection='select  {} from points {};'.format(columns,sql_where)
     print('the sql query is:\n{}'.format(sql_selection))
     # get unique items in the list ordered
     vars_lookups=tools.populate_with_array_ids(vars_lookups,style,array_ids_dict)
