@@ -1,12 +1,14 @@
 #! /usr/bin/env python
 import argparse
 
-from py_modules.tools import *
+from py_modules import tools
 import py_modules.CtypesWrappers as cw
 import matplotlib.pyplot as plt
 import user.gauss_constraints
 import user.contour_constraints
+import user.mneu_mg_m12g_m3g_X2_lookups
 import user.contours
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--constraint',
@@ -18,7 +20,6 @@ def parse_args():
     parser.add_argument('--print-all-gauss-constraints',action='store_true')
     return parser.parse_args()
 
-
 def add_array_ids(constraint,style):
     n_observables=len(constraint['observable_ids'][style])
     constraint['observable_ids']['array_ids']=range(n_observables)
@@ -27,14 +28,20 @@ def add_array_ids(constraint,style):
 def setup_constraint(name,style):
     gauss_constraint=user.gauss_constraints.get().get(name)
     contour_constraint=user.contour_constraints.get().get(name)
+    mneu_mg_m12g_m3g_X2_lookup=user.mneu_mg_m12g_m3g_X2_lookups.get().get(name)
     if gauss_constraint is not None:
         gauss_constraint=add_array_ids(gauss_constraint,style)
-        add_gauss_constraints({name:gauss_constraint})
+        tools.add_gauss_constraints({name:gauss_constraint})
     elif contour_constraint is not None:
         contours=populate_contours(user.contours.get())
-        add_contours(contours)
+        tools.add_contours(contours)
         contour_constraint=add_array_ids(contour_constraint,style)
-        add_contour_constraints({name:contour_constraint})
+        tools.add_contour_constraints({name:contour_constraint})
+    elif mneu_mg_m12g_m3g_X2_lookup is not None:
+        mneu_mg_m12g_m3g_X2_lookup=add_array_ids(mneu_mg_m12g_m3g_X2_lookup,style)
+        lookups={name:mneu_mg_m12g_m3g_X2_lookup}
+        lookups=tools.populate_mneu_mg_m12g_m3g_X2_lookups(lookups)
+        tools.add_mneu_mg_m12g_m3g_X2_lookups(lookups)
     else:
         print('{} not found in gauss or contour constraints.\Exiting'.format(name))
         exit()
