@@ -44,12 +44,24 @@ def populate_contours(contours):
     for name, details in contours.items():
         try:
             data_file=details['file']
-            xys=numpy.loadtxt(data_file)
+            xys=numpy.loadtxt(data_file) 
             contours[name]['xs']=list(xys[:,0])
             contours[name]['ys']=list(xys[:,1])
         except KeyError:
             print('Could not find \'file\' for contour \'{}\''.format(name))
     return contours
+
+def populate_mneu_mg_m12g_m3g_X2_lookups(lookups):
+    for name, details in lookups.items():
+        data=numpy.loadtxt(details['file'])
+        ind = numpy.lexsort((data[:,3],data[:,2],data[:,1],data[:,0]))
+        table=[]
+        for masses_X2 in data[ind]:
+            table.append(list(masses_X2))
+        lookups[name]['table']=table
+        print('HERE')
+    return lookups
+
 
 def populate_axes(axes,valid_values_list,axes_list=None):
     #FIXME: may want to check that the gauss_constraint etc. are defined
@@ -128,7 +140,6 @@ def get_array_ids(in_dict,style,array_ids_dict):
             array_ids=[array_ids_dict[oid] for oid in oids]
         except KeyError:
             pass
-#            print('WARNING: observable id \"{}\" not defined for style \"{}\".'.format(oids,style))
     return array_ids
 
 
@@ -191,6 +202,13 @@ def add_contour_constraints(contour_constraints):
         contours=details['contours']
         function_name=details['function']
         cw.add_contour_constraint(name,array_ids,contours,function_name)
+
+def add_mneu_mg_m12g_m3g_X2_lookups(lookups):
+    for name, details in lookups.items():
+        array_ids=details['observable_ids']['array_ids']
+        default_X2=details['default_X2']
+        mneu_mg_m12g_m3g_X2_table=details['table']
+        cw.add_mneu_mg_m12g_m3g_X2_lookup(name,array_ids,default_X2,mneu_mg_m12g_m3g_X2_table)
 
 def add_chi2_calculator(name,constraints_list):
     cw.add_chi2_calculator(name)

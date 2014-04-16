@@ -15,6 +15,12 @@ spaces={
         {   'axes':['logmneu1','logssikocm2'],'zaxes': ['Dssicm2','Dssi']},
 #            {   'axes':['logmneu1','logssicm2']},
         ],
+    'chargino-masses':[
+        {'axes':'mchar1_2_5K'},
+        {'axes':'mchar1_4K'},
+        {'axes':'mchar1_5K'},
+        {'axes':'mchar1_6K'},
+        ],
     'm0-A0':[
         {'axes':['m0','A0']},
         ],
@@ -200,6 +206,20 @@ spaces={
             {   'axes':['MA','tanb']},
             {   'axes':['logmneu1','logssikocm2']},
             ],
+    'cmssm-TLEP':[
+            {'axes':['m0','m12'],'zaxes':['TLEP_Gamma_Z','TLEP_mz','TLEP_Rl','TLEP_Rb','TLEP_MW','TLEP_mt',
+                'current_Gamma_Z','current_mz','current_Rl','current_Rb','current_MW','current_mt','mstau1']},
+            {'axes':['msqr_140131','mg_140131']},
+            {'axes':'TLEP_Gamma_Z'},
+            {'axes':'mz'},
+            {'axes':'TLEP_Rl'},
+            {'axes':'TLEP_Rb'},
+            {'axes':'TLEP_MW'},
+            {'axes':'mt'},
+            ],
+    'cmssm_for_Mitesh':[
+            {'axes':['MA_2500','tanb']},
+            ],
     'cmssm': [
             {'axes':'mtop'},
 #            {   'axes':['m0','m12'] , 'zaxes':['mh','chi2_mh','mstop1','A0','BsmmRatio','ssmh'] },
@@ -272,6 +292,22 @@ spaces={
 #        {   'axes':['m0','mh_over_m0']},
 #        {   'axes':['m0','mh2_m0^2_Ratio']},
       ],
+   'cmssm_universal_limits_test':[
+            {'axes':['m0','m12'],'zaxes':['chi2_universal_limits_7TeV','chi2_m0_m12_7TeV']},
+            {'axes':['mg_2K','mneu1_750'],'zaxes':['chi2_universal_limits_7TeV','chi2_m0_m12_7TeV']},
+            {'axes':['mstop1_2K','mneu1_750'],'zaxes':['chi2_universal_limits_7TeV','chi2_m0_m12_7TeV']},
+            {'axes':['m12g_2K','mneu1_750'],'zaxes':['chi2_universal_limits_7TeV','chi2_m0_m12_7TeV']},
+           ],
+   'universal_limits_test':[
+            {'axes':['mg_2K','mneu1_750'],'zaxes':['chi2_universal_limits_7TeV']},
+            {'axes':['m12g_2K','mneu1_750'],'zaxes':['chi2_universal_limits_7TeV']},
+            {'axes':['m3g_2K','mneu1_750'],'zaxes':['chi2_universal_limits_7TeV']},
+            {'axes':['mchar1_2K','mneu1_750'],'zaxes':['chi2_universal_limits_7TeV']},
+            {'axes':['mstau1_2K','mneu1_750'],'zaxes':['chi2_universal_limits_7TeV']},
+           ],
+   'mg-mneu1':[
+            {'axes':['mg','mneu1']},
+           ],
    'pmssm':[
             {'axes':'mstop1'},
             {'axes':'msbot1'},
@@ -398,4 +434,23 @@ spaces={
 #            {'axes':'mh'},
 #            {   'axes':'BsmmRatio', 'zaxes':['BsmmRatio','chi2_mh'] }, 
                    ],
+    'nuhm2':[
+            {'axes':['m0_nuhm2','m12']},
+            {'axes':['mhu2','mhd2']},
+            {'axes':['mhd2','mhu2']},
+            {'axes':['A0_nuhm2','tanb']},
+            {'axes':['tanb','m12']},
+            {'axes':['MA','tanb']},
+            {'axes':['logmneu1','logssikocm2']},
+            {'axes':['mg_5K'] },
+            {'axes':['msqr']},
+            {'axes':['mstop1_5K']},
+            {'axes':['mstau1']},
+            {'axes':['mh']},
+            {'axes':['MA']},
+            {'axes':['BsmmRatio']},
+            {'axes':'mchar1_2_5K'},
+            ],
+            
+            
     }

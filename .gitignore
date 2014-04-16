@@ -1,4 +1,5 @@
 #own contributions
+*.inp
 *.db
 temp*
 *~

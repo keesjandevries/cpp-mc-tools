@@ -48,7 +48,21 @@ def get():
                     }
                 },
             'm3g': {
-                'name': 'average',
+                'name': 'm3g',
+                'observable_ids': {
+                    'mc_old': ['stop1','stop2','sbottom1','sbottom2'],
+                    'mcpp': [('MASS', 'MSf(1,3,3)'),('MASS', 'MSf(2,3,3)'),('MASS', 'MSf(1,4,3)'),('MASS', 'MSf(2,4,3)')]
+                    }
+                },
+            'm3g_new': {
+                'name': 'power_4_weighted_average',
+                'observable_ids': {
+                    'mc_old': ['stop1','stop2','sbottom1','sbottom2'],
+                    'mcpp': [('MASS', 'MSf(1,3,3)'),('MASS', 'MSf(2,3,3)'),('MASS', 'MSf(1,4,3)'),('MASS', 'MSf(2,4,3)')]
+                    }
+                },
+            'sigma_m3g': {
+                'name': 'standard_deviation',
                 'observable_ids': {
                     'mc_old': ['stop1','stop2','sbottom1','sbottom2'],
                     'mcpp': [('MASS', 'MSf(1,3,3)'),('MASS', 'MSf(2,3,3)'),('MASS', 'MSf(1,4,3)'),('MASS', 'MSf(2,4,3)')]
@@ -76,7 +90,7 @@ def get():
             'mstop2-mstop1': {
                     'name': 'difference',
                     'observable_ids': {
-                        'mc_old': ['mstop2','mstop1'],
+                        'mc_old': ['stop2','stop1'],
                         'mcpp': [('MASS', 'MSf(2,3,3)'),('MASS', 'MSf(1,3,3)')]
                         }
                     },

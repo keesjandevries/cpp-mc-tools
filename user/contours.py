@@ -24,6 +24,14 @@ def get():
                     'type':'radial',
                     'file':'user/data_files/atlas_20fb_m0_m12.dat'
                 },
+            'atlas_3000fb_14TeV_m0_m12':{
+                    'type':'radial',
+                    'file':'user/data_files/projected_m0_m12_14_TeV_3000_fb-1.dat'
+                },
+            'atlas_putative_3000fb_msqr_mg':{
+                    'type':'radial',
+                    'file':'user/data_files/atlas_putative_3000fb_msqr_mg.dat'
+                },
             'mc8_bsmm':{
                     'type':'default',
                     'file':'user/data_files/mc8_bsmm.dat',

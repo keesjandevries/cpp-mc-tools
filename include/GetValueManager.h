@@ -11,6 +11,7 @@
 #include "VarsFunction.h"
 #include "GaussConstraint.h"
 #include "ContourConstraint.h"
+#include "MneuMgM12gM3gX2Lookup.h"
 #include "Chi2Calculator.h"
 // modules that contain std::map<string, FUNCTIONPTR >
 #include "GetVarsFunctions.h"
@@ -30,6 +31,12 @@ class GetValueManager {
         void AddGaussConstraint(const char *, int*, int, double, double*,int, const char *);
         void AddContourConstraint(const char *,std::vector<int>,std::vector<std::string>,const char *);
         void AddContourConstraint(const char *,int*, int,const char **, int ,const char *);
+        void AddMneuMgM12gM3gX2Lookup(const char *, std::vector<int> /*array_ids*/, 
+                std::vector<double *> /*X2_s*/,double /*default_X2*/,std::vector<double> /*mneus*/,
+                std::vector< std::vector<double> > /*grid_mgs*/,std::vector< std::vector<double> > /*grid_m12gs*/,
+                std::vector< std::vector<double> > /*grid_m3gs*/);
+        void AddMneuMgM12gM3gX2Lookup(const char * name, int * array_ids_p, int n_array_ids, 
+            double default_X2, double * mneu_mg_m12g_m3g_X2_table, int n_rows);
         // FIXME: perhaps separating out the Chi2Calculator
         void AddChi2Calculator(const char *);
         void AddConstraintToChi2Calculator(const char *,const char *);

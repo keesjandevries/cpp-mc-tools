@@ -38,6 +38,7 @@ void InsertRootIntoSqlite(const char * root_file_name, const char * sqlite_db, i
     else {
         std::cout << "tree not found in \"" << root_file_name << "\""<< std::endl;
         root_file.Close();
+        sqlite3_close(conn);
         return;
     }
     int nvars;
@@ -47,6 +48,7 @@ void InsertRootIntoSqlite(const char * root_file_name, const char * sqlite_db, i
     else{
         std::cout << "vars not found in \"" << root_file_name << "\"" << std::endl;
         root_file.Close();
+        sqlite3_close(conn);
         return;
     }
     double * vars=new double[nvars];
@@ -65,6 +67,7 @@ void InsertRootIntoSqlite(const char * root_file_name, const char * sqlite_db, i
         std::cout << "returning" << std::endl;
         sqlite3_free(errorMessage);
         root_file.Close();
+        sqlite3_close(conn);
         return;
     }
 

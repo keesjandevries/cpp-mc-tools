@@ -60,6 +60,17 @@ void Space::update(double * VARS, int entry_nr){
     }
 }
 
+void Space::update(double * VARS, int entry_nr,double reference){
+    int ibin=_reference_plot->find_bin(VARS);
+    if(reference<_reference_plot->get_bin_content(ibin)){
+        _reference_plot->set_bin_content(ibin,reference);
+        _entry_plot->set_bin_content(ibin,(double)entry_nr);
+        for (std::vector<Plot*>::iterator it=_other_plots.begin(); it!=_other_plots.end(); it++){
+            (*it)->set_bin_content(ibin,VARS);
+        }
+    }
+}
+
 void Space::write_plots(){
     _reference_plot->write();
     _entry_plot->write();

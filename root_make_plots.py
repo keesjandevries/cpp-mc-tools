@@ -16,6 +16,7 @@ import user.vars_functions
 import user.cuts
 import user.gauss_constraints
 import user.contour_constraints
+import user.mneu_mg_m12g_m3g_X2_lookups
 import user.constraints_sets
 import user.cuts_sets
 import user.contours
@@ -54,6 +55,9 @@ if __name__ == '__main__':
     vars_functions=populate_with_array_ids(user.vars_functions.get(),style,array_ids_dict)
     gauss_constraints=populate_with_array_ids((user.gauss_constraints.get()),style,array_ids_dict)
     contour_constraints=populate_with_array_ids((user.contour_constraints.get()),style,array_ids_dict)
+    mneu_mg_m12g_m3g_X2_lookups=populate_with_array_ids((user.mneu_mg_m12g_m3g_X2_lookups.get()),style,array_ids_dict)
+    # pupulate mneu_mg_m12g_m3g_X2_lookups with the lookup data
+    mneu_mg_m12g_m3g_X2_lookups=populate_mneu_mg_m12g_m3g_X2_lookups(mneu_mg_m12g_m3g_X2_lookups)
     # populate cuts
     cuts=populate_with_array_ids(user.cuts.get(),style,array_ids_dict)
     # populate contours and add to managers
@@ -64,7 +68,7 @@ if __name__ == '__main__':
     # for now the "valid" value functions are those for which array_ids are specified
     valid_values_list=list(vars_lookups.keys())+list(vars_functions.keys())+ \
         list(gauss_constraints.keys())+list(contour_constraints.keys())+\
-        [args.reference]
+        list(mneu_mg_m12g_m3g_X2_lookups.keys())+[args.reference]
     # populate the valid-and-required-by-spaces axes
     axes=populate_axes(user.axes.get(),valid_values_list,axes_list)
     # now add values to the managers
@@ -72,6 +76,7 @@ if __name__ == '__main__':
     add_vars_functions(vars_functions) 
     add_gauss_constraints(gauss_constraints)
     add_contour_constraints(contour_constraints)
+    add_mneu_mg_m12g_m3g_X2_lookups(mneu_mg_m12g_m3g_X2_lookups)
     # add cuts to manager
     add_cuts(cuts) 
     # look for chi2 calculators
