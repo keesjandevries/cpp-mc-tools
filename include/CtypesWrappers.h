@@ -11,6 +11,7 @@
 #include "RootMakePlots.h"
 #include "SqliteMakePlots.h"
 #include "SqliteInserter.h"
+#include "SqliteReduceDb.h"
 #include "TFile.h"
 #include "TH2D.h"
 #include "TMath.h"

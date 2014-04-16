@@ -104,6 +104,11 @@ void sqlite_make_plots(const char * sqlite_db_file, const char * query,int query
     }
     outfile.Close();
 }
+void sqlite_reduce_db(const char * input_name, const char * output_name, const char * select_query, 
+    int select_query_length, const char * chi2_function_name, double max_chi2 ){
+    BaseGetValueFunction * chi2_function=get_value_manager->Get(chi2_function_name);
+    SqliteReduceDB(input_name, output_name,  select_query, select_query_length, chi2_function, max_chi2);
+}
 void insert_root_into_sqlite(const char * root_file_name, const char * sqlite_db, int collection_rowid){
     InsertRootIntoSqlite(root_file_name, sqlite_db, collection_rowid);
 }
