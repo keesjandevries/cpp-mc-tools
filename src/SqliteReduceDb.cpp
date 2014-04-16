@@ -82,7 +82,7 @@ void SqliteReduceDB(const char * input_name, const char * output_name, const cha
         ///Get all variables
         points_rowid=sqlite3_column_int(stmt_in,0);
         for (int i=2;i<ncols;i++){ 
-            vars[i]=sqlite3_column_double(stmt_in,i);
+            vars[i-2]=sqlite3_column_double(stmt_in,i);
         }
         ///Calculate chi2 (usually the chi2)
         chi2=(*chi2_function)(vars);
