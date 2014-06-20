@@ -109,7 +109,7 @@ double multi_abs_lowerlimit(double * vars, std::vector<int> & array_ids , GaussD
     double min=std::abs(vars[*it]);
     it++;
     for (;it!=array_ids.end();it++){
-        if (vars[*it]<min) min=std::abs(vars[*it]);
+        if (std::abs(vars[*it])<min) min=std::abs(vars[*it]);
     }
     if (min>data.mu) return 0;
     else{ 
