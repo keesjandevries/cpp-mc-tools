@@ -131,8 +131,8 @@ if __name__ == '__main__':
                 low,high,step=binnings[0]['low'],binnings[0]['high'],axes_details[0]['xticks']
                 axes.set_xticks(numpy.arange(low,high*1.001,step))
             if axes_details[1].get('yticks',False) and binnings[1]['type']=='linear':
-                low,high,step=binnings[0]['low'],binnings[0]['high'],axes_details[1]['yticks']
-                axes.set_xticks(numpy.arange(low,high*1.001,step))
+                low,high,step=binnings[1]['low'],binnings[1]['high'],axes_details[1]['yticks']
+                axes.set_yticks(numpy.arange(low,high*1.001,step))
         #FIXME: there might be a better way of zipping an unzipping
         if figure_options.get('text_box',False):
             args=figure_options['text_box'].get('args')
@@ -240,10 +240,10 @@ if __name__ == '__main__':
             bf2 = plt.Line2D((0,1),(0,0), color='none',marker='*',markeredgewidth=1.5,
                     markeredgecolor='g',markersize=15, linestyle='')
             handles=[solid_1,solid_2,dashed_1,dashed_2,bf1,bf2]
-            dchi2_1,dchi2_2=r' $\Delta\chi^2=2.30$',r' $\Delta\chi^2=5.99$'
+            dchi2_1,dchi2_2=r' $\Delta\chi^2=\/2.30$',r' $\Delta\chi^2=\/5.99$'
             labels=[solid_label+dchi2_1,solid_label+dchi2_2,dashed_label+dchi2_1,dashed_label+dchi2_2,
                     solid_label+' best fit',dashed_label+' best fit']
-            axes.legend(handles,labels,loc='lower left',fontsize=10,numpoints=1,frameon=False)
+            axes.legend(handles,labels,loc='best',fontsize=10,numpoints=1,frameon=False)
         if figure_options.get('title'):
             axes.set_title(figure_options.get('title'),fontsize=20)
         plt.savefig(figname)
