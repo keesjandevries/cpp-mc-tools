@@ -53,6 +53,8 @@ def get():
         'mu': {'mc_old': 'mu', 'mcpp': ('HMIX', 'MUE')},
         'oh2': {'mcpp': ('Micromegas', 'Omega')},
         'ssmh': {'mc_old': 'ssmh'},
+        'ssi':{'mcpp':('LSP scattering', 's3out')},
+        'ssd':{'mcpp':('LSP scattering', 's2out')},
         'Dssi':{'mcpp':('LSP scattering', 'ss3out')},
         #EWPOs
         'Afb(c)':{'mcpp':('SUSY-POPE', 'Afb_c')},

@@ -1,5 +1,23 @@
 def get():
     return{
+            'abs_mneu1': {
+                'name': 'abs',
+                'observable_ids': {
+                    'mcpp':[('MASS', 'MNeu(1)')],
+                    }
+                },
+            'abs_mg': {
+                'name': 'abs',
+                'observable_ids': {
+                    'mcpp':[('MASS', 'MGl')],
+                    }
+                },
+            'abs_mchar1': {
+                'name': 'abs',
+                'observable_ids': {
+                    'mcpp':[('MASS', 'MCha(1)')],
+                    }
+                },
             'A0_over_m0': {
                 'name': 'var1_over_var2',
                 'observable_ids': {

@@ -17,6 +17,9 @@ def get():
             'mc9lux_legend':{
                 'solid_dashed_contours_legend':['ATLAS8','ATLAS7']
                 },
+            'pmssm_workshop_legend':{
+                'solid_dashed_contours_legend':['w LHC@7TeV','w/o LHC@7TeV']
+                },
             'Mitesh_legend':{
                 'solid_dashed_contours_legend':[r'w $B_s\to\mu\mu$',r'w/o $B_s\to\mu\mu$'],
                 'title':'cMSSM July 2012',
