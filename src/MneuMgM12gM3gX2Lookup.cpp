@@ -27,7 +27,6 @@ double MgM12gM3gX2Lookup::get_X2(double mg, double m12g, double m3g){
     m[0]=mg; m[1]=m12g; m[2]=m3g;
     int lower_index[3];
     double c[3][2];
-    bool outside;
     int i_mg,i_m12g,i_m3g; 
     std::vector<double>::iterator m_it;
     std::vector<double>::iterator m_begin;
@@ -87,7 +86,7 @@ double MneuMgM12gM3gX2Lookup::operator()(double * vars){
     // mneu & mg: fermion masses can be negative
     double mneu=abs(vars[_array_ids[0]]);
     double mg=abs(vars[_array_ids[1]]);
-    double m12g, m3g;
+    double m12g=0, m3g;
     // m12g is the avarage over first 2 generation squark masses
     for (int i=2; i<10; i++){
         m12g+=vars[_array_ids[i]]/8;
@@ -118,6 +117,18 @@ double MneuMgM12gM3gX2Lookup::operator()(double * vars){
     else{
         X2=_default_X2;
     }
+    // add correction
+//    std::vector<double> chi2(5), dchi2(5);
+//    chi2[0]=0; chi2[1]=1; chi2[2]=4 ; chi2[3]=6; chi2[4]=1000;
+//    dchi2[0]=0; dchi2[1]=0.47; dchi2[2]=1.72 ; dchi2[3]=2.41; dchi2[4]=2.41;
+//    std::vector<double>::iterator X2_begin=chi2.begin();
+//    std::vector<double>::iterator X2_end=chi2.end();
+//    std::vector<double>::iterator X2_it=std::upper_bound(X2_begin,X2_end,X2);
+//    double c1_X2=c1(X2_it,X2);
+//    double c2_X2=c2(X2_it,X2);
+//    int index=X2_it-X2_begin-1;
+//    double correction=c1_X2*dchi2[index]+c2_X2*dchi2[index+1];
+//    return X2-correction;
     return X2;
 }
 

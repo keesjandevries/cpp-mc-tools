@@ -1,6 +1,7 @@
 #include "GetVarsFunctions.h"
 std::map<std::string, GetVarsFunction > get_GetVarsFunction_map(){
     std::map<std::string, GetVarsFunction > function_map;
+    function_map["abs"]=abs;
     function_map["pb_to_cm2"]=pb_to_cm2;
     function_map["bsmm_ratio"]=bsmm_ratio;
     function_map["difference"]=difference;
@@ -18,6 +19,10 @@ std::map<std::string, GetVarsFunction > get_GetVarsFunction_map(){
 
 double bsmm_ratio(double *VARS, std::vector<int>& array_ids){
     return VARS[array_ids[0]]/(3.46e-9);
+}
+
+double abs(double *VARS, std::vector<int>& array_ids){
+    return std::abs(VARS[array_ids[0]]);
 }
 
 double pb_to_cm2(double *VARS, std::vector<int>& array_ids){

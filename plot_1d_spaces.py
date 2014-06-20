@@ -39,9 +39,10 @@ def prepare_figures_details(args):
         for space in spaces:
             if isinstance(space['axes'],list) and len(space['axes'])==1:
                 xaxis_name=space['axes'][0]
+                figures_xaxis_names.append(xaxis_name)
             elif not isinstance(space['axes'],list):
                 xaxis_name=space['axes']
-            figures_xaxis_names.append(xaxis_name)
+                figures_xaxis_names.append(xaxis_name)
     elif args.xaxis is not None:
         figures_xaxis_names=[args.xaxis]
     figures_xaxis_details=[]

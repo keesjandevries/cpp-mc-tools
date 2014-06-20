@@ -130,6 +130,17 @@ d= {
         'chi2_minimum_fill_color':'none',
         'chi2_minimum_edge_color':'g',
      },
+    'dotted_contours':{
+        'contours': True,    
+        'levels': [5.99, 2.30],
+        'contour_colors': ['b','r'],
+        'dchi2_mode': True,
+        'min_segment_length': 10,
+        'contour_linestyle':'dotted',
+        'plot_chi2_minimum': True,
+        'chi2_minimum_fill_color':'none',
+        'chi2_minimum_edge_color':'g',
+     },
     'mc9_neg_mu_cmssm_solid_contours':{
         'contours': True,    
         'levels':[5.99, 2.30],
