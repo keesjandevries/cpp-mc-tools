@@ -15,7 +15,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--db-in',help='sqlite database')
     parser.add_argument('--db-out',help='sqlite database')
-    parser.add_argument('--reference', default='chi2-chi2',
+    parser.add_argument('--reference', required=True,
         help='Usually chi-functions, but in general the function that is mimimised to project the spaces')
     parser.add_argument('--max-chi2',type=float,default=100)
     parser.add_argument('--sql-where')
