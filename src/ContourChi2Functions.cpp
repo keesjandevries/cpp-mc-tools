@@ -31,7 +31,7 @@ double xenon100_jul_2012(double * vars, std::vector<int> & array_ids,std::vector
     //NOTE: this is the old implementation that should be multiplied by 4.61/2.71
     //it is only kept for compatibility purposes 
     Contour * xenon100_contour=contours[0];
-    double mneu=vars[array_ids[0]];
+    double mneu=std::abs(vars[array_ids[0]]);
     double sigma_p_si=vars[array_ids[1]];
     double sigma_p_si_contour=xenon100_contour->GetContourValue(mneu);
     //number of events
@@ -44,7 +44,7 @@ double xenon100_jul_2012_Sigma_pi_N_unc(double * vars, std::vector<int> & array_
     //NOTE: this is the old implementation that should be multiplied by 4.61/2.71
     //it is only kept for compatibility purposes 
     Contour * xenon100_contour=contours[0];
-    double mneu=vars[array_ids[0]];
+    double mneu=std::abs(vars[array_ids[0]]);
     double sigma_p_si=vars[array_ids[1]];
     double D_sigma_p_si=vars[array_ids[2]];
     double sigma_p_si_contour=xenon100_contour->GetContourValue(mneu);
@@ -57,7 +57,7 @@ double xenon100_jul_2012_Sigma_pi_N_unc(double * vars, std::vector<int> & array_
 
 double xenon100_Jul12_90CL_ssi_unc(double * vars, std::vector<int> & array_ids,std::vector<Contour *> & contours) {
     Contour * xenon100_contour=contours[0];
-    double mneu=vars[array_ids[0]];
+    double mneu=std::abs(vars[array_ids[0]]);
     double sigma_p_si=vars[array_ids[1]];
     double D_sigma_p_si=vars[array_ids[2]];
     double sigma_p_si_contour=xenon100_contour->GetContourValue(mneu);
@@ -72,7 +72,7 @@ double xenon100_Jul12_90CL_ssi_unc(double * vars, std::vector<int> & array_ids,s
 
 double lux131030_90CL(double * vars, std::vector<int> & array_ids,std::vector<Contour *> & contours) {
     Contour * lux_contour=contours[0];
-    double mneu=vars[array_ids[0]];
+    double mneu=std::abs(vars[array_ids[0]]);
     double sigma_p_si=vars[array_ids[1]];
     double sigma_p_si_contour=lux_contour->GetContourValue(mneu);
     //number of events
@@ -85,7 +85,7 @@ double lux131030_90CL(double * vars, std::vector<int> & array_ids,std::vector<Co
 
 double lux131030_90CL_ssi_unc(double * vars, std::vector<int> & array_ids,std::vector<Contour *> & contours) {
     Contour * lux_contour=contours[0];
-    double mneu=vars[array_ids[0]];
+    double mneu=std::abs(vars[array_ids[0]]);
     double sigma_p_si=vars[array_ids[1]];
     double D_sigma_p_si=vars[array_ids[2]];
     double sigma_p_si_contour=(lux_contour->GetContourValue(mneu));
