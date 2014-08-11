@@ -1,6 +1,7 @@
 #ifndef INC_SQLITEMAKEPLOTS_H
 #define INC_SQLITEMAKEPLOTS_H
 #include <iostream>
+#include <utility>
 #include <sqlite3.h>
 #include "BaseGetValueFunction.h"
 #include "Space.h"
@@ -10,7 +11,7 @@ class SqliteMakePlots {
         SqliteMakePlots(){};
         SqliteMakePlots(const char * filename);
         ~SqliteMakePlots(){};
-        void Run(const char *,int, std::vector<Space*>, BaseGetValueFunction * );
+        std::pair<int, double> Run(const char *,int, std::vector<Space*>, BaseGetValueFunction * );
     private:
         sqlite3 * _connection;
 };

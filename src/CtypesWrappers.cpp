@@ -97,11 +97,19 @@ void sqlite_make_plots(const char * sqlite_db_file, const char * query,int query
     std::vector<Space*> spaces=space_manager->Get();
     BaseGetValueFunction * reference_function=get_value_manager->Get(reference_name);
     SqliteMakePlots plotter(sqlite_db_file);
-    plotter.Run(query,query_length,spaces,reference_function);
+    std::pair<int, double> result=plotter.Run(query,query_length,spaces,reference_function);
     TFile outfile(outfile_name,"UPDATE");
     for( std::vector<Space*>::iterator it=spaces.begin(); it!=spaces.end() ; it++){
         (*it)->write_plots();
     }
+    TTree *tree = new TTree("min_reference_tree","Tree with minimum reference value/rowid");
+    Int_t min_reference_rowid = result.first;
+    Double_t min_reference = result.second;
+    tree->Branch("min_reference_rowid", &min_reference_rowid,
+            "min_reference_rowid/I");
+    tree->Branch("min_reference", &min_reference, "min_reference/D");
+    tree->Fill();
+    tree->Write();
     outfile.Close();
 }
 void sqlite_reduce_db(const char * input_name, const char * output_name, const char * select_query, 
@@ -135,6 +143,26 @@ void get_2d_hist_content(const char* root_file_name, const char * th2d_name, int
         std::cout << "Couldn't open rootfile: \"" << root_file_name <<"\"" << std::endl;
     }
     file.Close();
+}
+double get_min_reference(const char * root_file_name){
+    TFile file(root_file_name);
+    TTree * tree = (TTree*) file.Get("min_reference_tree");
+    double min_reference = 1e9;
+    if (tree!=0){
+        tree->SetBranchAddress("min_reference",&min_reference);
+        tree->GetEntry(0);
+    }
+    return min_reference;
+}
+int get_min_reference_rowid(const char * root_file_name){
+    TFile file(root_file_name);
+    TTree * tree = (TTree*) file.Get("min_reference_tree");
+    int min_reference_rowid = -1;
+    if (tree!=0){
+        tree->SetBranchAddress("min_reference_rowid",&min_reference_rowid);
+        tree->GetEntry(0);
+    }
+    return min_reference_rowid;
 }
 void get_1d_hist_content(const char* root_file_name, const char * th1d_name, int n, double * content){
     TFile file(root_file_name);
