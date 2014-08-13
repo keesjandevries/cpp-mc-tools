@@ -2,6 +2,7 @@
 std::map<std::string, GetVarsFunction > get_GetVarsFunction_map(){
     std::map<std::string, GetVarsFunction > function_map;
     function_map["abs"]=abs;
+    function_map["negative"]=negative;
     function_map["pb_to_cm2"]=pb_to_cm2;
     function_map["bsmm_ratio"]=bsmm_ratio;
     function_map["difference"]=difference;
@@ -12,7 +13,12 @@ std::map<std::string, GetVarsFunction > get_GetVarsFunction_map(){
     function_map["standard_deviation"]=standard_deviation;
     function_map["var1_over_var2_square"]=var1_over_var2_square;
     function_map["var1_over_var2"]=var1_over_var2;
+    function_map["abs_var1_over_var2"]=abs_var1_over_var2;
     function_map["sqrt_var1_over_var2"]=sqrt_var1_over_var2;
+    function_map["var1_minus_var2_over_var3"]=var1_minus_var2_over_var3;
+    function_map["coannihilation_measure"]=coannihilation_measure;
+    function_map["focus_point_measure"]=focus_point_measure;
+    function_map["funnel_measure"]=funnel_measure;
     function_map["C9_straub"]=C9_straub;
     return function_map;
 }
@@ -23,6 +29,10 @@ double bsmm_ratio(double *VARS, std::vector<int>& array_ids){
 
 double abs(double *VARS, std::vector<int>& array_ids){
     return std::abs(VARS[array_ids[0]]);
+}
+
+double negative(double *VARS, std::vector<int>& array_ids){
+    return -VARS[array_ids[0]];
 }
 
 double pb_to_cm2(double *VARS, std::vector<int>& array_ids){
@@ -49,10 +59,39 @@ double var1_over_var2(double *VARS, std::vector<int>& array_ids){
     return var1/var2;
 }
 
+double abs_var1_over_var2(double *VARS, std::vector<int>& array_ids){
+    double var1=VARS[array_ids[0]], var2=VARS[array_ids[1]];
+    return std::abs(var1/var2);
+}
+
 double sqrt_var1_over_var2(double *VARS, std::vector<int>& array_ids){
     double var1=VARS[array_ids[0]], var2=VARS[array_ids[1]];
     double sign_var1=(var1>0)-(var1<0);
     return sign_var1*sqrt(var1)/var2;
+}
+
+double var1_minus_var2_over_var3(double *VARS, std::vector<int>& array_ids){
+    double var1=VARS[array_ids[0]], var2=VARS[array_ids[1]], 
+           var3=VARS[array_ids[2]];
+    return var1-var2/var3;
+}
+
+double coannihilation_measure(double *VARS, std::vector<int>& array_ids){
+    double m1=VARS[array_ids[0]], m2=VARS[array_ids[1]];
+    return std::abs(std::abs(m1/m2) - 1);
+}
+
+double focus_point_measure(double *VARS, std::vector<int>& array_ids){
+    double mu=std::abs(VARS[array_ids[0]]);
+    double mneu1=std::abs(VARS[array_ids[1]]); 
+    double ma=std::abs(VARS[array_ids[2]]);
+    bool is_a_funnel = std::abs(std::abs(ma/mneu1) - 2) < 0.2;
+    return std::abs(std::abs(mu/mneu1) - 1) + 1e9*is_a_funnel;
+}
+
+double funnel_measure(double *VARS, std::vector<int>& array_ids){
+    double m1=VARS[array_ids[0]], m2=VARS[array_ids[1]];
+    return std::abs(std::abs(m1/m2) - 2);
 }
 
 double average(double * VARS, std::vector<int> & array_ids){
@@ -115,5 +154,3 @@ double C9_straub(double * VARS, std::vector<int> & array_ids){
     double x=mt*mt/(mHpm*mHpm);
     return -x*cotb*cotb*f9Hpm(x);
 }
-
-

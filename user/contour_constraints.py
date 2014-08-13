@@ -46,7 +46,15 @@ contour_constraints={
                     'mc_old':['MA','tanb'],
                     },
                 'contours':['mc8_ma_tanb'],
-                'function':'mc8_ma_tanb',#FIXME name is consistent with mcpp, but should be renamed
+                'function':'mc8_ma_tanb',
+                },
+            'atlas_susy2014_ma_tanb':{
+                'observable_ids':{
+                    'mcpp':[('FeynHiggs', 'mA'),('MINPAR', 'TB')],
+                    'mc_old':['MA','tanb'],
+                    },
+                'contours':['atlas_susy2014_ma_tanb'],
+                'function':'mc8_ma_tanb',
                 },
             'atlas5_m0_m12':{
                 'observable_ids':{
@@ -62,6 +70,20 @@ contour_constraints={
                     },
                 'contours':['atlas_20fb_m0_m12'],
                 'function':'m0_m12_power_4',
+                },
+            'atlas_ichep2014_m0_m12':{
+                'observable_ids':{
+                    'mcpp':[('MINPAR', 'in_M0'),('MINPAR', 'in_M12')],
+                    },
+                'contours':['atlas_ichep2014_m0_m12'],
+                'function':'m0_m12_power_4',
+                },
+            'atlas20_m0_m12_pow8':{
+                'observable_ids':{
+                    'mcpp':[('MINPAR', 'in_M0'),('MINPAR', 'in_M12')],
+                    },
+                'contours':['atlas_20fb_m0_m12'],
+                'function':'m0_m12_power_8',
                 },
             'atlas_3000fb_14TeV_m0_m12':{
                 'observable_ids':{
