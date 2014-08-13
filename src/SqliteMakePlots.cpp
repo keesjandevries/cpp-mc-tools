@@ -8,9 +8,10 @@ SqliteMakePlots::SqliteMakePlots(const char * filename){
     }
 }
 
-void SqliteMakePlots::Run(const char * query,int query_length, std::vector<Space*> spaces, 
+std::pair<int, double> SqliteMakePlots::Run(const char * query,int query_length, std::vector<Space*> spaces, 
         BaseGetValueFunction * reference_function){
     ///FIXME: atm the 'collection_rowid' columns has to be selected. This should be only optional
+    std::pair<int, double> result;
     /// Prepare sql statement
     int error;
     const char * tail;
@@ -18,7 +19,7 @@ void SqliteMakePlots::Run(const char * query,int query_length, std::vector<Space
     error = sqlite3_prepare(_connection,query,query_length,&stmt,&tail);
     if (error != SQLITE_OK){
         std::cout << "ERROR: prepare stament failed" << std::endl;
-        return;
+        return result;
     }
     /// for retrieving tha vars
     int rowid;
@@ -29,6 +30,8 @@ void SqliteMakePlots::Run(const char * query,int query_length, std::vector<Space
     /// some definitions
     int nrows=0, n_chi2_lt_45=0;
     double reference;
+    int min_reference_rowid=-1;
+    double min_reference=1e9;
     /// loop over selected rows
     while (sqlite3_step(stmt)==SQLITE_ROW){
         if (nrows%100000==0) std::cout << "Currently at " << nrows << " rows\r" << std::flush;
@@ -39,7 +42,12 @@ void SqliteMakePlots::Run(const char * query,int query_length, std::vector<Space
         }
         ///Calculate reference (usually the chi2)
         reference=(*reference_function)(vars);
-        if (reference<45) n_chi2_lt_45++;
+        if (reference < min_reference){
+            min_reference = reference;
+            min_reference_rowid = rowid;
+        }
+        if (reference<45) 
+            n_chi2_lt_45++;
         ///Update all _spaces: check whether X^2 is lower than existing X^2
         for( space_it=spaces.begin(); space_it!=spaces.end() ; space_it++){
             (*space_it)->update(vars,rowid,reference);
@@ -51,4 +59,6 @@ void SqliteMakePlots::Run(const char * query,int query_length, std::vector<Space
     std::cout << "Number of rows processed:       " << nrows << std::endl;
     std::cout << "Number of points with chi2<45 : " << n_chi2_lt_45 << std::endl;
     delete vars;
+    result = std::make_pair(min_reference_rowid, min_reference);
+    return result;
 }

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <utility>
 #include "GetValueManager.h"
 #include "AxisManager.h"
 #include "SpaceManager.h"
@@ -15,4 +16,6 @@
 #include "TFile.h"
 #include "TH2D.h"
 #include "TMath.h"
+#include "TTree.h"
+#include "TString.h"
 #endif // INCLUDE_CTYPESWRAPPERS_H_

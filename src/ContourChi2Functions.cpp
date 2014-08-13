@@ -9,6 +9,7 @@ std::map< std::string, ContourFunc>  get_ContourFunc_map(){
     ContourFunc_map["lux131030_90CL"]=lux131030_90CL;
     ContourFunc_map["lux131030_90CL_ssi_unc"]=lux131030_90CL_ssi_unc;
     ContourFunc_map["m0_m12_power_4"]=m0_m12_power_4;
+    ContourFunc_map["m0_m12_power_8"]=m0_m12_power_8;
     ContourFunc_map["msqr_mg_power_4"]=msqr_mg_power_4;
     ContourFunc_map["one_dim_chi2_lookup"]=one_dim_chi2_lookup;
 //    ContourFunc_map["universal_limits"]=universal_limits;
@@ -107,6 +108,17 @@ double m0_m12_power_4(double * vars, std::vector<int> & array_ids, std::vector<C
     double r=m0_m12_contour->GetPointValue(point);
     double r_contour=m0_m12_contour->GetContourValue(theta);
     return 5.99146*pow(r_contour/r,4);
+}
+
+double m0_m12_power_8(double * vars, std::vector<int> & array_ids, std::vector<Contour*> & contours){
+    Contour * m0_m12_contour=contours[0];
+    double m0=vars[array_ids[0]];
+    double m12=vars[array_ids[1]];
+    double_pair point(m0,m12);
+    double theta=m0_m12_contour->GetPointParameter(point);
+    double r=m0_m12_contour->GetPointValue(point);
+    double r_contour=m0_m12_contour->GetContourValue(theta);
+    return 5.99146*pow(r_contour/r,8);
 }
 
 double msqr_mg_power_4(double * vars, std::vector<int> & array_ids, std::vector<Contour*> & contours){
