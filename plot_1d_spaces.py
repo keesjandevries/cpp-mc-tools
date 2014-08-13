@@ -1,11 +1,13 @@
 #! /usr/bin/env python
 #python core
 import argparse
+from numpy import sqrt
 #third party
 import numpy
 from numpy import ma
 import matplotlib
 import matplotlib.pyplot as plt
+from matplotlib.patches import Patch
 #private
 import py_modules.CtypesWrappers as cw
 import user.spaces
@@ -124,11 +126,14 @@ if __name__ == '__main__':
             if xaxis_details.get('xticks',False) and binning['type']=='linear':
                 low,high,step=binning['low'],binning['high'],xaxis_details['xticks']
                 axes.set_xticks(numpy.arange(low,high*1.001,step))
-        if figure_options.get('text_box',False):
-            args=figure_options['text_box'].get('args')
-            kwargs={'verticalalignment':'top','transform':axes.transAxes,'fontsize':20,'horizontalalignment':'left'}
-            kwargs.update(figure_options['text_box'].get('kwargs',{}))
-            axes.text(*args,**kwargs)
+        text_box_options_list = figure_options.get('text_boxes',False)
+        if isinstance(text_box_options_list, list):
+            for text_box_options in text_box_options_list:
+                args=text_box_options.get('args')
+                kwargs={'verticalalignment':'top','transform':axes.transAxes,
+                        'fontsize':20,'horizontalalignment':'left'}
+                kwargs.update(text_box_options.get('kwargs',{}))
+                axes.text(*args,**kwargs)
         #FIXME: there might be a better way of zipping an unzipping
         filenames, plotnames, layers_options = layers_details
         for filename, plotname, layer_options in zip(filenames, plotnames, layers_options):
@@ -136,12 +141,17 @@ if __name__ == '__main__':
             entries_plotname='{}_entries'.format(xaxis_details['name'])
             entries_plot=cw.get_1d_hist(filename,entries_plotname,nxbins)
             if layer_options.get('dchi2_mode',False):
-                chi2_minimum=layer_options.get('chi2_minimum',numpy.min(plot))
+                #chi2_minimum=cw.get_min_reference(filename)
+                chi2_minimum = cw.get_1d_minimum(filename,plotname,nxbins)
+                if chi2_minimum==1e9:
+                    chi2_minimum=layer_options.get('chi2_minimum',numpy.min(plot))
                 plot=plot-chi2_minimum
             color=layer_options.get('color')
             linestyle=layer_options.get('linestyle')
             linewidth=layer_options.get('linewidth',2)
-            axes.plot(bin_centres,plot,linewidth=linewidth,c=color,linestyle=linestyle)
+            label = layer_options.get('label')
+            axes.plot(bin_centres,plot,linewidth=linewidth,c=color,
+                    linestyle=linestyle)
             #FIXME: maybe ylim shouldn't be a property of the layer
             axes.set_ylim([layer_options.get('ymin',0),layer_options.get('ymax',9)])
             axes.set_ylabel(layer_options.get('ylabel',''),fontsize=20)
@@ -160,4 +170,42 @@ if __name__ == '__main__':
 
         if not figure_options.get('chi2_eq_4_limit'):
             print(figname)
+        vertical_line_kwargs = figure_options.get('vertical_line')
+        if isinstance(vertical_line_kwargs, dict):
+            axes.axvline(**vertical_line_kwargs)
+        experimental_band_options = figure_options.get('experimental_band')
+        if isinstance(experimental_band_options, dict):
+            min=experimental_band_options['min']
+            max=experimental_band_options['max']
+            axes.axvspan(min, max, color='r', alpha=0.5)
+        if figure_options.get('bsmm_ratio_constraint'):
+            mu=0.92
+            sigma_plus=0.21
+            sigma_min=0.2
+            br=numpy.linspace(0,3,1000)
+            chi2=2*(mu*sqrt(-(-br/mu+1)*(8*sigma_plus/mu -8*sigma_min/mu)+ \
+                    (-sigma_plus/mu -sigma_min/mu)**2)-sigma_plus-sigma_min)**2\
+                    /(8*(sigma_plus-sigma_min)**2);
+            axes.plot(br,chi2,c='r')
+        if figure_options.get('g-2_constraint'):
+            gm2=numpy.linspace(-1e-9,10e-9,1000)
+            mu=3.02e-09
+            sigma=9.0244113381427819e-10
+            chi2=((mu-gm2)/sigma)**2
+            axes.plot(gm2,chi2,c='r')
+        legend_options_list = figure_options.get('legend')
+        if isinstance(legend_options_list,list):
+            labels=[]
+            handles=[]
+            for legend_options in legend_options_list:
+                label = legend_options['label']
+                line_2d_kwargs = legend_options.get('line_2d_kwargs')
+                if isinstance(line_2d_kwargs, dict):
+                    handle = plt.Line2D((0,1),(0,0), **line_2d_kwargs)
+                patch_kwargs = legend_options.get('patch_kwargs')
+                if isinstance(patch_kwargs, dict):
+                    handle = Patch(**patch_kwargs)
+                labels.append(label)
+                handles.append(handle)
+            axes.legend(handles, labels, loc='upper right',numpoints=1,frameon=False)
         plt.savefig(figname)

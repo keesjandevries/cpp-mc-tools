@@ -1,9 +1,57 @@
 def get():
     return{
+            'stau_coannihilation_measure':{
+                'name':'coannihilation_measure',
+                'observable_ids':{
+                    'mcpp':[('MASS', 'MSf(1,2,3)'), ('MASS','MNeu(1)')]
+                    },
+                },
+            'stop_coannihilation_measure':{
+                'name':'coannihilation_measure',
+                'observable_ids':{
+                    'mcpp':[('MASS', 'MSf(1,3,3)'), ('MASS','MNeu(1)')]
+                    },
+                },
+            'neu2_coannihilation_measure':{
+                'name':'coannihilation_measure',
+                'observable_ids':{
+                    'mcpp':[('MASS', 'MNeu(2)'), ('MASS','MNeu(1)')]
+                    },
+                },
+            'char_coannihilation_measure':{
+                'name':'coannihilation_measure',
+                'observable_ids':{
+                    'mcpp':[('MASS', 'MCha(1)'), ('MASS','MNeu(1)')]
+                    },
+                },
+            'A_funnel_measure':{
+                'name':'funnel_measure',
+                'observable_ids':{
+                    'mcpp':[('MASS', 'MA0'), ('MASS','MNeu(1)')]
+                    },
+                },
+            'focus_point_measure': {
+                'name': 'abs_var1_over_var2',
+                'observable_ids': {
+                    'mcpp': [('HMIX', 'MUE'), ('MASS','MNeu(1)'), ('MASS', 'MA0')],
+                    }
+                },
+            'Xt':{
+                'name':'var1_minus_var2_over_var3',
+                'observable_ids': {
+                    'mcpp':[('AU','Af(3,3)'),('HMIX','MUE'),('HMIX','TB')],
+                    },
+                },
             'abs_mneu1': {
                 'name': 'abs',
                 'observable_ids': {
                     'mcpp':[('MASS', 'MNeu(1)')],
+                    }
+                },
+            'abs_mneu2': {
+                'name': 'abs',
+                'observable_ids': {
+                    'mcpp':[('MASS', 'MNeu(2)')],
                     }
                 },
             'abs_mg': {
@@ -136,5 +184,11 @@ def get():
                         'mcpp': [('FeynHiggs', 'mh'),('MASS', 'Mh0')]
                         }
                     },
+            'A0_ko': {
+                    'name':'negative',
+                    'observable_ids': {
+                        'mcpp': [('MINPAR', 'in_A')],
+                        },
+                    }
             }
 

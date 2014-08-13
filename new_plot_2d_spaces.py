@@ -9,6 +9,7 @@ import argparse
 #third party
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.colors as col
 #private
 import py_modules.CtypesWrappers as cw
 
@@ -33,6 +34,27 @@ def parse_args():
     parser.add_argument('--extension', help='extension for figuren name',
             default='pdf')
     return parser.parse_args()
+
+def transparent_cmap(color, alpha=0.7):
+    # create the color map
+    opaque_color = col.colorConverter.to_rgba(color, alpha=alpha)
+    transparent_color=col.colorConverter.to_rgba(color, alpha=0.0)
+    cmaplist = [opaque_color, opaque_color]
+    cmap = col.LinearSegmentedColormap.from_list('Custom cmap', cmaplist, 256)
+    cmap.set_over(transparent_color)
+    cmap.set_under(opaque_color)
+    return cmap
+
+def add_custom_legend_line(ax, y, linestyle, name, markercolor, contouralpha=1.0, 
+        markeralpha=1.0, linewidth=2, fontsize=15):
+    ax.plot((0.5), (y), marker='*', linestyle='none', markeredgecolor='g', 
+            markersize=10, color=markercolor, alpha=markeralpha)
+    ax.plot((1, 1.6), (y, y), linestyle=linestyle, color='r', linewidth=linewidth, 
+            alpha=contouralpha)
+    ax.plot((2, 2.6), (y, y), linestyle=linestyle, color='b', linewidth=linewidth,
+            alpha=contouralpha)
+    ax.text(2.75, y, name, verticalalignment='center', fontsize=fontsize)
+    return ax
 
 def value_from_path_key(path_key):
     """
@@ -109,8 +131,7 @@ def get_plot_options_list(rootfiles, axes_file, axes, spaces_axes, zaxes,
             })
     return plot_options_list
 
-def get_ax(fig, xaxis_options, yaxis_options,
-        axes_rect=[0.17, 0.15, 0.77, 0.75]):
+def get_ax(fig, axes_rect, xaxis_options, yaxis_options):
     """
     Function taking care of labels, binning, ticks, log scale, etc.
 
@@ -201,9 +222,10 @@ def get_min_chi2(rootfile, xaxis_options, yaxis_options):
     plotname = '_'.join([xaxis, yaxis, 'chi2'])
     return cw.get_2d_hist_minimum(rootfile, plotname, nxbins, nybins)
 
-def plot_contours(ax, zaxis_plot, min_chi2, entries_plot, x_mesh, y_mesh,
-        levels, colors, dchi2_mode=False, linewidth=2, alpha=1.0,
-        linestyle='solid', min_segment_length=0):
+def plot_contour(ax, zaxis_plot, chi2_plot, entries_plot, x_mesh, y_mesh, 
+        min_chi2,
+        levels, colors, dchi2_mode=False, linewidth=2.0, alpha=1.0,
+        linestyle='solid', min_segment_length=0, mask_dchi2_gt=None):
     """Function plots contours
 
     Return:
@@ -211,6 +233,9 @@ def plot_contours(ax, zaxis_plot, min_chi2, entries_plot, x_mesh, y_mesh,
     """
     if dchi2_mode:
         zaxis_plot = zaxis_plot - min_chi2
+    if mask_dchi2_gt:
+        mask_criterium = chi2_plot - min_chi2 > mask_dchi2_gt
+        zaxis_plot = np.ma.masked_where(mask_criterium, zaxis_plot)
     #we want control over the segments,
     #so we delete the contours for the plot and plot the segments individually
     cs = ax.contour(x_mesh, y_mesh, zaxis_plot, levels=levels)
@@ -223,6 +248,38 @@ def plot_contours(ax, zaxis_plot, min_chi2, entries_plot, x_mesh, y_mesh,
     for coll in cs.collections:
         coll.remove()
     return ax
+
+def plot_contourf(ax, zaxis_plot, chi2_plot, entries_plot, x_mesh, y_mesh, 
+        min_chi2,
+        levels, colors, alpha=1.0, mask_dchi2_gt=None):
+    zaxis_plot = np.ma.masked_where(entries_plot==-1, zaxis_plot)
+    if mask_dchi2_gt:
+        mask_criterium = chi2_plot - min_chi2 > mask_dchi2_gt
+        zaxis_plot = np.ma.masked_where(mask_criterium, zaxis_plot)
+    cs = ax.contourf(x_mesh, y_mesh, zaxis_plot, levels=levels, colors=colors, 
+            interpolation='nearest', alpha=alpha)
+    return ax
+
+def plot_colz(ax, zaxis_plot, chi2_plot, entries_plot, x_mesh, y_mesh, 
+        min_chi2,
+        cmap='jet', mask_dchi2_gt=None, alpha=1.0, vmin=None, vmax=None, 
+        interpolation='nearest'):
+    ext = [np.min(x_mesh), np.max(x_mesh), np.min(y_mesh), np.max(y_mesh)]
+    if mask_dchi2_gt:
+        mask_criterium = chi2_plot - min_chi2 > mask_dchi2_gt
+        zaxis_plot = np.ma.masked_where(mask_criterium, zaxis_plot)
+    if isinstance(cmap, dict):
+        transparent_cmap_options = cmap.get('transparent')
+        if isinstance(transparent_cmap_options, dict):
+            cmap=transparent_cmap(**transparent_cmap_options)
+    else:
+        plt.get_cmap(cmap)
+    
+    cax = ax.imshow(zaxis_plot, vmin=vmin, vmax=vmax, origin='lower', 
+            interpolation=interpolation, aspect='auto', extent=ext, cmap=cmap)
+    return ax
+
+
 
 def plot_chi2_minimum(fig, ax, chi2_plot, entries_plot, chi2_min,
         chi2_overflow_edges, x_mesh, y_mesh,
@@ -307,8 +364,21 @@ def plot_chi2_minimum(fig, ax, chi2_plot, entries_plot, chi2_min,
                 linestyle='none')
     return ax
 
+def plot_custom_legend(fig, ax, legend_line_options_list=None):
+    pos = ax.get_position()
+    l, b, w, h  = pos.x0, pos.y0, pos.width, pos.height
+    ax2 = fig.add_axes([l, b+h+0.01, w, 1-(b+h+0.04)], frameon=False)
+    ax2.tick_params(which='both', bottom='off', left='off', right='off', top='off',
+            labelbottom='off', labelleft='off')
+    ax2.set_xlim([-2.0,8.0])
+    ax2.set_ylim([0.5,3.5])
+    for legend_line_options in legend_line_options_list:
+        ax2 = add_custom_legend_line(ax2, **legend_line_options)
+    return ax
+
 def plot_layer(fig, ax, xaxis_options, yaxis_options, rootfile, zaxis,
-        colz_options=None, contours_options=None, chi2_minimum_options=None):
+        colz_options=None, contour_options=None, chi2_minimum_options=None, 
+        contourf_options=None):
     """
     Function plots all layers
 
@@ -320,7 +390,7 @@ def plot_layer(fig, ax, xaxis_options, yaxis_options, rootfile, zaxis,
         rootfile (string)
         zaxis (string)
         colz_options (dict)
-        contours_options (dict)
+        contour_options (dict)
         chi2_minimum_options (dict)
 
     Returns:
@@ -333,12 +403,24 @@ def plot_layer(fig, ax, xaxis_options, yaxis_options, rootfile, zaxis,
             yaxis_options)
     min_chi2 = get_min_chi2(rootfile, xaxis_options, yaxis_options)
     x_mesh, y_mesh = get_x_y_mesh(xaxis_options, yaxis_options)
-    if contours_options:
-        ax = plot_contours(ax, zaxis_plot, min_chi2, entries_plot,
-                x_mesh, y_mesh, **contours_options)
+    if contour_options:
+        ax = plot_contour(ax, zaxis_plot, chi2_plot, entries_plot, x_mesh, 
+                y_mesh, min_chi2, **contour_options)
+    if colz_options:
+        ax = plot_colz(ax, zaxis_plot, chi2_plot, entries_plot, x_mesh, 
+                y_mesh, min_chi2, **colz_options)
+    if contourf_options:
+        ax = plot_contourf(ax, zaxis_plot, chi2_plot, entries_plot, x_mesh, 
+                y_mesh, min_chi2, **contourf_options)
     if chi2_minimum_options:
         ax = plot_chi2_minimum(fig, ax, chi2_plot, entries_plot, min_chi2,
                 chi2_overflow_edges, x_mesh, y_mesh, **chi2_minimum_options)
+    return ax
+
+def plot_figure_options(fig, ax, 
+        custom_legend_options=None, **kwargs):
+    if custom_legend_options:
+        ax = plot_custom_legend(fig, ax, **custom_legend_options)
     return ax
 
 def produce_plot(figname, figure_options, axes_options, layer_options_list):
@@ -346,13 +428,16 @@ def produce_plot(figname, figure_options, axes_options, layer_options_list):
     Function that produces each individual plot of the list provided by
     get_plot_options_list().
     """
-    fig = plt.figure()
-    ax = get_ax(fig, **axes_options)
+    figsize = figure_options.get('figsize',[8, 6])
+    axes_rect = figure_options.get('axes_rect', [0.17, 0.15, 0.77, 0.75])
+    fig = plt.figure(figsize=figsize)
+    ax = get_ax(fig, axes_rect=axes_rect, **axes_options)
     xaxis_options = axes_options['xaxis_options']
     yaxis_options = axes_options['yaxis_options']
     #loop over layers to produce the plot
     for layer_options in layer_options_list:
         ax = plot_layer(fig, ax, xaxis_options, yaxis_options, **layer_options)
+    ax = plot_figure_options(fig, ax, **figure_options)
     print(figname)
     plt.savefig(figname)
 
@@ -365,4 +450,5 @@ def main(main_options):
         produce_plot(**plot_options)
 
 if __name__ == "__main__":
-    main(vars(parse_args()))
+    MAIN_OPTIONS = vars(parse_args())
+    main(MAIN_OPTIONS)

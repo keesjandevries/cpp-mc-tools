@@ -75,6 +75,8 @@ def get():
         'Ac':{'mcpp':('SUSY-POPE', 'Ac')},
         'Ab':{'mcpp':('SUSY-POPE', 'Ab')},
         'MW':{'mcpp':('SUSY-POPE', 'MW')},
+        #FeynHiggs
+        'g-2':{'mcpp':('FeynHiggs', 'gm2')},
         }
 
 

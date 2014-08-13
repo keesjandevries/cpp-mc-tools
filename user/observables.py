@@ -2,8 +2,9 @@ def get(name):
     return observables.get(name)
 
 observables={
-        'usual':['mneu1','MA','MHp','mstau1','mstop1','mchar1','mu','msqr','ssicm2',
-            'ssikocm2','Dssikocm2','mh','Dmh','mg','bsmm','m12g','m3g','chi2-chi2'],
+        'usual':['mneu1','MA','MHp','mstau1','mstop1','mchar1', 'mneu2','mu',
+            'msqr','ssicm2', 'ssikocm2','Dssikocm2','mh','Dmh','mg','bsmm',
+            'm12g','m3g','g-2', 'oh2','chi2-chi2'],
         'mc9-table2': [ 'chi2-{}'.format(constraint) for constraint in [ 
  'mc9_R_B->Xsg',
  'mc9_R_B->taunu',

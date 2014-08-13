@@ -24,6 +24,17 @@ def get():
                     'type':'radial',
                     'file':'user/data_files/atlas_20fb_m0_m12.dat'
                 },
+            'atlas_ichep2014_m0_m12':{
+                    'type':'radial',
+                    'file':'user/data_files/140806_atlas_ichep2014.dat',
+                    'info':'https://atlas.web.cern.ch/Atlas/GROUPS/PHYSICS/'
+                    'CombinedSummaryPlots/SUSY/ATLAS_SUSY_MSUGRA/ATLAS_SUSY_MSUGRA.png',
+                },
+            'atlas_susy2014_ma_tanb':{
+                    'type': 'default',
+                    'file': 'user/data_files/140806_atlas_susy2014_ma_tanb.dat',
+                    'info': "Sekula's talk at SUSY 2014, p. 31 (ATLAS-CONF-2014-049 Fig. 6(a))"
+                },
             'atlas_3000fb_14TeV_m0_m12':{
                     'type':'radial',
                     'file':'user/data_files/projected_m0_m12_14_TeV_3000_fb-1.dat'

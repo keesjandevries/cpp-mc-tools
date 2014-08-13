@@ -33,7 +33,7 @@ def setup_constraint(name,style):
         gauss_constraint=add_array_ids(gauss_constraint,style)
         tools.add_gauss_constraints({name:gauss_constraint})
     elif contour_constraint is not None:
-        contours=populate_contours(user.contours.get())
+        contours=tools.populate_contours(user.contours.get())
         tools.add_contours(contours)
         contour_constraint=add_array_ids(contour_constraint,style)
         tools.add_contour_constraints({name:contour_constraint})

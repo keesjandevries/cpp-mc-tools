@@ -24,10 +24,10 @@ import user.array
 import user.parameters
 import user.observables
 
-#NOTE: based on the root version of this script point.py
-#       will need substantial altering 
 def get_parser():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(
+            formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+            fromfile_prefix_chars='@')
     parser.add_argument('--sqlite-db', help='define input root file')
     parser.add_argument('--rowid',type=int,help='rowid of point')
     parser.add_argument('--database-info', action='store_true',help='specify inputs as defined in user/inputs.py')
@@ -117,7 +117,8 @@ def main(args):
         print('='*50)
         for observable in observables:
             value=ctw.get_value(observable,vars)
-            if not ('ssi' in observable) and not ('bsmm' in observable):
+            if not ('ssi' in observable) and not ('bsmm' in observable) \
+                and not (observable=='g-2'):
                 print(number_format.format(observable,value))
             else:
                 print(float_format.format(observable,value))

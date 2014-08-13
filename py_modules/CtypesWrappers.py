@@ -46,6 +46,15 @@ def get_value(name,vars):
     c_vars=(c_double*len(vars))(*vars)
     return lib.get_value(c_name,c_vars)
 
+def get_min_reference(filename):
+    lib.get_min_reference.restype=c_double
+    c_filename=filename.encode('ascii')
+    return lib.get_min_reference(c_filename)
+
+def get_min_reference_rowid(filename):
+    c_filename=filename.encode('ascii')
+    return lib.get_min_reference_rowid(c_filename)
+
 def get_contour_value(name,parameter):
     lib.get_contour_value.restype=c_double
     c_name=name.encode('ascii')
@@ -122,12 +131,39 @@ def get_2d_hist(root_file_name,hist_name,nx,ny):
     array=array.reshape(nx+2,ny+2)
     return array[1:-1,1:-1]
 
+def get_2d_hist_minimum(root_file_name,hist_name,nx,ny):
+    n=(nx+2)*(ny+2)
+    double_array=(c_double*n)(*([0.]*n))
+    lib.get_2d_hist_content(root_file_name.encode('ascii'),hist_name.encode('ascii'),n,double_array)
+    array=numpy.array([v for v in double_array])
+    return numpy.min(array)
+
+def get_2d_overflow_edges(root_file_name,hist_name,nx,ny):
+    n=(nx+2)*(ny+2)
+    double_array=(c_double*n)(*([0.]*n))
+    lib.get_2d_hist_content(root_file_name.encode('ascii'),hist_name.encode('ascii'),n,double_array)
+    array=numpy.array([v for v in double_array])
+    array=array.reshape(nx+2,ny+2)
+    bottom = array[0,:] 
+    top = array[-1,:] 
+    left = array[:,0] 
+    right = array[:,-1] 
+    return bottom, top, left, right
+
+
 def get_1d_hist(root_file_name,hist_name,nbins):
     n=nbins+2
     double_array=(c_double*n)(*([0.]*n))
     lib.get_1d_hist_content(root_file_name.encode('ascii'),hist_name.encode('ascii'),n,double_array)
     array=numpy.array([v for v in double_array])
     return array[1:-1]
+
+def get_1d_minimum(root_file_name,hist_name,nbins):
+    n=nbins+2
+    double_array=(c_double*n)(*([0.]*n))
+    lib.get_1d_hist_content(root_file_name.encode('ascii'),hist_name.encode('ascii'),n,double_array)
+    array=numpy.array([v for v in double_array])
+    return numpy.min(array)
 
 def chi2_ndof_to_cl(chi2, ndof):
     lib.chi2_ndof_to_cl.restype=c_double

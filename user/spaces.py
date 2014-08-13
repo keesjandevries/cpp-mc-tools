@@ -21,6 +21,9 @@ spaces={
         {'axes':'mchar1_5K'},
         {'axes':'mchar1_6K'},
         ],
+    'di-lepton-edge' : [
+        {'axes': ['abs_mneu2_500','abs_mneu1_500']}
+        ],
     'm0-A0':[
         {'axes':['m0','A0']},
         ],
@@ -115,6 +118,66 @@ spaces={
             'LEP-chargino', 'LEP-neutralino', 'LEP-slepton', 'LEP-sneutrino', 'LEP-squark','neutralino-lsp'
             ]}
         ],
+    'tmp-nuhm2-params-and-breakdowns':[
+        {'axes':['m0_nuhm2','m12'],
+            'zaxes':['m0','m12','A0','tanb','mhu2','mhd2', 'Al(SLD)', 'Ab', 'Ac', 'mc9_Oh2', 'mc9_Mh',   
+            'Gamma_Z', 'GZ_in', 'R(B->Xsll)', 'Al(P_tau)', 'MZ', 'mc9_R_DMBs', 'MW', 'Afb_l', 
+            'lux131030_unc', 'mc9_DAlpha_had', 'mc9_epsilon_K',  'sigma_had^0', 'Afb(c)', 
+            'atlas20_m0_m12', 'Afb(b)',  'mc9_R_B->Xsg', 'mc9_R_DMBs_DMBd', 'mc9_R_B->taunu', 
+            'Rc', 'Rb',  'Rl', 'RmmNov13_mc9', 'sintheta_eff', 'mc9_Mt', 'R(K->lnu)', 'R(Kp->pinn)', 'gminus2mu', 'MATANB' ,
+            'LEP-chargino', 'LEP-neutralino', 'LEP-slepton', 'LEP-sneutrino', 'LEP-squark','neutralino-lsp'
+            ]},
+            ],
+    'nuhm2-params-and-breakdowns':[
+        {'axes':['m0_nuhm2','m12'],
+            'zaxes':['m0','m12','A0','tanb','mhu2','mhd2', 'Al(SLD)', 'Ab', 'Ac', 'mc9_Oh2', 'mc9_Mh',   
+            'Gamma_Z', 'GZ_in', 'R(B->Xsll)', 'Al(P_tau)', 'MZ', 'mc9_R_DMBs', 'MW', 'Afb_l', 
+            'lux131030_unc', 'mc9_DAlpha_had', 'mc9_epsilon_K',  'sigma_had^0', 'Afb(c)', 
+            'atlas20_m0_m12', 'Afb(b)',  'mc9_R_B->Xsg', 'mc9_R_DMBs_DMBd', 'mc9_R_B->taunu', 
+            'Rc', 'Rb',  'Rl', 'RmmNov13_mc9', 'sintheta_eff', 'mc9_Mt', 'R(K->lnu)', 'R(Kp->pinn)', 'gminus2mu', 'MATANB' ,
+            'LEP-chargino', 'LEP-neutralino', 'LEP-slepton', 'LEP-sneutrino', 'LEP-squark','neutralino-lsp'
+            ]},
+        {'axes':['m0_nuhm2','mhu2'],
+            'zaxes':['m0','m12','A0','tanb','mhu2','mhd2', 'Al(SLD)', 'Ab', 'Ac', 'mc9_Oh2', 'mc9_Mh',   
+            'Gamma_Z', 'GZ_in', 'R(B->Xsll)', 'Al(P_tau)', 'MZ', 'mc9_R_DMBs', 'MW', 'Afb_l', 
+            'lux131030_unc', 'mc9_DAlpha_had', 'mc9_epsilon_K',  'sigma_had^0', 'Afb(c)', 
+            'atlas20_m0_m12', 'Afb(b)',  'mc9_R_B->Xsg', 'mc9_R_DMBs_DMBd', 'mc9_R_B->taunu', 
+            'Rc', 'Rb',  'Rl', 'RmmNov13_mc9', 'sintheta_eff', 'mc9_Mt', 'R(K->lnu)', 'R(Kp->pinn)', 'gminus2mu', 'MATANB' ,
+            'LEP-chargino', 'LEP-neutralino', 'LEP-slepton', 'LEP-sneutrino', 'LEP-squark','neutralino-lsp'
+            ]},
+        {'axes':['m0_nuhm2','mhd2'],
+            'zaxes':['m0','m12','A0','tanb','mhu2','mhd2', 'Al(SLD)', 'Ab', 'Ac', 'mc9_Oh2', 'mc9_Mh',   
+            'Gamma_Z', 'GZ_in', 'R(B->Xsll)', 'Al(P_tau)', 'MZ', 'mc9_R_DMBs', 'MW', 'Afb_l', 
+            'lux131030_unc', 'mc9_DAlpha_had', 'mc9_epsilon_K',  'sigma_had^0', 'Afb(c)', 
+            'atlas20_m0_m12', 'Afb(b)',  'mc9_R_B->Xsg', 'mc9_R_DMBs_DMBd', 'mc9_R_B->taunu', 
+            'Rc', 'Rb',  'Rl', 'RmmNov13_mc9', 'sintheta_eff', 'mc9_Mt', 'R(K->lnu)', 'R(Kp->pinn)', 'gminus2mu', 'MATANB' ,
+            'LEP-chargino', 'LEP-neutralino', 'LEP-slepton', 'LEP-sneutrino', 'LEP-squark','neutralino-lsp'
+            ]},
+        {'axes':['tanb','m12'],
+            'zaxes':['m0','m12','A0','tanb','mhu2','mhd2', 'Al(SLD)', 'Ab', 'Ac', 'mc9_Oh2', 'mc9_Mh',   
+            'Gamma_Z', 'GZ_in', 'R(B->Xsll)', 'Al(P_tau)', 'MZ', 'mc9_R_DMBs', 'MW', 'Afb_l', 
+            'lux131030_unc', 'mc9_DAlpha_had', 'mc9_epsilon_K',  'sigma_had^0', 'Afb(c)', 
+            'atlas20_m0_m12', 'Afb(b)',  'mc9_R_B->Xsg', 'mc9_R_DMBs_DMBd', 'mc9_R_B->taunu', 
+            'Rc', 'Rb',  'Rl', 'RmmNov13_mc9', 'sintheta_eff', 'mc9_Mt', 'R(K->lnu)', 'R(Kp->pinn)', 'gminus2mu', 'MATANB' ,
+            'LEP-chargino', 'LEP-neutralino', 'LEP-slepton', 'LEP-sneutrino', 'LEP-squark','neutralino-lsp'
+            ]},
+        {'axes':['logmneu1','logssikocm2_55'],
+            'zaxes':['m0','m12','A0','tanb','mhu2','mhd2', 'Al(SLD)', 'Ab', 'Ac', 'mc9_Oh2', 'mc9_Mh',   
+            'Gamma_Z', 'GZ_in', 'R(B->Xsll)', 'Al(P_tau)', 'MZ', 'mc9_R_DMBs', 'MW', 'Afb_l', 
+            'lux131030_unc', 'mc9_DAlpha_had', 'mc9_epsilon_K',  'sigma_had^0', 'Afb(c)', 
+            'atlas20_m0_m12', 'Afb(b)',  'mc9_R_B->Xsg', 'mc9_R_DMBs_DMBd', 'mc9_R_B->taunu', 
+            'Rc', 'Rb',  'Rl', 'RmmNov13_mc9', 'sintheta_eff', 'mc9_Mt', 'R(K->lnu)', 'R(Kp->pinn)', 'gminus2mu', 'MATANB' ,
+            'LEP-chargino', 'LEP-neutralino', 'LEP-slepton', 'LEP-sneutrino', 'LEP-squark','neutralino-lsp'
+            ]},
+        {'axes':['MA','tanb'],
+            'zaxes':['m0','m12','A0','tanb','mhu2','mhd2', 'Al(SLD)', 'Ab', 'Ac', 'mc9_Oh2', 'mc9_Mh',   
+            'Gamma_Z', 'GZ_in', 'R(B->Xsll)', 'Al(P_tau)', 'MZ', 'mc9_R_DMBs', 'MW', 'Afb_l', 
+            'lux131030_unc', 'mc9_DAlpha_had', 'mc9_epsilon_K',  'sigma_had^0', 'Afb(c)', 
+            'atlas20_m0_m12', 'Afb(b)',  'mc9_R_B->Xsg', 'mc9_R_DMBs_DMBd', 'mc9_R_B->taunu', 
+            'Rc', 'Rb',  'Rl', 'RmmNov13_mc9', 'sintheta_eff', 'mc9_Mt', 'R(K->lnu)', 'R(Kp->pinn)', 'gminus2mu', 'MATANB' ,
+            'LEP-chargino', 'LEP-neutralino', 'LEP-slepton', 'LEP-sneutrino', 'LEP-squark','neutralino-lsp'
+            ]},
+        ],
     'pmssm-params-and-breakdowns':[
         {'axes':['m3g','mneu1'],'zaxes':['msq3','msq12','msl','M1','M2','M3','A','in_ma','tanb','in_mu', 
             'Al(SLD)', 'Ab', 'Ac', 'mc9_Oh2', 'mc9_Mh',   
@@ -182,6 +245,14 @@ spaces={
 #            {   'axes':['mh']},
 #            {   'axes':['MA_2500']},
 #            {   'axes':['BsmmRatio']},
+            ],
+    'ICHEP-mass-ranges':[
+            {   'axes':'abs_mg_4K'},
+            {   'axes':'msqr_4K'},
+            ],
+    'ICHEP-Gino':[
+            {'axes':['MA','tanb'],'zaxes':'BsmmRatio'},
+            {'axes':'BsmmRatio'},
             ],
     'neg-mu-cmssm-mc9-1d-lhoods':[
             {   'axes':['mg_5K'] },
@@ -443,6 +514,190 @@ spaces={
 #            {'axes':'mh'},
 #            {   'axes':'BsmmRatio', 'zaxes':['BsmmRatio','chi2_mh'] }, 
                    ],
+    'cmssm-dm-processes':[
+            {'axes':['m0_nuhm2','m12'],
+                'zaxes':[
+                    'A_funnel_measure',
+                    'stau_coannihilation_measure',
+                    'stop_coannihilation_measure',
+                    'neu2_coannihilation_measure',
+                    'char_coannihilation_measure',
+                    'focus_point_measure'
+                    ]
+                },
+            {'axes':['m0_nuhm2','tanb'],
+                'zaxes':[
+                    'A_funnel_measure',
+                    'stau_coannihilation_measure',
+                    'stop_coannihilation_measure',
+                    'neu2_coannihilation_measure',
+                    'char_coannihilation_measure',
+                    'focus_point_measure'
+                    ]
+                },
+            {'axes':['MA','tanb'],
+                'zaxes':[
+                    'A_funnel_measure',
+                    'stau_coannihilation_measure',
+                    'stop_coannihilation_measure',
+                    'neu2_coannihilation_measure',
+                    'char_coannihilation_measure',
+                    'focus_point_measure'
+                    ]
+                },
+            ],
+    'nuhm2-dm-processes':[
+            {'axes':['m0_nuhm2','m12'],
+                'zaxes':[
+                    'A_funnel_measure',
+                    'stau_coannihilation_measure',
+                    'stop_coannihilation_measure',
+                    'neu2_coannihilation_measure',
+                    'char_coannihilation_measure',
+                    'focus_point_measure'
+                    ]
+                },
+            {'axes':['m0_nuhm2','mhu2'],
+                'zaxes':[
+                    'A_funnel_measure',
+                    'stau_coannihilation_measure',
+                    'stop_coannihilation_measure',
+                    'neu2_coannihilation_measure',
+                    'char_coannihilation_measure',
+                    'focus_point_measure'
+                    ]
+                },
+            {'axes':['m0_nuhm2','mhd2'],
+                'zaxes':[
+                    'A_funnel_measure',
+                    'stau_coannihilation_measure',
+                    'stop_coannihilation_measure',
+                    'neu2_coannihilation_measure',
+                    'char_coannihilation_measure',
+                    'focus_point_measure'
+                    ]
+                },
+            {'axes':['mhu2','mhd2'],
+                'zaxes':[
+                    'A_funnel_measure',
+                    'stau_coannihilation_measure',
+                    'stop_coannihilation_measure',
+                    'neu2_coannihilation_measure',
+                    'char_coannihilation_measure',
+                    'focus_point_measure'
+                    ]
+                },
+            {'axes':['m0_nuhm2','tanb'],
+                'zaxes':[
+                    'A_funnel_measure',
+                    'stau_coannihilation_measure',
+                    'stop_coannihilation_measure',
+                    'neu2_coannihilation_measure',
+                    'char_coannihilation_measure',
+                    'focus_point_measure'
+                    ]
+                },
+            {'axes':['MA','tanb'],
+                'zaxes':[
+                    'A_funnel_measure',
+                    'stau_coannihilation_measure',
+                    'stop_coannihilation_measure',
+                    'neu2_coannihilation_measure',
+                    'char_coannihilation_measure',
+                    'focus_point_measure'
+                    ]
+                },
+            ],
+    'mc10-nuhm2':[
+            #Fig. 1
+            {'axes':['m0_nuhm2','m12'],
+                'zaxes':[
+                    'A_funnel_measure',
+                    'stau_coannihilation_measure',
+                    'stop_coannihilation_measure',
+                    'neu2_coannihilation_measure',
+                    'char_coannihilation_measure',
+                    'focus_point_measure'
+                    ]
+                },
+            #Fig. 2
+            {'axes':['tanb','m0_nuhm2']},
+            {'axes':['m0_nuhm2','tanb']},
+            {'axes':['tanb','m12']},
+            #Fig. 3
+            {'axes':['m0_nuhm2','mhu2']},
+            {'axes':['m0_nuhm2','mhd2']},
+            {'axes':['m0_nuhm2','mhu2_big']},
+            {'axes':['m0_nuhm2','mhd2_big']},
+            #Fig. 4
+            {'axes':['mhu2','mhd2']},
+            {'axes':['mhu2_big','mhd2_big']},
+            #Fig. 5
+            {'axes':['m0_nuhm2','A0_ko_nuhm2']},
+            {'axes':['m12','A0_ko_nuhm2']},
+            {'axes':['A0_ko_nuhm2','m12']},
+            #Fig. 6
+            {'axes':['MA','tanb']},
+            #Fig. 7
+            {'axes':['mg_5K'], 'zaxes':['atlas20_m0_m12', 'atlas_3000fb_14TeV_m0_m12', 'mc9_Mh']},
+            {'axes':['msqr'], 'zaxes':['atlas20_m0_m12', 'atlas_3000fb_14TeV_m0_m12', 'mc9_Mh']},
+            #Fig. 8
+            {'axes':['mstau1'], 'zaxes':['atlas20_m0_m12', 'atlas_3000fb_14TeV_m0_m12', 'mc9_Mh']},
+            {'axes':['mstop1_5K'], 'zaxes':['atlas20_m0_m12', 'atlas_3000fb_14TeV_m0_m12', 'mc9_Mh']},
+            #Fig. 9
+            {'axes':['MA_2500'], 'zaxes':['atlas20_m0_m12', 'atlas_3000fb_14TeV_m0_m12', 'mc9_Mh']},
+            {'axes':['BsmmRatio']},
+            #Fig. 10
+            {'axes':['mneu1_1250'], 'zaxes':['atlas20_m0_m12', 'atlas_3000fb_14TeV_m0_m12', 'mc9_Mh']},
+            {'axes':['mchar1_2K'], 'zaxes':['atlas20_m0_m12', 'atlas_3000fb_14TeV_m0_m12', 'mc9_Mh']},
+            #Fig. 11
+            {'axes':'g-2', 'zaxes':['atlas20_m0_m12', 'atlas_3000fb_14TeV_m0_m12', 'mc9_Mh']},
+            {'axes':['logmneu1','logssikocm2_SNOW']},
+            #other requests
+            {'axes':'mu'},
+            {'axes':'logssikocm2_SNOW'},
+            ],
+    'mc10-nuhm1-cmssm':[
+            #Fig. 1
+            {'axes':['m0_nuhm2','m12'],
+                'zaxes':[
+                    'A_funnel_measure',
+                    'stau_coannihilation_measure',
+                    'stop_coannihilation_measure',
+                    'neu2_coannihilation_measure',
+                    'char_coannihilation_measure',
+                    'focus_point_measure'
+                    ]
+                },
+            #Fig. 2
+            {'axes':['tanb','m0_nuhm2']},
+            {'axes':['m0_nuhm2','tanb']},
+            {'axes':['tanb','m12']},
+            #Fig. 5
+            {'axes':['m0_nuhm2','A0_ko_nuhm2']},
+            {'axes':['m12','A0_ko_nuhm2']},
+            {'axes':['A0_ko_nuhm2','m12']},
+            #Fig. 6
+            {'axes':['MA','tanb']},
+            #Fig. 7
+            {'axes':['mg_5K'], 'zaxes':['atlas20_m0_m12', 'atlas_3000fb_14TeV_m0_m12', 'mc9_Mh']},
+            {'axes':['msqr'], 'zaxes':['atlas20_m0_m12', 'atlas_3000fb_14TeV_m0_m12', 'mc9_Mh']},
+            #Fig. 8
+            {'axes':['mstau1'], 'zaxes':['atlas20_m0_m12', 'atlas_3000fb_14TeV_m0_m12', 'mc9_Mh']},
+            {'axes':['mstop1_5K'], 'zaxes':['atlas20_m0_m12', 'atlas_3000fb_14TeV_m0_m12', 'mc9_Mh']},
+            #Fig. 9
+            {'axes':['MA_2500'], 'zaxes':['atlas20_m0_m12', 'atlas_3000fb_14TeV_m0_m12', 'mc9_Mh']},
+            {'axes':['BsmmRatio']},
+            #Fig. 10
+            {'axes':['mneu1_1250'], 'zaxes':['atlas20_m0_m12', 'atlas_3000fb_14TeV_m0_m12', 'mc9_Mh']},
+            {'axes':['mchar1_2K'], 'zaxes':['atlas20_m0_m12', 'atlas_3000fb_14TeV_m0_m12', 'mc9_Mh']},
+            #Fig. 11
+            {'axes':'g-2', 'zaxes':['atlas20_m0_m12', 'atlas_3000fb_14TeV_m0_m12', 'mc9_Mh']},
+            {'axes':['logmneu1','logssikocm2_SNOW']},
+            #other requests
+            {'axes':'mu'},
+            {'axes':'logssikocm2_SNOW'},
+            ],
     'nuhm2':[
             {'axes':['m0_nuhm2','m12']},
             {'axes':['mhu2','mhd2']},
@@ -462,6 +717,7 @@ spaces={
             {'axes':['MA']},
             {'axes':['BsmmRatio']},
             {'axes':['mchar1_2_5K']},
+            {'axes':['logabsmneu1_SNOW','logssikocm2_SNOW']},
             ],
     'nuhm1-vs-2':[
             {'axes':['m0_nuhm2','m12']},
@@ -479,6 +735,24 @@ spaces={
             {'axes':['MA']},
             {'axes':['BsmmRatio']},
             {'axes':['mchar1_2_5K']},
+            {'axes':['logabsmneu1_SNOW','logssikocm2_SNOW']},
+            ],
+    'cmssm-vs-nuhm2':[
+            {'axes':['m0_nuhm2','m12']},
+            {'axes':['A0_nuhm2','tanb']},
+            {'axes':['tanb','m12']},
+            {'axes':['MA','tanb']},
+            {'axes':['logmneu1','logssikocm2']},
+            {'axes':['logmneu1','logssikocm2_55']},
+            {'axes':['mg_5K'] },
+            {'axes':['msqr']},
+            {'axes':['mstop1_5K']},
+            {'axes':['mstau1']},
+            {'axes':['mh']},
+            {'axes':['MA']},
+            {'axes':['BsmmRatio']},
+            {'axes':['mchar1_2_5K']},
+            {'axes':['logabsmneu1_SNOW','logssikocm2_SNOW']},
             ],
     'low-ssi':[
             {'axes':['M1'   ,'logssikocm2_55']},
@@ -493,6 +767,64 @@ spaces={
             {'axes':['tanb','logssikocm2_55']},
             {'axes':['A','logssikocm2_55']},
             {'axes':['logabsmneu1','logssikocm2_55']},
+            ],
+    'pmssm-dm':[
+            {'axes':['abs_mg_2K','abs_mneu1_750'], 'zaxes': [ 
+                    'A_funnel_measure',
+                    'stau_coannihilation_measure',
+                    'stop_coannihilation_measure',
+                    'neu2_coannihilation_measure',
+                    'char_coannihilation_measure',
+                    'focus_point_measure'
+                ]},
+            {'axes':['mstop1_2K','abs_mneu1_750'], 'zaxes': [ 
+                    'A_funnel_measure',
+                    'stau_coannihilation_measure',
+                    'stop_coannihilation_measure',
+                    'neu2_coannihilation_measure',
+                    'char_coannihilation_measure',
+                    'focus_point_measure'
+                ]},
+            {'axes':['mstau1_2K','abs_mneu1_750'], 'zaxes': [ 
+                    'A_funnel_measure',
+                    'stau_coannihilation_measure',
+                    'stop_coannihilation_measure',
+                    'neu2_coannihilation_measure',
+                    'char_coannihilation_measure',
+                    'focus_point_measure'
+                ]},
+            {'axes':['abs_mchar1_2K','abs_mneu1_750'], 'zaxes': [ 
+                    'A_funnel_measure',
+                    'stau_coannihilation_measure',
+                    'stop_coannihilation_measure',
+                    'neu2_coannihilation_measure',
+                    'char_coannihilation_measure',
+                    'focus_point_measure'
+                ]},
+            {'axes':['msqr_2K','abs_mneu1_750'], 'zaxes': [ 
+                    'A_funnel_measure',
+                    'stau_coannihilation_measure',
+                    'stop_coannihilation_measure',
+                    'neu2_coannihilation_measure',
+                    'char_coannihilation_measure',
+                    'focus_point_measure'
+                ]},
+            {'axes':['logabsmneu1_SNOW','logssikocm2_SNOW'], 'zaxes': [ 
+                    'A_funnel_measure',
+                    'stau_coannihilation_measure',
+                    'stop_coannihilation_measure',
+                    'neu2_coannihilation_measure',
+                    'char_coannihilation_measure',
+                    'focus_point_measure'
+                ]},
+            {'axes': ['abs_mneu2_2K','abs_mneu1_500'], 'zaxes': [
+                    'A_funnel_measure',
+                    'stau_coannihilation_measure',
+                    'stop_coannihilation_measure',
+                    'neu2_coannihilation_measure',
+                    'char_coannihilation_measure',
+                    'focus_point_measure'
+                ]},
             ],
     'pmssm10-m1-m3':[
             {'axes':['M1'   ,'logssikocm2_55']},
@@ -521,9 +853,95 @@ spaces={
             {'axes':['abs_mchar1_2K','abs_mneu1_750']},
             {'axes':['msqr_2K','abs_mneu1_750']},
             ],
+    'pmssm10-140624':[
+            {'axes':['abs_mg_2K','abs_mneu1_750']},
+            {'axes':['mstop1_2K','abs_mneu1_750']},
+            {'axes':['mstau1_2K','abs_mneu1_750']},
+            {'axes':['abs_mchar1_2K','abs_mneu1_750']},
+            {'axes':['msqr_2K','abs_mneu1_750']},
+            {'axes':['logabsmneu1_10K','logssipb']},
+            {'axes':['logabsmneu1_10K','logssicm2_t']},
+            {'axes':['logabsmneu1_SNOW','logssikocm2_SNOW']},
+            {'axes':['logabsmneu1','logssikocm2_55']},
+            {'axes':['MA','tanb']},
+            ],
     'dm':[
             {'axes':['logabsmneu1_10K','logssipb']},
             {'axes':['logabsmneu1_10K','logssdpb']},
             {'axes':['logoh2', 'logssipb_oh2']},
-            ]
+            ],
+    'merge-dm':[
+#            {'axes':['logabsmneu1','logssikocm2_55']},
+#            {'axes':['logabsmneu1_SNOW','logssikocm2_SNOW']},
+            {'axes':['logabsmneu1_SNOW','logssicm2_t']},
+            ],
+    'ichep-mstop-mneu': [
+            {'axes':['mstop1_ICHEP_800' ,'abs_mneu1_750']} ,
+            {'axes':['mstop1_ICHEP_1500','abs_mneu1_750']} ,
+            {'axes':['mstop1_ICHEP_2000','abs_mneu1_750']} ,
+            {'axes':['mstop1_2K'        ,'abs_mneu1_750']} ,
+            {'axes':['mstop1_ICHEP_800' ,'abs_mneu1_500']} ,
+            {'axes':['mstop1_ICHEP_1500','abs_mneu1_500']} ,
+            {'axes':['mstop1_ICHEP_1200','abs_mneu1_500']} ,
+            {'axes':['mstop1_ICHEP_2000','abs_mneu1_500']} ,
+            {'axes':['mstop1_2K'        ,'abs_mneu1_500']} ,
+            ],
+    'ichep-msqr-mneu':[
+            {'axes':['msqr_2K'        ,'abs_mneu1_750']} ,
+            {'axes':['msqr_4K'        ,'abs_mneu1_750']} ,
+            {'axes':['msqr_ICHEP_2K'  ,'abs_mneu1_750']} ,
+            ],
+    'ichep-planes':[
+            {'axes':['msqr_2K'        ,'abs_mneu1_750']} ,
+            {'axes':['msqr_4K'        ,'abs_mneu1_750']} ,
+            {'axes':['msqr_ICHEP_2K'  ,'abs_mneu1_750']} ,
+            {'axes':['mstop1_ICHEP_800' ,'abs_mneu1_750']} ,
+            {'axes':['mstop1_ICHEP_1500','abs_mneu1_750']} ,
+            {'axes':['mstop1_ICHEP_2000','abs_mneu1_750']} ,
+            {'axes':['mstop1_2K'        ,'abs_mneu1_750']} ,
+            {'axes':['mstop1_ICHEP_800' ,'abs_mneu1_500']} ,
+            {'axes':['mstop1_ICHEP_1500','abs_mneu1_500']} ,
+            {'axes':['mstop1_ICHEP_1200','abs_mneu1_500']} ,
+            {'axes':['mstop1_ICHEP_2000','abs_mneu1_500']} ,
+            {'axes':['mstop1_2K'        ,'abs_mneu1_500']} ,
+            ],
+    'g-2':[
+            {'axes':'g-2'},
+            ],
+    'pmssm10-mstop-investigation': [
+        {   'axes':['mstop1_2K','abs_mneu1_750'],
+            'zaxes':[
+                'pm-M1','M2','pm-M3','msq12','msq3','msl','in_mu','in_ma','tanb',
+                'A',
+                'mstop2_2K','abs_mg','msqr','abs_mchar1_2K','mstau1_2K',
+                'Al(SLD)', 'Ab', 'Ac', 'mc9_Oh2', 'mc9_Mh',   
+                'Gamma_Z', 'GZ_in', 'R(B->Xsll)', 'Al(P_tau)', 'MZ', 
+                'mc9_R_DMBs', 'MW', 'Afb_l', 'lux131030_unc', 'mc9_DAlpha_had', 
+                'mc9_epsilon_K',  'sigma_had^0', 'Afb(c)', 'Afb(b)',  
+                'mc9_R_B->Xsg', 'mc9_R_DMBs_DMBd', 'mc9_R_B->taunu', 'Rc', 'Rb',
+                'Rl', 'RmmNov13_mc9', 'sintheta_eff', 'mc9_Mt', 'R(K->lnu)', 
+                'R(Kp->pinn)', 'gminus2mu', 'MATANB' , 'LEP-chargino',  
+                'LEP-slepton', 'LEP-sneutrino', 'LEP-squark','neutralino-lsp'
+                ]},
+        {   'axes':['mstop1_750','abs_mneu1_350'],
+            'zaxes':[
+                'pm-M1','M2','pm-M3','msq12','msq3','msl','in_mu','in_ma','tanb',
+                'A',
+                'mstop2_2K','abs_mg','msqr','abs_mchar1_2K','mstau1_2K',
+                'Al(SLD)', 'Ab', 'Ac', 'mc9_Oh2', 'mc9_Mh',   
+                'Gamma_Z', 'GZ_in', 'R(B->Xsll)', 'Al(P_tau)', 'MZ', 
+                'mc9_R_DMBs', 'MW', 'Afb_l', 'lux131030_unc', 'mc9_DAlpha_had', 
+                'mc9_epsilon_K',  'sigma_had^0', 'Afb(c)', 'Afb(b)',  
+                'mc9_R_B->Xsg', 'mc9_R_DMBs_DMBd', 'mc9_R_B->taunu', 'Rc', 'Rb',
+                'Rl', 'RmmNov13_mc9', 'sintheta_eff', 'mc9_Mt', 'R(K->lnu)', 
+                'R(Kp->pinn)', 'gminus2mu', 'MATANB' , 'LEP-chargino',  
+                'LEP-slepton', 'LEP-sneutrino', 'LEP-squark','neutralino-lsp',
+                'universal_limits_7TeV',
+                ]},
+        {   'axes':['mstop1_2K','mh_zoom']},
+        {   'axes':['mstop1_2K','mh']},
+        {   'axes':['mstop1_2K','Xt']},
+        {   'axes':['mh_zoom','Xt']},
+        {   'axes':['mh','Xt']},
+        ],
     }
