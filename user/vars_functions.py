@@ -31,7 +31,7 @@ def get():
                     },
                 },
             'focus_point_measure': {
-                'name': 'abs_var1_over_var2',
+                'name': 'focus_point_measure',
                 'observable_ids': {
                     'mcpp': [('HMIX', 'MUE'), ('MASS','MNeu(1)'), ('MASS', 'MA0')],
                     }

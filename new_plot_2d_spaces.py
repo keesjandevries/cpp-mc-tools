@@ -260,11 +260,20 @@ def plot_contourf(ax, zaxis_plot, chi2_plot, entries_plot, x_mesh, y_mesh,
             interpolation='nearest', alpha=alpha)
     return ax
 
-def plot_colz(ax, zaxis_plot, chi2_plot, entries_plot, x_mesh, y_mesh,
+def plot_colorbar(fig, cax, label=None, fontsize=20):
+    bar = fig.colorbar(cax)
+    if label:
+        bar.set_label(label, fontsize=fontsize)
+    return cax
+
+def plot_colz(fig, ax, zaxis_plot, chi2_plot, entries_plot, x_mesh, y_mesh,
         min_chi2,
         cmap='jet', mask_dchi2_gt=None, alpha=1.0, vmin=None, vmax=None,
-        interpolation='nearest'):
+        interpolation='nearest', dchi2_mode=False, colorbar_options=None,
+        cmap_over=None):
     ext = [np.min(x_mesh), np.max(x_mesh), np.min(y_mesh), np.max(y_mesh)]
+    zaxis_plot = np.ma.masked_where((entries_plot == -1) | (chi2_plot > 1e9), 
+            zaxis_plot)
     if mask_dchi2_gt:
         mask_criterium = chi2_plot - min_chi2 > mask_dchi2_gt
         zaxis_plot = np.ma.masked_where(mask_criterium, zaxis_plot)
@@ -273,10 +282,14 @@ def plot_colz(ax, zaxis_plot, chi2_plot, entries_plot, x_mesh, y_mesh,
         if isinstance(transparent_cmap_options, dict):
             cmap = transparent_cmap(**transparent_cmap_options)
     else:
-        plt.get_cmap(cmap)
-
+        cmap = plt.get_cmap(cmap)
+    cmap.set_over(cmap_over)
+    if dchi2_mode:
+        zaxis_plot = zaxis_plot - min_chi2
     cax = ax.imshow(zaxis_plot, vmin=vmin, vmax=vmax, origin='lower',
             interpolation=interpolation, aspect='auto', extent=ext, cmap=cmap)
+    if colorbar_options:
+        cax = plot_colorbar(fig, cax, **colorbar_options)
     return ax
 
 def plot_chi2_minimum(fig, ax, chi2_plot, entries_plot, chi2_min,
@@ -375,14 +388,14 @@ def plot_contour_legend(fig, ax, legend_line_options_list=None):
     return ax
 
 def plot_color_legend(ax, line_options_list=None, labels=None, 
-        loc='lower center', ncol=1, frameon=False):
+        loc='lower center', ncol=1, markerscale=2.5):
     if line_options_list and labels:
         handles = []
         for line_options in line_options_list:
             handle = plt.Line2D((0,1),(0,0), **line_options)
             handles.append(handle)
-        ax.legend(handles, labels, loc=loc, numpoints=1, frameon=frameon, 
-                ncol=ncol)
+        ax.legend(handles, labels, loc=loc, numpoints=1, frameon=False, 
+                ncol=ncol, markerscale=markerscale)
     return ax
 
 def plot_layer(fig, ax, xaxis_options, yaxis_options, rootfile, zaxis,
@@ -416,7 +429,7 @@ def plot_layer(fig, ax, xaxis_options, yaxis_options, rootfile, zaxis,
         ax = plot_contour(ax, zaxis_plot, chi2_plot, entries_plot, x_mesh,
                 y_mesh, min_chi2, **contour_options)
     if colz_options:
-        ax = plot_colz(ax, zaxis_plot, chi2_plot, entries_plot, x_mesh,
+        ax = plot_colz(fig, ax, zaxis_plot, chi2_plot, entries_plot, x_mesh,
                 y_mesh, min_chi2, **colz_options)
     if contourf_options:
         ax = plot_contourf(ax, zaxis_plot, chi2_plot, entries_plot, x_mesh,
@@ -439,6 +452,8 @@ def produce_plot(figname, figure_options, axes_options, layer_options_list):
     Function that produces each individual plot of the list provided by
     get_plot_options_list().
     """
+    if figure_options is None:
+        figure_options = {}
     figsize = figure_options.get('figsize', [8, 6])
     axes_rect = figure_options.get('axes_rect', [0.17, 0.15, 0.77, 0.75])
     fig = plt.figure(figsize=figsize)

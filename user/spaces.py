@@ -15,6 +15,9 @@ spaces={
         {   'axes':['logmneu1','logssikocm2'],'zaxes': ['Dssicm2','Dssi']},
 #            {   'axes':['logmneu1','logssicm2']},
         ],
+    'atlas-mstop-mneu': [
+        {'axes': ['mstop1_750', 'abs_mneu1_500']},
+        ],
     'chargino-masses':[
         {'axes':'mchar1_2_5K'},
         {'axes':'mchar1_4K'},
@@ -31,6 +34,10 @@ spaces={
         {'axes':'mstau1-mneu1'},
         {'axes':'mchar1-mneu1'},
         {'axes':'MA-2mneu1'},
+        ],
+    'test-parameter-plotting': [
+        {'axes': 'mg_6K', 'zaxes': ['m0', 'm12', 'A0', 'tanb', 'msqr']},
+        {'axes': 'mg_6K_coarse', 'zaxes': ['m0', 'm12', 'A0', 'tanb', 'msqr']},
         ],
     'pmssm-chi2-slices': [
         {'axes':'pmssm-mc9-chi2','zaxes':['msq3','msq12','msl','M1','M2','M3','A','in_ma','tanb','in_mu','mt','mz','Delta_alpha_had']},
@@ -608,6 +615,23 @@ spaces={
                     ]
                 },
             ],
+    'm0-m12-dm':[
+            {'axes':['m0_6K','m12'],
+                'zaxes':[
+                    'A_funnel_measure',
+                    'stau_coannihilation_measure',
+                    'stop_coannihilation_measure',
+                    'neu2_coannihilation_measure',
+                    'char_coannihilation_measure',
+                    'focus_point_measure'
+                    ]
+                },
+            ],
+    'mc10-nuhm2-fig-4-5':[
+            {'axes':['mhu2_big','mhd2_big']},
+            {'axes':['m0_nuhm2','mhu2_big']},
+            {'axes':['m0_nuhm2','mhd2_big']},
+            ],
     'mc10-nuhm2':[
             #Fig. 1
             {'axes':['m0_nuhm2','m12'],
@@ -653,9 +677,11 @@ spaces={
             #Fig. 11
             {'axes':'g-2', 'zaxes':['atlas20_m0_m12', 'atlas_3000fb_14TeV_m0_m12', 'mc9_Mh']},
             {'axes':['logmneu1','logssikocm2_SNOW']},
+            {'axes':['logmneu1','logssikocm2_MC10']},
             #other requests
             {'axes':'mu'},
             {'axes':'logssikocm2_SNOW'},
+            {'axes':'logssikocm2_MC10'},
             ],
     'mc10-nuhm1-cmssm':[
             #Fig. 1
@@ -674,9 +700,9 @@ spaces={
             {'axes':['m0_nuhm2','tanb']},
             {'axes':['tanb','m12']},
             #Fig. 5
-            {'axes':['m0_nuhm2','A0_ko_nuhm2']},
-            {'axes':['m12','A0_ko_nuhm2']},
-            {'axes':['A0_ko_nuhm2','m12']},
+#            {'axes':['m0_nuhm2','A0_ko_nuhm2']},
+#            {'axes':['m12','A0_ko_nuhm2']},
+#            {'axes':['A0_ko_nuhm2','m12']},
             #Fig. 6
             {'axes':['MA','tanb']},
             #Fig. 7
@@ -694,9 +720,23 @@ spaces={
             #Fig. 11
             {'axes':'g-2', 'zaxes':['atlas20_m0_m12', 'atlas_3000fb_14TeV_m0_m12', 'mc9_Mh']},
             {'axes':['logmneu1','logssikocm2_SNOW']},
+            {'axes':['logmneu1','logssikocm2_MC10']},
             #other requests
             {'axes':'mu'},
             {'axes':'logssikocm2_SNOW'},
+            {'axes':'logssikocm2_MC10'},
+            ],
+    'mc10-mass-ranges':[
+            #Fig. 7
+            {'axes':['mg_5K'], 'zaxes':['atlas20_m0_m12', 'atlas_3000fb_14TeV_m0_m12', 'mc9_Mh']},
+            {'axes':['msqr'], 'zaxes':['atlas20_m0_m12', 'atlas_3000fb_14TeV_m0_m12', 'mc9_Mh']},
+            #Fig. 8
+            {'axes':['mstau1'], 'zaxes':['atlas20_m0_m12', 'atlas_3000fb_14TeV_m0_m12', 'mc9_Mh']},
+            {'axes':['mstop1_5K'], 'zaxes':['atlas20_m0_m12', 'atlas_3000fb_14TeV_m0_m12', 'mc9_Mh']},
+            #Fig. 10
+            {'axes':['mneu1_1250'], 'zaxes':['atlas20_m0_m12', 'atlas_3000fb_14TeV_m0_m12', 'mc9_Mh']},
+            {'axes':['mchar1_2K'], 'zaxes':['atlas20_m0_m12', 'atlas_3000fb_14TeV_m0_m12', 'mc9_Mh']},
+            #Fig. 11
             ],
     'nuhm2':[
             {'axes':['m0_nuhm2','m12']},
@@ -768,7 +808,10 @@ spaces={
             {'axes':['A','logssikocm2_55']},
             {'axes':['logabsmneu1','logssikocm2_55']},
             ],
-    'pmssm-dm':[
+    'mc11-pmssm-correlations': [
+            {'axes':'abs_mg_4K', 'zaxes': ['abs_mneu1_500', 'abs_mneu2_2K', 'abs_mchar1', 'msqr', 'mstop1', 'mstop2', 'mstau1']},
+            ],
+    'mc11-pmssm-dm':[
             {'axes':['abs_mg_2K','abs_mneu1_750'], 'zaxes': [ 
                     'A_funnel_measure',
                     'stau_coannihilation_measure',
@@ -809,7 +852,7 @@ spaces={
                     'char_coannihilation_measure',
                     'focus_point_measure'
                 ]},
-            {'axes':['logabsmneu1_SNOW','logssikocm2_SNOW'], 'zaxes': [ 
+            {'axes':['logabsmneu1_SNOW','logssikocm2_MC10'], 'zaxes': [ 
                     'A_funnel_measure',
                     'stau_coannihilation_measure',
                     'stop_coannihilation_measure',
@@ -825,6 +868,20 @@ spaces={
                     'char_coannihilation_measure',
                     'focus_point_measure'
                 ]},
+            ],
+    'mc11-pmssm-1d' : [
+            {'axes':'g-2' },
+            {'axes':'mu'},
+            {'axes':'logssikocm2_MC10'},
+            {'axes':'BsmmRatio'},
+            {'axes':'mh'},
+            {'axes':'mg_5K'},
+            {'axes':'msqr'},
+            {'axes':'mstau1'},
+            {'axes':'mstop1_5K'},
+            {'axes':'MA_2500'},
+            {'axes':'mneu1_1250'},
+            {'axes':'mchar1_2K'},
             ],
     'pmssm10-m1-m3':[
             {'axes':['M1'   ,'logssikocm2_55']},
@@ -864,6 +921,9 @@ spaces={
             {'axes':['logabsmneu1_SNOW','logssikocm2_SNOW']},
             {'axes':['logabsmneu1','logssikocm2_55']},
             {'axes':['MA','tanb']},
+            ],
+    'nuhm2-bf-test':[
+            {'axes':['mhu2_1e8', 'mhd2_1e8']},
             ],
     'dm':[
             {'axes':['logabsmneu1_10K','logssipb']},

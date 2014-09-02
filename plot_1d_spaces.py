@@ -32,6 +32,17 @@ def parse_args():
     parser.add_argument('--extension', help='extension for figure name',default='pdf')
     return parser.parse_args()
 
+def plot_constraint_arrow(ax, zaxis_plot, entries_plot, level=5.99, nth_level=0):
+    is_crossing_level = (entries_plot[:-1] != -1) & (entries_plot[1:] !=-1) & \
+            (zaxis_plot[:-1] > level) & (zaxis_plot[1:] < level)
+    index = numpy.where(is_crossing_level)[0][nth_level]+0.5
+    xytext = (index/len(zaxis_plot), 0.0)
+    xy = (index/len(zaxis_plot), 0.2)
+    ax.annotate('', xy=xy, xycoords='axes fraction',  xytext=xytext, 
+            textcoords='axes fraction', arrowprops={'arrowstyle':'->',
+                'linewidth': 2.0, 
+                'connectionstyle':'arc3', 'color': 'green'})
+    return axes
 
 def prepare_figures_details(args):
     #prepare axes details
@@ -150,8 +161,12 @@ if __name__ == '__main__':
             linestyle=layer_options.get('linestyle')
             linewidth=layer_options.get('linewidth',2)
             label = layer_options.get('label')
-            axes.plot(bin_centres,plot,linewidth=linewidth,c=color,
-                    linestyle=linestyle)
+            constraint_arrow_options = layer_options.get('constraint_arrow_options')
+            if constraint_arrow_options:
+                axes = plot_constraint_arrow(axes, plot, entries_plot, **constraint_arrow_options)
+            else:
+                axes.plot(bin_centres,plot,linewidth=linewidth,c=color,
+                        linestyle=linestyle)
             #FIXME: maybe ylim shouldn't be a property of the layer
             axes.set_ylim([layer_options.get('ymin',0),layer_options.get('ymax',9)])
             axes.set_ylabel(layer_options.get('ylabel',''),fontsize=20)

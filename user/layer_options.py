@@ -60,6 +60,18 @@ d= {
         'bar_label':'zaxis_texname',
         'cmap':{'transparent':{'color':'red'}},
     },
+    'arrow_constraint': {
+        'constraint_arrow_options': {
+            'level': 5.99,
+            'nth_level':0,
+            },
+        },
+    'arrow_constraint_last': {
+        'constraint_arrow_options': {
+            'level': 5.99,
+            'nth_level':-1,
+            },
+        },
     'colz_zaxis_transparent_green':{
         'colz':True,
         'mask_dchi2_gt': 5.99,
@@ -154,7 +166,7 @@ d= {
         'levels':[5.99, 2.30],
         'contour_colors':['b','r'],
         'dchi2_mode': True,
-        'min_segment_length':10,
+        'min_segment_length':30,
         'contour_linestyle':'solid',
         'plot_chi2_minimum': True,
         'chi2_minimum_fill_color':'g',
@@ -318,7 +330,7 @@ d= {
         'contour_linewidths':[1.3, 1.3],
         'contour_colors': ['b','r'],
         'dchi2_mode': True,
-        'min_segment_length': 10,
+        'min_segment_length': 20,
         'contour_linestyle':'dashed',
         'plot_chi2_minimum': True,
         'chi2_minimum_alpha': 0.5,
@@ -332,7 +344,7 @@ d= {
         'contour_linewidths':[1.0, 1.0],
         'contour_colors': ['b','r'],
         'dchi2_mode': True,
-        'min_segment_length': 10,
+        'min_segment_length': 20,
         'contour_linestyle':'dotted',
         'plot_chi2_minimum': True,
         'chi2_minimum_alpha': 0.5,

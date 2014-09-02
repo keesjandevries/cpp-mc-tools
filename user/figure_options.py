@@ -114,8 +114,7 @@ def get():
                             'linestyle': 'dotted',
                             },
                         },
-                    ]
-                
+                    ],
                 },
             'bsmm_ratio_band':{
                 'experimental_band': {

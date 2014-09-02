@@ -10,7 +10,7 @@ def parse_args():
     parser=argparse.ArgumentParser()
     parser.add_argument('rootfiles',nargs='+')
     parser.add_argument('--outfile')
-    parser.add_argument('--spaces')
+    parser.add_argument('--spaces', nargs='+')
     return parser.parse_args()
 
 def root_merge_2d(infiles,outfile,reference_path):
@@ -39,9 +39,12 @@ def root_merge_space_1d(infiles,outfile,reference_path,other_hist_paths):
     lib.root_merge_spaces_1d(c_infiles,len(c_infiles),c_outfile,c_reference_path,c_other_hist_paths,len(c_other_hist_paths))
 
 args=parse_args()
-spaces=user.spaces.get_spaces(args.spaces)
+spaces_keys_list = args.spaces
+spaces_list = []
+for spaces_key in spaces_keys_list:
+    spaces_list += user.spaces.get_spaces(spaces_key)
 
-for space in spaces:
+for space in spaces_list:
     axes=space['axes']
     if not isinstance(axes,list):
         axes=[axes]

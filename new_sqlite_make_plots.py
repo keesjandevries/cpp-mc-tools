@@ -29,7 +29,8 @@ def parse_args():
     parser.add_argument('--outfile',help='output root file')
     parser.add_argument('--reference', default='chi2-chi2',
         help='Usually chi-functions, but in general the function that is mimimised to project the spaces')
-    parser.add_argument('--spaces', help='select plots from user/spaces.py')
+    parser.add_argument('--spaces', help='select plots from user/spaces.py.'
+            ' You can specify multiple options', nargs='+')
     parser.add_argument('--sql-where',help='provide the "where-part" of the sql statement')
     parser.add_argument('--reduced-db',action='store_true',
             help='Select if file was produced with sqlite_reduce_db.py. This is needed for the preparation of the sql query')
@@ -111,7 +112,11 @@ if __name__ == '__main__':
     # get array ids
     oid_column_dict, style=get_oid_column_dict_and_style(db)
     # get spaces for which axis names are defined spaces
-    spaces=prepare_spaces(user.spaces.get_spaces(args.spaces),args.reference)
+    spaces_keys_list = args.spaces
+    spaces_list = []
+    for spaces_key in spaces_keys_list:
+        spaces_list += user.spaces.get_spaces(spaces_key)
+    spaces=prepare_spaces(spaces_list,args.reference)
     axes=prepare_axes(user.axes.get(),spaces)
     values=[axis['value'] for axis in axes.values()]
     if  args.reference == 'chi2-chi2':

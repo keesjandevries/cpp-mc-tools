@@ -85,7 +85,7 @@ double focus_point_measure(double *VARS, std::vector<int>& array_ids){
     double mu=std::abs(VARS[array_ids[0]]);
     double mneu1=std::abs(VARS[array_ids[1]]); 
     double ma=std::abs(VARS[array_ids[2]]);
-    bool is_a_funnel = std::abs(std::abs(ma/mneu1) - 2) < 0.2;
+    bool is_a_funnel = std::abs(std::abs(ma/(2*mneu1)) - 1) < 0.2;
     return std::abs(std::abs(mu/mneu1) - 1) + 1e9*is_a_funnel;
 }
 
