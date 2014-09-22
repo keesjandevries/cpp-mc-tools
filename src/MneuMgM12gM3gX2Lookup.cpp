@@ -96,8 +96,16 @@ double MneuMgM12gM3gX2Lookup::operator()(double * vars){
     // hence sum(1/M**a)=4/m3g**a
     double sum_1_over_M_to_a=0;
     double a=8;
-    for (int i=10; i<14; i++){
-        sum_1_over_M_to_a+=pow(vars[_array_ids[i]],-a);
+    // if stop1 is in the compressed region, apply limit as if the mass was very
+    // high
+    double  msq3[4];
+    for (int i=0; i<4; i++){
+        msq3[i] = vars[_array_ids[i+10]];
+    }
+    if (msq3[0] - mneu < 175)
+        msq3[0] = 5000.0;
+    for (int i=0; i<4; i++){
+        sum_1_over_M_to_a+=pow(msq3[i], -a);
     }
     m3g=pow(4/sum_1_over_M_to_a,1/a);
     //calculate X2
