@@ -1,30 +1,45 @@
 #include "GetVarsFunctions.h"
 std::map<std::string, GetVarsFunction > get_GetVarsFunction_map(){
     std::map<std::string, GetVarsFunction > function_map;
-    function_map["abs"]=abs;
-    function_map["negative"]=negative;
-    function_map["pb_to_cm2"]=pb_to_cm2;
-    function_map["bsmm_ratio"]=bsmm_ratio;
-    function_map["difference"]=difference;
-    function_map["x_minus_2y"]=x_minus_2y;
-    function_map["average"]=average;
-    function_map["m3g"]=m3g;
-    function_map["power_4_weighted_average"]=power_4_weighted_average;
-    function_map["standard_deviation"]=standard_deviation;
-    function_map["var1_over_var2_square"]=var1_over_var2_square;
-    function_map["var1_over_var2"]=var1_over_var2;
-    function_map["abs_var1_over_var2"]=abs_var1_over_var2;
-    function_map["sqrt_var1_over_var2"]=sqrt_var1_over_var2;
-    function_map["var1_minus_var2_over_var3"]=var1_minus_var2_over_var3;
-    function_map["coannihilation_measure"]=coannihilation_measure;
-    function_map["focus_point_measure"]=focus_point_measure;
-    function_map["funnel_measure"]=funnel_measure;
-    function_map["C9_straub"]=C9_straub;
+    function_map["abs"] = abs;
+    function_map["min"] = min;
+    function_map["min_var1_var2_m_var3"] = min_var1_var2_m_var3;
+    function_map["negative"] = negative;
+    function_map["pb_to_cm2"] = pb_to_cm2;
+    function_map["bsmm_ratio"] = bsmm_ratio;
+    function_map["difference"] = difference;
+    function_map["x_minus_2y"] = x_minus_2y;
+    function_map["average"] = average;
+    function_map["m3g"] = m3g;
+    function_map["power_4_weighted_average"] = power_4_weighted_average;
+    function_map["standard_deviation"] = standard_deviation;
+    function_map["var1_over_var2_square"] = var1_over_var2_square;
+    function_map["var1_over_var2"] = var1_over_var2;
+    function_map["abs_var1_over_var2"] = abs_var1_over_var2;
+    function_map["sqrt_var1_over_var2"] = sqrt_var1_over_var2;
+    function_map["var1_minus_var2_over_var3"] = var1_minus_var2_over_var3;
+    function_map["coannihilation_measure"] = coannihilation_measure;
+    function_map["focus_point_measure"] = focus_point_measure;
+    function_map["funnel_measure"] = funnel_measure;
+    function_map["C9_straub"] = C9_straub;
     return function_map;
 }
 
 double bsmm_ratio(double *VARS, std::vector<int>& array_ids){
     return VARS[array_ids[0]]/(3.46e-9);
+}
+
+double min(double *VARS, std::vector<int>& array_ids){
+    double var0 = std::abs(VARS[array_ids[0]]);    
+    double var1 = std::abs(VARS[array_ids[1]]);    
+    return std::min(var0, var1);
+}
+
+double min_var1_var2_m_var3(double *VARS, std::vector<int>& array_ids){
+    double var0 = std::abs(VARS[array_ids[0]]);    
+    double var1 = std::abs(VARS[array_ids[1]]);    
+    double var2 = std::abs(VARS[array_ids[2]]);    
+    return std::min(var0, var1) - var2;
 }
 
 double abs(double *VARS, std::vector<int>& array_ids){
@@ -107,12 +122,19 @@ double m3g(double * VARS, std::vector<int> & array_ids){
     // m3g calculated as "m3g=(4/sum(M**a))**1/a"
     // this is based on the assumption that the xsection scales as 1/M**a
     // hence sum(1/M**a)=4/m3g**a
+    double mneu = std::abs(VARS[array_ids[0]]);
+    double m[4];
+    for (int i=0; i<4; i++){
+        m[i] = VARS[array_ids[i+1]];
+    }
     double sum_1_over_M_to_a=0;
     double a=8;
+    if ((m[0] - mneu) < 175)
+        m[0] = 5000;
     for (int i=0; i<4; i++){
-        sum_1_over_M_to_a+=pow(VARS[array_ids[i]],-a);
+        sum_1_over_M_to_a+=pow(m[i], -a);
     }
-    return pow(4/sum_1_over_M_to_a,1/a);
+    return pow(4/sum_1_over_M_to_a, 1/a);
 }
 
 double power_4_weighted_average(double * VARS, std::vector<int> & array_ids){

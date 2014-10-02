@@ -11,6 +11,8 @@ std::map<std::string, GetVarsFunction > get_GetVarsFunction_map();
 
 ///Individual declarations
 double abs(double *VARS, std::vector<int>& array_ids);
+double min(double *VARS, std::vector<int>& array_ids);
+double min_var1_var2_m_var3(double *VARS, std::vector<int>& array_ids);
 double negative(double *VARS, std::vector<int>& array_ids);
 double pb_to_cm2(double *VARS, std::vector<int>& array_ids);
 double bsmm_ratio(double *VARS, std::vector<int>& array_ids);
