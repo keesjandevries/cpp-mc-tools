@@ -33,6 +33,24 @@
         'vmax':4,
         'texname':r'$\chi^2(universal@7TeV)$'
         },
+    'min_mg_msq': {
+        'binning':{
+            'low': 0,
+            'high': 1500,
+            'nbins': 100,
+            'type': 'linear',
+            },
+        'value': 'min_mg_msq'
+        },
+    'min_mg_msq_m_mneu3': {
+        'binning':{
+            'low': 0,
+            'high': 1500,
+            'nbins': 100,
+            'type': 'linear',
+            },
+        'value': 'min_mg_msq_m_mneu3'
+        },
     'chi2_m0_m12_7TeV':{
         'value':'chi2-atlas5_m0_m12',
         'vmin':0,

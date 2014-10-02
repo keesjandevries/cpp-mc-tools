@@ -49,6 +49,17 @@ spaces={
         {'axes':'mh'},
         {'axes':['mh','mstop1'],'zaxes':'atlas20_m0_m12'},
         ],
+    '140929_BSM_fit_workshop':[
+        {'axes': ['msqr_4K']},
+        {'axes': ['abs_mg_4K']},
+        {'axes': ['mstop1_4K']},
+        {'axes': ['mstau1_4K']},
+        {'axes': ['msqr_4K', 'abs_mg_4K']},
+        {'axes': ['msqr_atlas', 'abs_mg_atlas']},
+        {'axes': ['mstop1_atlas', 'mneu_atlas']},
+        {'axes': ['logabsmneu1_SNOW', 'logssikocm2_SNOW']},
+        {'axes':['logabsmneu1_SNOW','logssicm2_t']},
+        ],
     'cmssm-params-and-breakdowns':[
         {   'axes':['m0_6K','m12'],
             'zaxes':[ 
@@ -810,6 +821,10 @@ spaces={
             ],
     'mc11-pmssm-correlations': [
             {'axes':'abs_mg_4K', 'zaxes': ['abs_mneu1_500', 'abs_mneu2_2K', 'abs_mchar1', 'msqr', 'mstop1', 'mstop2', 'mstau1']},
+            ],
+    'mc11-pmssm-other-planes':[
+            {'axes': ['msqr_4K', 'abs_mg_4K']},
+            {'axes': ['min_mg_msq', 'min_mg_msq_m_mneu3'], 'zaxes': 'abs_mneu1_500'},
             ],
     'mc11-pmssm-dm':[
             {'axes':['abs_mg_2K','abs_mneu1_750'], 'zaxes': [ 

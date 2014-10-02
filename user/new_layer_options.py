@@ -20,6 +20,15 @@
             },
         },
     },
+'solid_contours_bf_21': {
+    'min_chi2': 21.0,
+    'contour_options': {
+        'levels':[5.99, 2.30],
+        'colors':['b','r'],
+        'dchi2_mode': True,
+        'linestyle':'solid',
+        },
+    },
 'solid_contours': {
     'contour_options': {
         'levels':[5.99, 2.30],
@@ -46,6 +55,19 @@
         'edge_color':'g',
         },
     },
+'dotted_contours': {
+    'contour_options': {
+        'levels':[5.99, 2.30],
+        'colors':['b','r'],
+        'dchi2_mode': True,
+        'min_segment_length':10,
+        'linestyle':'dotted',
+        },
+    'chi2_minimum_options':{
+        'fill_color':'none',
+        'edge_color':'g',
+        },
+    },
 'solid_contours_no_star': {
     'contour_options': {
         'levels':[5.99, 2.30],
@@ -56,17 +78,6 @@
         },
     },
 'stau_coannihilation': {
-#    'colz_options': {
-#        'cmap': {
-#            'transparent':{
-#                'color':'red',
-#                'alpha': 0.7,
-#                }
-#            },
-#        'vmin': 0.15,
-#        'vmax': 0.1500001,
-#        'mask_dchi2_gt': 5.99,
-#        },
     'contourf_options': {
         'levels': [0.0, 0.15],
         'colors': ['red'],

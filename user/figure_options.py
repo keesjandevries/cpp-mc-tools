@@ -43,7 +43,78 @@ def get():
                     'min': 2.117e-9 , 
                     'max': 3.922e-9, 
                     },
+                'legend': [
+                    {
+                        'label': 'pMSSM10',
+                        'line_2d_kwargs': {
+                            'color': 'k',
+                            'linewidth': 2,
+                            'linestyle': 'solid',
+                            },
+                        },
+                    {
+                        'label': 'NUHM2',
+                        'line_2d_kwargs': {
+                            'color': 'b',
+                            'linewidth': 2,
+                            'linestyle': 'solid',
+                            },
+                        },
+                    {
+                        'label': 'NUHM1',
+                        'line_2d_kwargs': {
+                            'color': 'b',
+                            'linewidth': 2,
+                            'linestyle': 'dashed',
+                            },
+                        },
+                    {
+                        'label': 'CMSSM',
+                        'line_2d_kwargs': {
+                            'color': 'b',
+                            'linewidth': 2,
+                            'linestyle': 'dotted',
+                            },
+                        },
+                    ],
                 },
+            '4-models':{
+                'legend': [
+                    {
+                        'label': 'pMSSM10',
+                        'line_2d_kwargs': {
+                            'color': 'k',
+                            'linewidth': 2,
+                            'linestyle': 'solid',
+                            },
+                        },
+                    {
+                        'label': 'NUHM2',
+                        'line_2d_kwargs': {
+                            'color': 'b',
+                            'linewidth': 2,
+                            'linestyle': 'solid',
+                            },
+                        },
+                    {
+                        'label': 'NUHM1',
+                        'line_2d_kwargs': {
+                            'color': 'b',
+                            'linewidth': 2,
+                            'linestyle': 'dashed',
+                            },
+                        },
+                    {
+                        'label': 'CMSSM',
+                        'line_2d_kwargs': {
+                            'color': 'b',
+                            'linewidth': 2,
+                            'linestyle': 'dotted',
+                            },
+                        },
+                    ],
+                    
+                    },
             'mc10_g-2':{
                 'legend': [
                     {
@@ -385,6 +456,27 @@ def get():
                                     },
                                 ]
                             }
+                    },
+                'ICHEP-w-wo-lhc7-contours-legend':{
+                        'figsize': [8,7],
+                        'axes_rect':[0.17, 0.15, 0.77, 0.70],
+                        'custom_legend':{
+                            'legend_line_kwargs':[
+                                {
+                                    'y':2, 
+                                    'linestyle':'solid', 
+                                    'markercolor': 'g',
+                                    'name':r'pMSSM10 w LHC7: best fit, $1\sigma$, $2\sigma$',
+                                    },
+                                {
+                                    'y':1, 
+                                    'linestyle':'dashed', 
+                                    'markercolor': 'w',
+                                    'name':r'pMSSM10 w/o LHC7: best fit, $1\sigma$, $2\sigma$',
+                                    },
+                                ]
+                            },
+                        'transparent': True,
                     },
                 'mc10-nuhm2-nuhm1-cmssm-contours-legend-snowmass':{
                         'figsize': [8,7],

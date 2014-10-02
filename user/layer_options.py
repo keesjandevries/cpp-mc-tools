@@ -166,7 +166,7 @@ d= {
         'levels':[5.99, 2.30],
         'contour_colors':['b','r'],
         'dchi2_mode': True,
-        'min_segment_length':30,
+        'min_segment_length':10,
         'contour_linestyle':'solid',
         'plot_chi2_minimum': True,
         'chi2_minimum_fill_color':'g',

@@ -1,5 +1,17 @@
 def get():
     return{
+            'min_mg_msq': {
+                'name': 'min',
+                'observable_ids': {
+                    'mcpp': [('MASS', 'MGl'), ('MASS', 'MSf(2,3,1)')],
+                    }
+                },
+            'min_mg_msq_m_mneu3': {
+                'name': 'min_var1_var2_m_var3',
+                'observable_ids': {
+                    'mcpp': [('MASS', 'MGl'), ('MASS', 'MSf(2,3,1)'), ('MASS', 'MNeu(3)')],
+                    }
+                },
             'stau_coannihilation_measure':{
                 'name':'coannihilation_measure',
                 'observable_ids':{
@@ -117,7 +129,7 @@ def get():
                 'name': 'm3g',
                 'observable_ids': {
                     'mc_old': ['stop1','stop2','sbottom1','sbottom2'],
-                    'mcpp': [('MASS', 'MSf(1,3,3)'),('MASS', 'MSf(2,3,3)'),('MASS', 'MSf(1,4,3)'),('MASS', 'MSf(2,4,3)')]
+                    'mcpp': [('MASS', 'MNeu(1)'), ('MASS', 'MSf(1,3,3)'),('MASS', 'MSf(2,3,3)'),('MASS', 'MSf(1,4,3)'),('MASS', 'MSf(2,4,3)')]
                     }
                 },
             'm3g_new': {
