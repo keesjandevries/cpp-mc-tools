@@ -102,12 +102,15 @@ double MneuMgM12gM3gX2Lookup::operator()(double * vars){
     for (int i=0; i<4; i++){
         msq3[i] = vars[_array_ids[i+10]];
     }
-    if (msq3[0] - mneu < 175)
+    if (vars[_array_ids[10]] - mneu < 175)
         msq3[0] = 5000.0;
     for (int i=0; i<4; i++){
         sum_1_over_M_to_a+=pow(msq3[i], -a);
     }
     m3g=pow(4/sum_1_over_M_to_a,1/a);
+    // if msbot1 close to diagonal, restore the mass splitting
+    if (vars[_array_ids[10]] - mneu < 175 &&  msq3[2]-mneu<600)
+        mneu = mneu + (m3g-msq3[2])*(1-((msq3[2]-mneu)/600));
     //calculate X2
     std::vector<double>::iterator m_begin=_mneu.begin();
     std::vector<double>::iterator m_end=_mneu.end();
