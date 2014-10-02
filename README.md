@@ -3,6 +3,7 @@ cpp-mc-tools
 
 Requirements
 ============
+* [numpy, scipy, matplotlib](http://www.scipy.org/)
 * [root](http://root.cern.ch/drupal/)
 * [SLHALib-2.2](http://www.feynarts.de/slha/)
 
