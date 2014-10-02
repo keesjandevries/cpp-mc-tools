@@ -13,7 +13,7 @@ Make sure that 'root-config' is callable, e.g. by sourcing your root version.
 
 Then simply type "make".
 
-To install SLHALib-2.2, here is what works on my local desktop with gcc 4.8.0
+To install SLHALib-2.2, here is an example of how to do it
 
     wget http://www.feynarts.de/slha/SLHALib-2.2.tar.gz 
     tar xvfz SLHALib-2.2.tar.gz
