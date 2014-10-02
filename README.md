@@ -24,7 +24,6 @@ To install SLHALib-2.2, here is an example of how to do it
 
 To compile slhalib.pyx, you first need to do the above (or equivalent), and then
 
-
-   python cython-setup.py build_ext --inplace 
+    python cython-setup.py build_ext --inplace 
 
 
