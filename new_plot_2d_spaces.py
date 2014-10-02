@@ -10,6 +10,7 @@ import argparse
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as col
+import matplotlib.image as mpimg
 #private
 import py_modules.CtypesWrappers as cw
 
@@ -46,9 +47,10 @@ def transparent_cmap(color, alpha=0.7):
     return cmap
 
 def add_contour_legend_line(ax, y, linestyle, name, markercolor,
-        contouralpha=1.0, markeralpha=1.0, linewidth=2, fontsize=15):
-    ax.plot((0.5), (y), marker='*', linestyle='none', markeredgecolor='g',
-            markersize=10, color=markercolor, alpha=markeralpha)
+        contouralpha=1.0, markeralpha=1.0, linewidth=2, fontsize=15, 
+        markeredgecolor='g'):
+    ax.plot((0.5), (y), marker='*', linestyle='none', alpha=markeralpha,
+            markeredgecolor=markeredgecolor, markersize=10, color=markercolor)
     ax.plot((1, 1.6), (y, y), linestyle=linestyle, color='r',
             linewidth=linewidth, alpha=contouralpha)
     ax.plot((2, 2.6), (y, y), linestyle=linestyle, color='b',
@@ -375,14 +377,14 @@ def plot_chi2_minimum(fig, ax, chi2_plot, entries_plot, chi2_min,
                 linestyle='none')
     return ax
 
-def plot_contour_legend(fig, ax, legend_line_options_list=None):
+def plot_contour_legend(fig, ax, legend_line_options_list=None, xmin=-2.0):
     pos = ax.get_position()
     l, b, w, h = pos.x0, pos.y0, pos.width, pos.height
     ax2 = fig.add_axes([l, b+h+0.01, w, 1-(b+h+0.04)], frameon=False)
     ax2.tick_params(which='both', bottom='off', left='off', right='off',
             top='off', labelbottom='off', labelleft='off')
-    ax2.set_xlim([-2.0, 8.0])
-    ax2.set_ylim([0.5, 3.5])
+    ax2.set_xlim([xmin, 8.0])
+    ax2.set_ylim([0.5, len(legend_line_options_list) + 0.5])
     for legend_line_options in legend_line_options_list:
         ax2 = add_contour_legend_line(ax2, **legend_line_options)
     return ax
@@ -400,7 +402,7 @@ def plot_color_legend(ax, line_options_list=None, labels=None,
 
 def plot_layer(fig, ax, xaxis_options, yaxis_options, rootfile, zaxis,
         colz_options=None, contour_options=None, chi2_minimum_options=None,
-        contourf_options=None):
+        contourf_options=None, min_chi2=None):
     """
     Function plots all layers
 
@@ -423,7 +425,8 @@ def plot_layer(fig, ax, xaxis_options, yaxis_options, rootfile, zaxis,
     zaxis_plot = get_plot(rootfile, xaxis_options, yaxis_options, zaxis)
     chi2_overflow_edges = get_overflow_edges(rootfile, xaxis_options,
             yaxis_options)
-    min_chi2 = get_min_chi2(rootfile, xaxis_options, yaxis_options)
+    if not min_chi2:
+        min_chi2 = get_min_chi2(rootfile, xaxis_options, yaxis_options)
     x_mesh, y_mesh = get_x_y_mesh(xaxis_options, yaxis_options)
     if contour_options:
         ax = plot_contour(ax, zaxis_plot, chi2_plot, entries_plot, x_mesh,
@@ -439,12 +442,24 @@ def plot_layer(fig, ax, xaxis_options, yaxis_options, rootfile, zaxis,
                 chi2_overflow_edges, x_mesh, y_mesh, **chi2_minimum_options)
     return ax
 
+def plot_image(ax, filename, alpha=1.0):
+    img = mpimg.imread(filename)
+#    img = img[::-1]
+    xmin, xmax = ax.get_xlim()
+    ymin, ymax = ax.get_ylim()
+    ax.imshow(img, zorder=0, aspect='auto', extent=[xmin, xmax, ymin, ymax], 
+            interpolation='nearest', alpha=alpha)
+    return ax
+
 def plot_figure_options(fig, ax,
-        contour_legend_options=None, color_legend_options=None, **kwargs):
+        contour_legend_options=None, color_legend_options=None, 
+        image_options=None, **kwargs):
     if contour_legend_options:
         ax = plot_contour_legend(fig, ax, **contour_legend_options)
     if color_legend_options:
         ax = plot_color_legend(ax, **color_legend_options)
+    if image_options:
+        ax = plot_image(ax, **image_options)
     return ax
 
 def produce_plot(figname, figure_options, axes_options, layer_options_list):
@@ -465,7 +480,8 @@ def produce_plot(figname, figure_options, axes_options, layer_options_list):
         ax = plot_layer(fig, ax, xaxis_options, yaxis_options, **layer_options)
     ax = plot_figure_options(fig, ax, **figure_options)
     print(figname)
-    plt.savefig(figname)
+    transparent = figure_options.get('transparent', False)
+    plt.savefig(figname, transparent=transparent)
 
 def main(main_options):
     """
